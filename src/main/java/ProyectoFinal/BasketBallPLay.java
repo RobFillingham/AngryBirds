@@ -31,7 +31,11 @@ import org.dyn4j.samples.*;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.MouseInfo;
+import java.awt.PointerInfo;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
@@ -55,6 +59,7 @@ import org.dyn4j.geometry.Circle;
 import org.dyn4j.geometry.Convex;
 import org.dyn4j.geometry.Geometry;
 import org.dyn4j.geometry.MassType;
+import org.dyn4j.geometry.Transform;
 import org.dyn4j.geometry.Vector2;
 import org.dyn4j.samples.framework.Camera;
 import org.dyn4j.samples.framework.SimulationBody;
@@ -85,13 +90,17 @@ public class BasketBallPLay extends SimulationFrame {
 
 
 	/** The basketball image */
-	private static final BufferedImage BASKETBALL = getImageSuppressExceptions("/org/dyn4j/samples/resources/Basketball.png");
-
+	private static final BufferedImage RED_BIRD = getImageSuppressExceptions("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\dyn4j-samples\\src\\main\\java\\org\\dyn4j\\samples\\resources\\Red.png");
+        private static final BufferedImage YELLOW_BIRD = getImageSuppressExceptions("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\dyn4j-samples\\src\\main\\java\\org\\dyn4j\\samples\\resources\\Yellow.png");
+        private static final BufferedImage WHITE_BIRD = getImageSuppressExceptions("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\dyn4j-samples\\src\\main\\java\\org\\dyn4j\\samples\\resources\\White.png");
+        private static final BufferedImage WHITE_BIRD_EGG = getImageSuppressExceptions("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\dyn4j-samples\\src\\main\\java\\org\\dyn4j\\samples\\resources\\Egg.png");
+        private static final BufferedImage WHITE_BIRD_BOOM = getImageSuppressExceptions("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\dyn4j-samples\\src\\main\\java\\org\\dyn4j\\samples\\resources\\Boom.png");
+        
 	/** Helper function to read the images from the class path */
-	private static final BufferedImage getImageSuppressExceptions(String pathOnClasspath) {
+	private static final BufferedImage getImageSuppressExceptions(String imagenSeleccionada) {
 		try {
                         
-			return ImageIO.read(new File("C:\\Users\\famfi\\OneDrive - Universidad Aut�noma de Aguascalientes\\UAA\\S4\\Programacion\\PF\\dyn4j-samples\\Red.png"));
+			return ImageIO.read(new File(imagenSeleccionada));
 		} catch (IOException e) {
 			return null;
 		}
@@ -167,6 +176,17 @@ public class BasketBallPLay extends SimulationFrame {
 	private final Vector2 direction = new Vector2();
 	private double power = 0.0;
 	private int score = 0;
+        
+        private final int nP;
+        private final int nC;
+        private int nPajaros;
+        private int nCerdos;
+        private boolean canMove;    //Determina si ya podemos lazar otro pajaro, o los objetos en el mundo se siguen moviendo
+        private ImageBody circle;   //Guardará los datos del pajaro actual creado (Para modificar poderes)
+        private boolean powerUsed;
+        private boolean huevaso;
+        private int nColisiones;
+        private boolean blockPower;
 	
 	private SimulationBody rim;
 	
@@ -210,6 +230,17 @@ public class BasketBallPLay extends SimulationFrame {
 		this.minus.install();
 		this.shoot.install();
 		this.path.install();
+                
+                this.nP = 3;    //Constantes
+                this.nC = 0;    //Constantes
+                this.nPajaros = nP;
+                this.nCerdos = nC;
+                this.canMove = true;
+                this.circle = new ImageBody(RED_BIRD);
+                this.powerUsed = false;
+                this.huevaso = false;
+                this.nColisiones = 4;
+                this.blockPower = false;
 	}
 	
 	/* (non-Javadoc)
@@ -238,6 +269,13 @@ public class BasketBallPLay extends SimulationFrame {
 		this.start.set(-10.0, -3.0);
 		this.direction.set(new Vector2(Math.toRadians(45)));
 		this.power = 15.0;
+                
+                nPajaros = nP;  //Para reseteo
+                nCerdos = nC;
+                powerUsed = false;
+                huevaso = false;
+                nColisiones = 0;
+                blockPower = false;
 		
 		AxisAlignedBounds bounds = new AxisAlignedBounds(200, 30);
 		bounds.translate(-5.0, 8.0);
@@ -327,7 +365,7 @@ public class BasketBallPLay extends SimulationFrame {
 			this.world.addBody(blockB);
                         
                   SimulationBody blockC1 = new SimulationBody(new Color(121,92,50));
-			bf = blockC1.addFixture(Geometry.createRectangle(0.8, 3.5)); //le agregamos una fixture (un atributo que define sus tama�o, posicion y propiedaes fisicas)
+			bf = blockC1.addFixture(Geometry.createRectangle(0.8, 3.5)); //le agregamos una fixture (un atributo que define sus tama�o, posicion y propiedaes fisicas)
 			bf.setFilter(allFilter); //puede interactuar con todos los objetos, retorna el bodyFixture para que podmaos modificar sus porpiedades ams facilmente a traves de la referencia al fixture del cuerpo, que retorna
 			bf.setDensity(5);
                         bf.setFriction(15);
@@ -336,7 +374,7 @@ public class BasketBallPLay extends SimulationFrame {
 			blockC1.setLinearDamping(0.8);
 			this.world.addBody(blockC1);
                    SimulationBody blockC2 = new SimulationBody(new Color(121,92,50));
-			bf = blockC2.addFixture(Geometry.createRectangle(0.8, 3.5)); //le agregamos una fixture (un atributo que define sus tama�o, posicion y propiedaes fisicas)
+			bf = blockC2.addFixture(Geometry.createRectangle(0.8, 3.5)); //le agregamos una fixture (un atributo que define sus tama�o, posicion y propiedaes fisicas)
 			bf.setFilter(allFilter); //puede interactuar con todos los objetos, retorna el bodyFixture para que podmaos modificar sus porpiedades ams facilmente a traves de la referencia al fixture del cuerpo, que retorna
 			bf.setDensity(5);
                         bf.setFriction(15);
@@ -346,7 +384,7 @@ public class BasketBallPLay extends SimulationFrame {
 			this.world.addBody(blockC2);
                         
                     SimulationBody blockC3 = new SimulationBody(new Color(121,92,50));
-			bf = blockC3.addFixture(Geometry.createRectangle(5, 0.5)); //le agregamos una fixture (un atributo que define sus tama�o, posicion y propiedaes fisicas)
+			bf = blockC3.addFixture(Geometry.createRectangle(5, 0.5)); //le agregamos una fixture (un atributo que define sus tama�o, posicion y propiedaes fisicas)
 			bf.setFilter(allFilter); //puede interactuar con todos los objetos, retorna el bodyFixture para que podmaos modificar sus porpiedades ams facilmente a traves de la referencia al fixture del cuerpo, que retorna
 			bf.setDensity(5);
                         bf.setFriction(15);
@@ -452,6 +490,45 @@ public class BasketBallPLay extends SimulationFrame {
 						bud.enteredScoreBegin = false;
 					}
 				}
+                                if(isBall(b1) && b1 == world.getBody(world.getBodyCount()-1) && powerUsed == false){
+                                    powerUsed = true;
+                                    blockPower = true;  //Bloquea el uso del poder cuando el pajaro ya chocó y no uso su poder
+                                }
+                                if (isBall(b1) && b1 == world.getBody(world.getBodyCount()-1) && powerUsed == true && nPajaros == 0 && blockPower == false) {  //Para diferenciar el pajaro del huevo
+                                    if(huevaso == false){  //Limitar a un huevo
+                                        
+                                        huevaso = true;  //Se puede dejar asi, solo cuando haya un solo pajaro blanco
+                                        Vector2 position = circle.getTransform().getTranslation();  //Obtener coordenadas del objeto en el mundo
+                                        
+                                        // create a circle
+                                        BallUserData data = new BallUserData();
+                                        data.start.x = position.x;
+                                        data.start.y = position.y;
+                                        
+                                        circle = new ImageBody(WHITE_BIRD_BOOM);
+                                        BodyFixture bf = circle.addFixture(Geometry.createCircle(2.7), 200.0, 0, .5);
+                                        bf.setFilter(ballFilter);
+                                        circle.setColor(Color.white);
+                                        circle.setUserData(data);
+                                        circle.setMass(MassType.NORMAL);
+                                        //world.getBody(world.getBodyCount()-1).getWorldCenter().x
+                                        circle.translate(world.getBody(world.getBodyCount()-1).getWorldCenter().x , world.getBody(world.getBodyCount()-1).getWorldCenter().y);
+                                        //Se añade "bomba de huevo"
+                                        world.addBody(circle);
+                                    }else{
+                                        if(nColisiones == 12){  //Detecta el limite de colisiones, para eliminar el objeto "bomba"
+                                            //world.removeBody(circle);
+                                            world.removeBody( world.getBody(world.getBodyCount()-1));
+                                            nColisiones++;
+                                        }else{
+                                            nColisiones++;
+                                        }
+                                        if(nColisiones == 13){
+                                            nColisiones++;
+                                            world.removeBody( world.getBody(world.getBodyCount()-1));
+                                        }
+                                    }
+				}
 				return super.collision(collision);
 			}
 		};
@@ -488,7 +565,44 @@ public class BasketBallPLay extends SimulationFrame {
 			}
 		};
 		this.world.addContactListener(ccl);
-	}
+                
+        // Create and add the custom MouseAdapter (Para actualizar velocidad y direccion de los pajaros, etc)
+        canvas.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    if(nPajaros == 1){ //Cambiar a numPajaro-1
+                        if(powerUsed == false && blockPower == false){  //Limitar el poder a solo un uso
+                            powerUsed = true;
+                            //Esta declarado "global", para acceder a el desde otras funciones (poderes de los pajaros)
+                            circle.setLinearVelocity(circle.getLinearVelocity().x*3, circle.getLinearVelocity().y*3);
+                        }
+                    }
+                    if(nPajaros == 0){ //Cambiar a numPajaro-1
+                        if(powerUsed == false && blockPower == false){
+                            powerUsed = true;
+                            circle.setLinearVelocity(45.0, 45.0);
+                            Vector2 position = circle.getTransform().getTranslation();  //Obtener coordenadas del objeto en el mundo
+                            
+                            // create a circle
+                            BallUserData data = new BallUserData();
+                            data.start.x = position.x;
+                            data.start.y = position.y;
+			
+                            circle = new ImageBody(WHITE_BIRD_EGG);
+                            circle.setUserData(data);
+                            BodyFixture bf = circle.addFixture(Geometry.createCircle(0.2), 10.0, 100, 0.2);
+                            bf.setFilter(ballFilter);
+                            circle.setMass(MassType.NORMAL);
+                            circle.translate(position);
+                            world.addBody(circle);
+                        }
+                    }
+                }
+            }
+        });
+        }
+        
 	
 	private boolean isBall(SimulationBody body) {
 		return body.getUserData() instanceof BallUserData;
@@ -541,7 +655,32 @@ public class BasketBallPLay extends SimulationFrame {
 	@Override
 	protected void render(Graphics2D g, double elapsedTime) {
 		super.render(g, elapsedTime);
-		
+                
+                // Detectar si existe algun objeto en movimiento (Ayuda con la parte de finalizar juego)
+                boolean allObjectsStopped = true;
+                for (SimulationBody body : world.getBodies()) {  //Verifica si algun objeto del mundo tiene velocidad
+                    // Verificar la velocidad lineal del cuerpo
+                    if (!body.getLinearVelocity().isZero()) {
+                        allObjectsStopped = false;
+                        break;
+                    }
+                }
+                if (allObjectsStopped) {
+                    // Todos los objetos están sin moverse
+                    powerUsed = false;  //Resetear la posibilidad de usar poder
+                    blockPower = false;  //Resetear la posibilidad
+                    //Aquí eliminar pajaros anteriores
+                    world.removeBody(circle);
+                    if(nPajaros == 0 || nCerdos == 0){ //Si gasto todos los pajaros o Si mató a todos los cerdos
+                        canMove = true;  //Ayuda a que no se pueda lanzar otro pajaro, a menos que todo este inmovil
+                        endgame(); //Fin del juego
+                    }
+                } else {
+                    canMove = false;
+                    // Al menos un objeto se está moviendo
+                }
+
+                
 		AffineTransform tx = g.getTransform();
 		g.scale(1, -1);
 		g.translate(-this.getWidth() * 0.5 - this.getCameraOffsetX(), -this.getHeight() * 0.5 + this.getCameraOffsetY());
@@ -637,20 +776,33 @@ public class BasketBallPLay extends SimulationFrame {
 		
 		if (this.shoot.isActiveButNotHandled()) {
 			this.shoot.setHasBeenHandled(true);
+			if(nPajaros > 0 && canMove == true){  //Limita los pajaros (No permite que se lancen mas del limite) Y solo lo permite cuando nada se mueve
+                             
+                            // create a circle
+                            BallUserData data = new BallUserData();
+                            data.start.x = start.x;
+                            data.start.y = start.y;
 			
-			// create a circle
-			BallUserData data = new BallUserData();
-			data.start.x = start.x;
-			data.start.y = start.y;
-			
-			ImageBody circle = new ImageBody(BASKETBALL);
-			circle.setUserData(data);
-			BodyFixture bf = circle.addFixture(Geometry.createCircle(0.5), 1.0, 0.2, 0.5);
-			bf.setFilter(ballFilter);
-			circle.setMass(MassType.NORMAL);
-			circle.translate(start);
-			circle.setLinearVelocity(this.direction.x * this.power, this.direction.y * this.power);
-			this.world.addBody(circle);
+                            //Esta declarado "global", para acceder a el desde otras funciones (poderes de los pajaros)
+                            if(nPajaros == 1){
+                                circle = new ImageBody(WHITE_BIRD);
+                            }else if(nPajaros == 2){
+                                circle = new ImageBody(YELLOW_BIRD);
+                            }else if(nPajaros == 3){
+                                circle = new ImageBody(RED_BIRD);  //Primer pajaro que sale
+                            }
+                            //Se lanzará un pajaro
+                            nPajaros--;
+                            blockPower = false; //Reiniciar posibiliad de usar su poder
+                            
+                            circle.setUserData(data);
+                            BodyFixture bf = circle.addFixture(Geometry.createCircle(0.5), 10.0, 100, 0.0);
+                            bf.setFilter(ballFilter);
+                            circle.setMass(MassType.NORMAL);
+                            circle.translate(start);
+                            circle.setLinearVelocity(this.direction.x * this.power, this.direction.y * this.power);
+                            this.world.addBody(circle);
+                        }
 		}
 		
 		for (SimulationBody b : this.toRemove) {
@@ -675,6 +827,18 @@ public class BasketBallPLay extends SimulationFrame {
 		}
 	}
 	
+        //Funcion que determine el final del juego (Cuando gasta todos sus pajaros o mata a todos los cerdos)
+        private void endgame(){
+            if(nPajaros == 0 && nCerdos !=0){ //Perdió la partida (Se quedó sin pajaros y no mató a todos los cerdos)
+                // Lamada al frame de puntuacion (con un -1 de parámetro que indica derrota)
+                //System.out.println("PERDISTE LA PARTIDA *************************");
+            }else{  //Ganó la partida (puede que tenga pajaros de sobra, o no)
+                // Lamada al frame de puntuacion (con un numero positivo de parámetro que indica los pajaros restantes)
+                //System.out.println("GANASTE LA PARTIDA *************************");
+            }
+        }
+        
+        
 	/**
 	 * Entry point for the example application.
 	 * @param args command line arguments
