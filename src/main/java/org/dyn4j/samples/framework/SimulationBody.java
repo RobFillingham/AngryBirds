@@ -42,20 +42,30 @@ import org.dyn4j.geometry.Convex;
 public class SimulationBody extends Body {
 	/** The color of the object */
 	protected Color color;
+        public Color underColor;
+        public int quality;
 	
 	/**
 	 * Default constructor.
 	 */
 	public SimulationBody() {
 		this.color = Graphics2DRenderer.getRandomColor();
+                
 	}
 	
 	/**
 	 * Constructor.
 	 * @param color a set color
 	 */
-	public SimulationBody(Color color) {
+	public SimulationBody(Color color, int quality) {
 		this.color = color;
+                this.quality = quality;
+                this.underColor = new Color(color.getRed()-30, color.getGreen()-30, color.getBlue()-30);
+	}
+        
+        public SimulationBody(Color color) {
+		this.color = color;
+                this.quality = 0;
 	}
 
 	/**

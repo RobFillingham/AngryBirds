@@ -194,6 +194,7 @@ public class Nivel1 extends SimulationFrame {
         private final List<SimulationBody> structure = new ArrayList<SimulationBody>();
         private final List<SimulationBody> pigs = new ArrayList<SimulationBody>();
         private final List<SimulationBody> blocks = new ArrayList<SimulationBody>();
+        private int cont = 10;  //Limita la cantidad de veces que se puede decrementar el color en la colision de un bloque
 	
 	private SimulationBody rim;
 	
@@ -356,6 +357,8 @@ public class Nivel1 extends SimulationFrame {
 		
 		// use a CollisionListener to detect when the body is in the scoring zones
 		CollisionListener<SimulationBody, BodyFixture> cl = new CollisionListenerAdapter<SimulationBody, BodyFixture>() {
+                        
+                        
 			@Override
 			public boolean collision(NarrowphaseCollisionData<SimulationBody, BodyFixture> collision) {
 				SimulationBody b1 = collision.getBody1();
@@ -377,13 +380,11 @@ public class Nivel1 extends SimulationFrame {
 				}else if (isBall(b1) && isPig(b2)){
                                     nCerdos--;
                                     //Evaluar si se acabo el juego
-                                }else if(isBall(b1) && isBlock(b2)){
-                                    //System.out.println(b1.getLinearVelocity());
-                                    //System.out.println(b1.getLinearVelocity().getMagnitude());
                                 }
                                 else if(isBlock(b1) && isPig(b2)){
                                     nCerdos--;
                                 }
+                                
                                 if(isBall(b1) && b1 == world.getBody(world.getBodyCount()-1) && powerUsed == false){
                                     powerUsed = true;
                                     blockPower = true;  //Bloquea el uso del poder cuando el pajaro ya chocó y no uso su poder
@@ -424,6 +425,19 @@ public class Nivel1 extends SimulationFrame {
                                         }
                                     }
 				}
+                                
+                                if(isBlock(b2) && isBall(b1)){
+                                   
+                                    b2.quality -= (b1.getLinearVelocity().getMagnitude()/4);
+                                   
+                                    if (b2.quality<=0){ 
+                                        toRemove.add(b2);
+                                    }else{ // si la calidad sigue siendo buena entonces solo hacemos mas oscuro el bloque
+                                        b2.setColor(b2.underColor);
+                                    }
+                                }else{
+                                    cont = 10;
+                                }
 				return super.collision(collision);
 			}
 		};
@@ -504,9 +518,9 @@ public class Nivel1 extends SimulationFrame {
         }
         
         //Add to the world a block
-        private void createBlock(BodyFixture bf, Color color, double width, double height, double density, double friction, MassType m, double x, double y){
+        private void createBlock(BodyFixture bf, Color color, double width, double height, double density, double friction, MassType m, double x, double y, int quality){
 
-            SimulationBody blockC = new SimulationBody(color);
+            SimulationBody blockC = new SimulationBody(color, quality);
             bf = blockC.addFixture(Geometry.createRectangle(width, height));
             bf.setFilter(ballFilter);
             bf.setDensity(density);
@@ -568,12 +582,12 @@ public class Nivel1 extends SimulationFrame {
         private void createStructureAndPigs(BodyFixture bf){
 
             //Bloques
-            createBlock(bf, Color.DARK_GRAY, 1, 6, 4, 15, MassType.NORMAL, 18, 0);
-            createBlock(bf, Color.DARK_GRAY, 1, 6, 4, 15, MassType.NORMAL, 24, 0);
-            createBlock(bf, new Color(121,92,50), 8, 1, 4, 15, MassType.NORMAL, 21, 3);
-            createBlock(bf, new Color(121, 92, 50), 0.8, 3.5, 4, 15, MassType.NORMAL, 19, 4);
-            createBlock(bf, new Color(121, 92, 50), 0.8, 3.5, 4, 15, MassType.NORMAL, 23, 4);
-            createBlock(bf, new Color(121, 92, 50), 5, 0.5, 4, 15, MassType.NORMAL, 21, 6);
+            createBlock(bf, Color.DARK_GRAY, 1, 6, 4, 15, MassType.NORMAL, 18, 0, 1500); // a la calidad se le resta la velocidad del otro objeto en una colision,
+            createBlock(bf, Color.DARK_GRAY, 1, 6, 4, 15, MassType.NORMAL, 24, 0,1500); // cuando la calidad sea negativa el objeto se remueve del mundo
+            createBlock(bf, new Color(121,92,50), 8, 1, 4, 15, MassType.NORMAL, 21, 3, 800);
+            createBlock(bf, new Color(121, 92, 50), 0.8, 3.5, 4, 15, MassType.NORMAL, 19, 4, 800);
+            createBlock(bf, new Color(121, 92, 50), 0.8, 3.5, 4, 15, MassType.NORMAL, 23, 4, 800);
+            createBlock(bf, new Color(121, 92, 50), 5, 0.5, 4, 15, MassType.NORMAL, 21, 6, 800);
 
             createPig(bf, "pig2.png", 1.5, 1, 0.2, MassType.NORMAL, 21,  -2);
 
