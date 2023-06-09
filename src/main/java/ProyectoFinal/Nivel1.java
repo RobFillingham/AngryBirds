@@ -82,7 +82,7 @@ import org.dyn4j.world.listener.ContactListenerAdapter;
  * @version 5.0.0
  * @since 5.0.0
  */
-public class BasketBallPLay extends SimulationFrame {
+public class Nivel1 extends SimulationFrame {
 	/** Generated serial version id */
 	private static final long serialVersionUID = 8357585473409415833L;
 	
@@ -90,11 +90,13 @@ public class BasketBallPLay extends SimulationFrame {
 
 
 	/** The basketball image */
-	private static final BufferedImage RED_BIRD = getImageSuppressExceptions("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\dyn4j-samples\\src\\main\\java\\org\\dyn4j\\samples\\resources\\Red.png");
-        private static final BufferedImage YELLOW_BIRD = getImageSuppressExceptions("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\dyn4j-samples\\src\\main\\java\\org\\dyn4j\\samples\\resources\\Yellow.png");
-        private static final BufferedImage WHITE_BIRD = getImageSuppressExceptions("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\dyn4j-samples\\src\\main\\java\\org\\dyn4j\\samples\\resources\\White.png");
-        private static final BufferedImage WHITE_BIRD_EGG = getImageSuppressExceptions("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\dyn4j-samples\\src\\main\\java\\org\\dyn4j\\samples\\resources\\Egg.png");
-        private static final BufferedImage WHITE_BIRD_BOOM = getImageSuppressExceptions("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\dyn4j-samples\\src\\main\\java\\org\\dyn4j\\samples\\resources\\Boom.png");
+	private static final BufferedImage RED_BIRD = getImageSuppressExceptions("Red.png");
+        private static final BufferedImage YELLOW_BIRD = getImageSuppressExceptions("Yellow.png");
+        private static final BufferedImage WHITE_BIRD = getImageSuppressExceptions("White.png");
+        private static final BufferedImage WHITE_BIRD_EGG = getImageSuppressExceptions("Egg.png");
+        private static final BufferedImage WHITE_BIRD_BOOM = getImageSuppressExceptions("Boom.png");
+        private static final BufferedImage NORMAL_PIG = getImageSuppressExceptions("Pig.png");
+        private static final BufferedImage BACKGROUND = getImageSuppressExceptions("Background.png");
         
 	/** Helper function to read the images from the class path */
 	private static final BufferedImage getImageSuppressExceptions(String imagenSeleccionada) {
@@ -156,6 +158,7 @@ public class BasketBallPLay extends SimulationFrame {
 	private static final CategoryFilter ballFilter = new CategoryFilter(BALL, ALL ^ RIM);
 	private static final CategoryFilter rimFilter = new CategoryFilter(RIM, ALL ^ BALL);
 	private static final CategoryFilter allFilter = new CategoryFilter(OTHER, ALL);
+        private static final CategoryFilter backgroundFilter = new CategoryFilter(OTHER, ALL ^ RIM ^ BALL ^ OTHER);
 	
 	// input control
 	
@@ -187,6 +190,10 @@ public class BasketBallPLay extends SimulationFrame {
         private boolean huevaso;
         private int nColisiones;
         private boolean blockPower;
+        
+        private final List<SimulationBody> structure = new ArrayList<SimulationBody>();
+        private final List<SimulationBody> pigs = new ArrayList<SimulationBody>();
+        private final List<SimulationBody> blocks = new ArrayList<SimulationBody>();
 	
 	private SimulationBody rim;
 	
@@ -206,9 +213,11 @@ public class BasketBallPLay extends SimulationFrame {
 	/**
 	 * Default constructor.
 	 */
-	public BasketBallPLay() {
-		super("BasketBall");
+	public Nivel1() {
+		super("Angry Birds - Level 1");
 		
+                super.setMousePickingEnabled(false);
+                
 		this.up = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_UP);
 		this.down = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_DOWN);
 		this.left = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_LEFT);
@@ -266,9 +275,10 @@ public class BasketBallPLay extends SimulationFrame {
 	 * Creates game objects and adds them to the world.
 	 */
 	protected void initializeWorld() {
-		this.start.set(-10.0, -3.0);
+                this.start.set(-28.0, 0.95);
+		//this.start.set(-10.0, -3.0);
 		this.direction.set(new Vector2(Math.toRadians(45)));
-		this.power = 15.0;
+		this.power = 20.0;
                 
                 nPajaros = nP;  //Para reseteo
                 nCerdos = nC;
@@ -280,35 +290,26 @@ public class BasketBallPLay extends SimulationFrame {
 		AxisAlignedBounds bounds = new AxisAlignedBounds(200, 30);
 		bounds.translate(-5.0, 8.0);
 		this.world.setBounds(bounds);
-		
+                
 		// create the floor
 		SimulationBody court = new SimulationBody(new Color(222, 184, 135));
-		BodyFixture bf = court.addFixture(Geometry.createRectangle(200, 0.5));
+		BodyFixture bf = court.addFixture(Geometry.createRectangle(180, 20)); //Longitud exacta calculada
 		bf.setFilter(allFilter);
 		court.setMass(MassType.INFINITE);
 		// move the floor down a bit
-		court.translate(-5.0, -4.0);
+		court.translate(-7.0, -14.0);  //Translate exacto calculado
 		this.world.addBody(court);
-		
-		// create the pole
-		SimulationBody pole = new SimulationBody(new Color(50, 50, 50));
-		bf = pole.addFixture(Geometry.createRectangle(0.2, 8));
-		bf.setFilter(allFilter);
-		bf = pole.addFixture(Geometry.createRectangle(0.2, 1.0));
-		bf.getShape().rotate(Math.toRadians(30));
-		bf.getShape().translate(-0.2, 4.2);
-		bf.setFilter(allFilter);
-		pole.setMass(MassType.INFINITE);
-		pole.translate(11.0, 0.0);
-		this.world.addBody(pole);
-		
-		// create the backboard
-		SimulationBody backboard = new SimulationBody(new Color(50, 50, 50));
-		bf = backboard.addFixture(Geometry.createRectangle(0.2, 2.5));
-		bf.setFilter(allFilter);
-		backboard.setMass(MassType.INFINITE);
-		backboard.translate(10.5, 5.25);
-		this.world.addBody(backboard);
+                
+                // Create the background
+                ImageBody body = new ImageBody(BACKGROUND);
+                bf = body.addFixture(Geometry.createCircle(20));
+                bf.setFilter(backgroundFilter);
+                body.setMass(MassType.INFINITE);
+                body.translate(0.0,7.0);
+                this.world.addBody(body);
+                
+                
+                createStructureAndPigs(bf);
 		
 		// create the rim
 		SimulationBody rim = new SimulationBody(new Color(255, 69, 0));
@@ -318,130 +319,14 @@ public class BasketBallPLay extends SimulationFrame {
 		bf.setFilter(allFilter);
 		bf.getShape().translate(-1.0, 0.0);
 		rim.setMass(MassType.INFINITE);
-		rim.translate(9.5, 4.0);
+		rim.translate(9.5, 50.0);
 		this.world.addBody(rim);
                 
-                // create the pole
-		SimulationBody pole2 = new SimulationBody(new Color(50, 50, 50));
-		bf = pole2.addFixture(Geometry.createRectangle(1, 8));
-		bf.setFilter(allFilter);
-		pole2.setMass(MassType.INFINITE);
-		pole2.translate(5.0, 0.0);
-		this.world.addBody(pole2);
-                
-                // block A
-                SimulationBody block = new SimulationBody(new Color(232,97,0));
-			bf = block.addFixture(Geometry.createRectangle(1, 6));
-			bf.setFilter(allFilter);
-                        bf.setDensity(5);
-                        bf.setFriction(15);
-			block.setMass(MassType.NORMAL);
-			block.translate(18.0, 0.0);
-                        
-			//block.setLinearDamping(0.8);
-			this.world.addBody(block);
-                        
-                // block A2
-                SimulationBody blockC = new SimulationBody();
-			bf = blockC.addFixture(Geometry.createRectangle(1, 6));
-			bf.setFilter(allFilter);
-                        bf.setDensity(5);
-                        bf.setFriction(15);
-			blockC.setMass(MassType.NORMAL);
-			blockC.translate(24, 0);
-			blockC.setLinearDamping(0.8);
-                        //blockC.setImage(new ImageIcon())
-			this.world.addBody(blockC);
-                
-                        // block A3
-                SimulationBody blockB = new SimulationBody(new Color(121,92,50));
-			bf = blockB.addFixture(Geometry.createRectangle(8, 1));
-			bf.setFilter(allFilter);
-                        bf.setDensity(5);
-                        bf.setFriction(15);
-			blockB.setMass(MassType.NORMAL);
-			blockB.translate(21, 3);
-			blockB.setLinearDamping(0.8);
-			this.world.addBody(blockB);
-                        
-                  SimulationBody blockC1 = new SimulationBody(new Color(121,92,50));
-			bf = blockC1.addFixture(Geometry.createRectangle(0.8, 3.5)); //le agregamos una fixture (un atributo que define sus tama�o, posicion y propiedaes fisicas)
-			bf.setFilter(allFilter); //puede interactuar con todos los objetos, retorna el bodyFixture para que podmaos modificar sus porpiedades ams facilmente a traves de la referencia al fixture del cuerpo, que retorna
-			bf.setDensity(5);
-                        bf.setFriction(15);
-                        blockC1.setMass(MassType.NORMAL);
-			blockC1.translate(19, 4);
-			blockC1.setLinearDamping(0.8);
-			this.world.addBody(blockC1);
-                   SimulationBody blockC2 = new SimulationBody(new Color(121,92,50));
-			bf = blockC2.addFixture(Geometry.createRectangle(0.8, 3.5)); //le agregamos una fixture (un atributo que define sus tama�o, posicion y propiedaes fisicas)
-			bf.setFilter(allFilter); //puede interactuar con todos los objetos, retorna el bodyFixture para que podmaos modificar sus porpiedades ams facilmente a traves de la referencia al fixture del cuerpo, que retorna
-			bf.setDensity(5);
-                        bf.setFriction(15);
-                        blockC2.setMass(MassType.NORMAL);
-			blockC2.translate(23, 4);
-			blockC2.setLinearDamping(0.8);
-			this.world.addBody(blockC2);
-                        
-                    SimulationBody blockC3 = new SimulationBody(new Color(121,92,50));
-			bf = blockC3.addFixture(Geometry.createRectangle(5, 0.5)); //le agregamos una fixture (un atributo que define sus tama�o, posicion y propiedaes fisicas)
-			bf.setFilter(allFilter); //puede interactuar con todos los objetos, retorna el bodyFixture para que podmaos modificar sus porpiedades ams facilmente a traves de la referencia al fixture del cuerpo, que retorna
-			bf.setDensity(5);
-                        bf.setFriction(15);
-                        blockC3.setMass(MassType.NORMAL);
-			blockC3.translate(21, 6);
-			blockC3.setLinearDamping(0.8);
-			this.world.addBody(blockC3);
-		
 		// save for rendering later 
 		// NOTE: in the real world you'd implement rendering a smarter
 		// way by grouping objects into layers
 		this.rim = rim;
 		
-		// create the net from joints and bodies
-		SimulationBody prevL = rim;
-		SimulationBody prevR = rim;
-		double y = 3.6;
-		for (int i = 0; i < 3; i++) {
-			SimulationBody ropeL = new SimulationBody(Color.WHITE);
-			bf = ropeL.addFixture(Geometry.createRectangle(0.1, 0.4));
-			bf.setFilter(allFilter);
-			ropeL.setMass(MassType.NORMAL);
-			ropeL.translate(8.8, y);
-			ropeL.setLinearDamping(0.8);
-			this.world.addBody(ropeL);
-			
-			SimulationBody ropeR = new SimulationBody(Color.WHITE);
-			bf = ropeR.addFixture(Geometry.createRectangle(0.1, 0.4));
-			bf.setFilter(allFilter);
-			ropeR.setMass(MassType.NORMAL);
-			ropeR.translate(10.2, y);
-			ropeR.setLinearDamping(0.8);
-			this.world.addBody(ropeR);
-			
-			// links
-			
-			RevoluteJoint<SimulationBody> rjl = new RevoluteJoint<SimulationBody>(prevL, ropeL, new Vector2(8.8, y + 0.2));
-			this.world.addJoint(rjl);
-			
-			RevoluteJoint<SimulationBody> rjr = new RevoluteJoint<SimulationBody>(prevR, ropeR, new Vector2(10.2, y + 0.2));
-			this.world.addJoint(rjr);
-			
-			// string
-			
-			DistanceJoint<SimulationBody> dj = new DistanceJoint<SimulationBody>(ropeL, ropeR, new Vector2(8.8, y - 0.2), new Vector2(10.2, y - 0.2));
-			dj.setRestDistance(dj.getRestDistance() - 0.2);
-			dj.setSpringEnabled(true);
-			dj.setSpringDamperEnabled(true);
-			dj.setSpringDampingRatio(0.8);
-			dj.setSpringFrequency(8.0);
-			this.world.addJoint(dj);
-			
-			prevL = ropeL;
-			prevR = ropeR;
-			
-			y-=0.5;
-		}
 		
 		// for scoring setup some sensor bodies
 		SimulationBody sensorScoreBegin = new SimulationBody(new Color(255, 0, 0, 0));
@@ -489,7 +374,16 @@ public class BasketBallPLay extends SimulationFrame {
 					} else {
 						bud.enteredScoreBegin = false;
 					}
-				}
+				}else if (isBall(b1) && isPig(b2)){
+                                    nCerdos--;
+                                    //Evaluar si se acabo el juego
+                                }else if(isBall(b1) && isBlock(b2)){
+                                    //System.out.println(b1.getLinearVelocity());
+                                    //System.out.println(b1.getLinearVelocity().getMagnitude());
+                                }
+                                else if(isBlock(b1) && isPig(b2)){
+                                    nCerdos--;
+                                }
                                 if(isBall(b1) && b1 == world.getBody(world.getBodyCount()-1) && powerUsed == false){
                                     powerUsed = true;
                                     blockPower = true;  //Bloquea el uso del poder cuando el pajaro ya chocó y no uso su poder
@@ -504,7 +398,6 @@ public class BasketBallPLay extends SimulationFrame {
                                         BallUserData data = new BallUserData();
                                         data.start.x = position.x;
                                         data.start.y = position.y;
-                                        
                                         circle = new ImageBody(WHITE_BIRD_BOOM);
                                         BodyFixture bf = circle.addFixture(Geometry.createCircle(2.7), 200.0, 0, .5);
                                         bf.setFilter(ballFilter);
@@ -518,14 +411,16 @@ public class BasketBallPLay extends SimulationFrame {
                                     }else{
                                         if(nColisiones == 12){  //Detecta el limite de colisiones, para eliminar el objeto "bomba"
                                             //world.removeBody(circle);
-                                            world.removeBody( world.getBody(world.getBodyCount()-1));
+                                            toRemove.add(world.getBody(world.getBodyCount()-1));
+                                            //world.removeBody( world.getBody(world.getBodyCount()-1));
                                             nColisiones++;
                                         }else{
                                             nColisiones++;
                                         }
-                                        if(nColisiones == 13){
+                                        if(nColisiones == 14){
                                             nColisiones++;
-                                            world.removeBody( world.getBody(world.getBodyCount()-1));
+                                            toRemove.add(world.getBody(world.getBodyCount()-1));
+                                            //world.removeBody( world.getBody(world.getBodyCount()-1));
                                         }
                                     }
 				}
@@ -571,16 +466,20 @@ public class BasketBallPLay extends SimulationFrame {
             @Override
             public void mousePressed(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
+                    
                     if(nPajaros == 1){ //Cambiar a numPajaro-1
+                        System.out.println("VELOZ?=" + powerUsed + "  " + blockPower);
                         if(powerUsed == false && blockPower == false){  //Limitar el poder a solo un uso
                             powerUsed = true;
                             //Esta declarado "global", para acceder a el desde otras funciones (poderes de los pajaros)
                             circle.setLinearVelocity(circle.getLinearVelocity().x*3, circle.getLinearVelocity().y*3);
+                            
                         }
                     }
                     if(nPajaros == 0){ //Cambiar a numPajaro-1
                         if(powerUsed == false && blockPower == false){
                             powerUsed = true;
+                            
                             circle.setLinearVelocity(45.0, 45.0);
                             Vector2 position = circle.getTransform().getTranslation();  //Obtener coordenadas del objeto en el mundo
                             
@@ -591,16 +490,93 @@ public class BasketBallPLay extends SimulationFrame {
 			
                             circle = new ImageBody(WHITE_BIRD_EGG);
                             circle.setUserData(data);
-                            BodyFixture bf = circle.addFixture(Geometry.createCircle(0.2), 10.0, 100, 0.2);
+                            BodyFixture bf = circle.addFixture(Geometry.createCircle(0.5), 0.5, 100, 0.1);
                             bf.setFilter(ballFilter);
+                            circle.setAngularVelocity(2.0);
                             circle.setMass(MassType.NORMAL);
-                            circle.translate(position);
+                            circle.translate(position.x,position.y-1);
                             world.addBody(circle);
                         }
                     }
                 }
             }
         });
+        }
+        
+        //Add to the world a block
+        private void createBlock(BodyFixture bf, Color color, double width, double height, double density, double friction, MassType m, double x, double y){
+
+            SimulationBody blockC = new SimulationBody(color);
+            bf = blockC.addFixture(Geometry.createRectangle(width, height));
+            bf.setFilter(ballFilter);
+            bf.setDensity(density);
+            bf.setFriction(friction);
+            blockC.setMass(m);
+            blockC.translate(x, y);
+            blockC.setLinearDamping(0.8);
+            blocks.add(blockC);
+
+            this.world.addBody(blockC);
+        }
+
+        private void createPig(BodyFixture bf, String classPath, double radius, double density, double friction, MassType m, double x, double y){
+            //Cerdos
+            ImageBody circle = new ImageBody(NORMAL_PIG);
+            //circle.setUserData(data);
+            bf = circle.addFixture(Geometry.createCircle(radius), density, friction, 0.5);
+            bf.setFilter(ballFilter);
+            circle.setMass(m);
+            circle.translate(x, y);
+            //circle.setLinearVelocity(this.direction.x * this.power, this.direction.y * this.power);
+            pigs.add(circle);
+            this.world.addBody(circle);
+        }
+        
+        private void createImgBlock(BodyFixture bf, double w, double h, double density, double friction, MassType m, double x, double y, BufferedImage img){
+            //Bloques con imagen
+            ImageBody circle = new ImageBody(img);
+            bf = circle.addFixture(Geometry.createRectangle(w, h), density, friction, 0.5);
+            bf.setFilter(ballFilter);
+            circle.setMass(m);
+            circle.translate(x, y);
+            blocks.add(circle);
+            this.world.addBody(circle);
+        }
+        
+        private boolean isPig(SimulationBody b2){
+            for(SimulationBody c : pigs){
+                if(b2==c){
+                    toRemove.add(b2);
+                    //System.out.println("Colission");
+                    return true;
+                }
+                //System.out.println("for");
+            }
+            //System.out.println("a");
+            return false;
+        }
+
+        private boolean isBlock(SimulationBody b2){
+            for(SimulationBody e : blocks){
+                if(b2 == e)
+                    return true;
+
+            }
+            return false;
+        }
+
+        private void createStructureAndPigs(BodyFixture bf){
+
+            //Bloques
+            createBlock(bf, Color.DARK_GRAY, 1, 6, 4, 15, MassType.NORMAL, 18, 0);
+            createBlock(bf, Color.DARK_GRAY, 1, 6, 4, 15, MassType.NORMAL, 24, 0);
+            createBlock(bf, new Color(121,92,50), 8, 1, 4, 15, MassType.NORMAL, 21, 3);
+            createBlock(bf, new Color(121, 92, 50), 0.8, 3.5, 4, 15, MassType.NORMAL, 19, 4);
+            createBlock(bf, new Color(121, 92, 50), 0.8, 3.5, 4, 15, MassType.NORMAL, 23, 4);
+            createBlock(bf, new Color(121, 92, 50), 5, 0.5, 4, 15, MassType.NORMAL, 21, 6);
+
+            createPig(bf, "pig2.png", 1.5, 1, 0.2, MassType.NORMAL, 21,  -2);
+
         }
         
 	
@@ -632,7 +608,7 @@ public class BasketBallPLay extends SimulationFrame {
 	@Override
 	protected void initializeCamera(Camera camera) {
 		super.initializeCamera(camera);
-		camera.scale = 24.0;
+		camera.scale = 15.0;
 		camera.offsetX = 0.0;
 		camera.offsetY = -100.0;
                
@@ -670,7 +646,8 @@ public class BasketBallPLay extends SimulationFrame {
                     powerUsed = false;  //Resetear la posibilidad de usar poder
                     blockPower = false;  //Resetear la posibilidad
                     //Aquí eliminar pajaros anteriores
-                    world.removeBody(circle);
+                    toRemove.add(circle);
+                    //world.removeBody(circle);
                     if(nPajaros == 0 || nCerdos == 0){ //Si gasto todos los pajaros o Si mató a todos los cerdos
                         canMove = true;  //Ayuda a que no se pueda lanzar otro pajaro, a menos que todo este inmovil
                         endgame(); //Fin del juego
@@ -794,17 +771,18 @@ public class BasketBallPLay extends SimulationFrame {
                             //Se lanzará un pajaro
                             nPajaros--;
                             blockPower = false; //Reiniciar posibiliad de usar su poder
+                            powerUsed = false;  //Posible solucion
                             
                             circle.setUserData(data);
-                            BodyFixture bf = circle.addFixture(Geometry.createCircle(0.5), 10.0, 100, 0.0);
+                            BodyFixture bf = circle.addFixture(Geometry.createCircle(1.2), 10.0, 30.0, 0.0);
                             bf.setFilter(ballFilter);
                             circle.setMass(MassType.NORMAL);
+                            //circle.translate(start);
                             circle.translate(start);
                             circle.setLinearVelocity(this.direction.x * this.power, this.direction.y * this.power);
                             this.world.addBody(circle);
                         }
 		}
-		
 		for (SimulationBody b : this.toRemove) {
 			this.world.removeBody(b);
 		}
@@ -834,6 +812,8 @@ public class BasketBallPLay extends SimulationFrame {
                 //System.out.println("PERDISTE LA PARTIDA *************************");
             }else{  //Ganó la partida (puede que tenga pajaros de sobra, o no)
                 // Lamada al frame de puntuacion (con un numero positivo de parámetro que indica los pajaros restantes)
+                //calcular puntuacion
+                
                 //System.out.println("GANASTE LA PARTIDA *************************");
             }
         }
@@ -844,7 +824,7 @@ public class BasketBallPLay extends SimulationFrame {
 	 * @param args command line arguments
 	 */
 	public static void main(String[] args) {
-		BasketBallPLay simulation = new BasketBallPLay();
+		Nivel1 simulation = new Nivel1();
 		simulation.run();
 	}
 }

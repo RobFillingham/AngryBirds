@@ -121,6 +121,11 @@ public abstract class SimulationFrame extends JFrame {
 	
 	private final ToggleStateKeyboardInputHandler printStepNumber;
 	private final ToggleStateKeyboardInputHandler printSimulation; 
+        
+        private int nZoom;
+        private double scaleDefined;
+        private double offsetXDefined;
+        private double offsetYDefined;
 	
 	/**
 	 * Constructor.
@@ -154,7 +159,8 @@ public abstract class SimulationFrame extends JFrame {
 		});
 		
 		// create the size of the window
-		Dimension size = new Dimension(800, 600);
+		//Dimension size = new Dimension(800, 600); //Size original
+                Dimension size = new Dimension(1024, 631); //Size modificado
 		
 		// create a canvas to paint to 
 		this.canvas = new Canvas();
@@ -168,10 +174,24 @@ public abstract class SimulationFrame extends JFrame {
 		// make the JFrame not resizable
 		// (this way I dont have to worry about resize events)
 		this.setResizable(false);
-		
+                
+                //Poner el frame al centro de la pantalla
+                // Obtener el tamaño de la pantalla
+                Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+                int screenWidth = screenSize.width;
+                int screenHeight = screenSize.height;
+        
+                // Calcular la posición para centrar el JFrame
+                int frameWidth = this.getWidth();
+                int frameHeight = this.getHeight();
+                int x = (screenWidth - frameWidth) / 2 - size.width/2;
+                int y = (screenHeight - frameHeight) / 2 - size.height/2;
+		//this.setLocationRelativeTo(null);
+                this.setLocation(x, y);
+                
 		// size everything
 		this.pack();
-		
+                
 		this.canvas.requestFocus();
 		
 		// install input handlers
@@ -227,6 +247,11 @@ public abstract class SimulationFrame extends JFrame {
 		this.printSimulation.install();
 		this.printStepNumber.install();
 		
+                this.nZoom = 0;  //Variable para que ayuda a definir la cantidad de zoom permitidos (rango)
+                this.scaleDefined = 0;  //Guardan los valores iniciales del zoom (Se actualizan inicializando)
+                this.offsetXDefined = 0;
+                this.offsetYDefined = 0;
+                
 		this.printControls();
 	}
 	
@@ -322,6 +347,9 @@ public abstract class SimulationFrame extends JFrame {
 		thread.setDaemon(true);
 		// start the game loop
 		thread.start();
+                this.offsetXDefined = this.getCameraOffsetX();
+                this.offsetYDefined = this.getCameraOffsetY();
+                this.scaleDefined = this.getCameraScale();
 	}
 	
 	/**
@@ -613,15 +641,51 @@ public abstract class SimulationFrame extends JFrame {
 		
 		// update the camera position
 		Vector2 cameraMove = this.panning.getOffsetAndReset();
-		this.camera.offsetX += cameraMove.x;
-		this.camera.offsetY += cameraMove.y;
-		
+                
+                this.camera.offsetX += cameraMove.x;
+                this.camera.offsetY += cameraMove.y;
+                
+                //El rango elegido es en x (80  -  -300)
+                if(camera.offsetX > 80){  //Reajustar en caso de que se exceda
+                    this.camera.offsetX = 80;
+                }else{
+                    if(camera.offsetX < -300){
+                        this.camera.offsetX = -300;
+                    }
+                }
+                //El rango elegido en y (-220  -  -100)
+                if(camera.offsetY < -220){  //Reajustar en caso de que se exceda
+                    this.camera.offsetY = -220;
+                }else{
+                    
+                    if(camera.offsetY > -100){
+                        this.camera.offsetY = -100;
+                    }
+                }
+                
 		// update the camera zoom
 		double scale = this.zoom.getScaleAndReset();
+                
+                if(scale > 1.0 && nZoom < 3){
+                    if(nZoom == 0){
+                        //Reseteo de offset
+                        this.camera.scale = scaleDefined;
+                    }
+                    nZoom++;
+                    // Actualizmos el zoom
+                    this.camera.scale *= 1.1;  // 0.1 menor que el definido
+                }else{
+                    if(scale < 1.0 && nZoom > -3){
+                        nZoom--;
+                        // Actualizmos el zoom
+                        this.camera.scale *= 0.9;
+                    }
+                }
+                /*
 		this.camera.scale *= scale;
-		this.camera.offsetX *= scale;
-		this.camera.offsetY *= scale;
-		
+                this.camera.offsetX *= scale;
+                this.camera.offsetY *= scale;
+                */
 		// update mouse picking location
 		this.picking.updateMousePickingState();
 	}
