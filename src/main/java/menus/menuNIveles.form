@@ -48,8 +48,8 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="star1lvl1">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\C&#xe9;sar Reyes Torres\Documents\NetBeansProjects\Reyes_Torres\src\main\java\imgLevels\StarLevel.png"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(&quot;StarLevel.png&quot;)" type="code"/>
             </Property>
           </Properties>
           <Constraints>
@@ -60,8 +60,8 @@
         </Component>
         <Component class="javax.swing.JLabel" name="star2lvl1">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\C&#xe9;sar Reyes Torres\Documents\NetBeansProjects\Reyes_Torres\src\main\java\imgLevels\StarLevel.png"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(&quot;StarLevel.png&quot;)" type="code"/>
             </Property>
           </Properties>
           <Constraints>
@@ -72,8 +72,8 @@
         </Component>
         <Component class="javax.swing.JLabel" name="star3lvl1">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\C&#xe9;sar Reyes Torres\Documents\NetBeansProjects\Reyes_Torres\src\main\java\imgLevels\StarLevel.png"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(&quot;StarLevel.png&quot;)" type="code"/>
             </Property>
           </Properties>
           <Constraints>
@@ -84,8 +84,8 @@
         </Component>
         <Component class="javax.swing.JLabel" name="star1lvl2">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\C&#xe9;sar Reyes Torres\Documents\NetBeansProjects\Reyes_Torres\src\main\java\imgLevels\StarLevel.png"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(&quot;StarLevel.png&quot;)" type="code"/>
             </Property>
           </Properties>
           <Constraints>
@@ -96,8 +96,8 @@
         </Component>
         <Component class="javax.swing.JLabel" name="star2lvl2">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\C&#xe9;sar Reyes Torres\Documents\NetBeansProjects\Reyes_Torres\src\main\java\imgLevels\StarLevel.png"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(&quot;StarLevel.png&quot;)" type="code"/>
             </Property>
           </Properties>
           <Constraints>
@@ -108,8 +108,8 @@
         </Component>
         <Component class="javax.swing.JLabel" name="star3lvl2">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\C&#xe9;sar Reyes Torres\Documents\NetBeansProjects\Reyes_Torres\src\main\java\imgLevels\StarLevel.png"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(&quot;StarLevel.png&quot;)" type="code"/>
             </Property>
           </Properties>
           <Constraints>
@@ -120,8 +120,8 @@
         </Component>
         <Component class="javax.swing.JLabel" name="star1lvl3">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\C&#xe9;sar Reyes Torres\Documents\NetBeansProjects\Reyes_Torres\src\main\java\imgLevels\StarLevel.png"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(&quot;StarLevel.png&quot;)" type="code"/>
             </Property>
           </Properties>
           <Constraints>
@@ -132,8 +132,8 @@
         </Component>
         <Component class="javax.swing.JLabel" name="star2lvl3">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\C&#xe9;sar Reyes Torres\Documents\NetBeansProjects\Reyes_Torres\src\main\java\imgLevels\StarLevel.png"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(&quot;StarLevel.png&quot;)" type="code"/>
             </Property>
           </Properties>
           <Constraints>
@@ -144,8 +144,8 @@
         </Component>
         <Component class="javax.swing.JLabel" name="star3lvl3">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\C&#xe9;sar Reyes Torres\Documents\NetBeansProjects\Reyes_Torres\src\main\java\imgLevels\StarLevel.png"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(&quot;StarLevel.png&quot;)" type="code"/>
             </Property>
           </Properties>
           <Constraints>
@@ -156,8 +156,8 @@
         </Component>
         <Component class="javax.swing.JLabel" name="star1lvl4">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\C&#xe9;sar Reyes Torres\Documents\NetBeansProjects\Reyes_Torres\src\main\java\imgLevels\StarLevel.png"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(&quot;StarLevel.png&quot;)" type="code"/>
             </Property>
           </Properties>
           <Constraints>
@@ -168,8 +168,8 @@
         </Component>
         <Component class="javax.swing.JLabel" name="star2lvl4">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\C&#xe9;sar Reyes Torres\Documents\NetBeansProjects\Reyes_Torres\src\main\java\imgLevels\StarLevel.png"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(&quot;StarLevel.png&quot;)" type="code"/>
             </Property>
           </Properties>
           <Constraints>
@@ -180,8 +180,8 @@
         </Component>
         <Component class="javax.swing.JLabel" name="star3lvl4">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\C&#xe9;sar Reyes Torres\Documents\NetBeansProjects\Reyes_Torres\src\main\java\imgLevels\StarLevel.png"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(&quot;StarLevel.png&quot;)" type="code"/>
             </Property>
           </Properties>
           <Constraints>
@@ -192,8 +192,8 @@
         </Component>
         <Component class="javax.swing.JLabel" name="star1lvl5">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\C&#xe9;sar Reyes Torres\Documents\NetBeansProjects\Reyes_Torres\src\main\java\imgLevels\StarLevel.png"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(&quot;StarLevel.png&quot;)" type="code"/>
             </Property>
           </Properties>
           <Constraints>
@@ -204,8 +204,8 @@
         </Component>
         <Component class="javax.swing.JLabel" name="star2lvl5">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\C&#xe9;sar Reyes Torres\Documents\NetBeansProjects\Reyes_Torres\src\main\java\imgLevels\StarLevel.png"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(&quot;StarLevel.png&quot;)" type="code"/>
             </Property>
           </Properties>
           <Constraints>
@@ -216,8 +216,8 @@
         </Component>
         <Component class="javax.swing.JLabel" name="star3lvl5">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\C&#xe9;sar Reyes Torres\Documents\NetBeansProjects\Reyes_Torres\src\main\java\imgLevels\StarLevel.png"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(&quot;StarLevel.png&quot;)" type="code"/>
             </Property>
           </Properties>
           <Constraints>
@@ -228,8 +228,8 @@
         </Component>
         <Component class="javax.swing.JLabel" name="star1lvl6">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\C&#xe9;sar Reyes Torres\Documents\NetBeansProjects\Reyes_Torres\src\main\java\imgLevels\StarLevel.png"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(&quot;StarLevel.png&quot;)" type="code"/>
             </Property>
           </Properties>
           <Constraints>
@@ -240,8 +240,8 @@
         </Component>
         <Component class="javax.swing.JLabel" name="star2lvl6">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\C&#xe9;sar Reyes Torres\Documents\NetBeansProjects\Reyes_Torres\src\main\java\imgLevels\StarLevel.png"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(&quot;StarLevel.png&quot;)" type="code"/>
             </Property>
           </Properties>
           <Constraints>
@@ -252,8 +252,8 @@
         </Component>
         <Component class="javax.swing.JLabel" name="star3lvl6">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\C&#xe9;sar Reyes Torres\Documents\NetBeansProjects\Reyes_Torres\src\main\java\imgLevels\StarLevel.png"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(&quot;StarLevel.png&quot;)" type="code"/>
             </Property>
           </Properties>
           <Constraints>
@@ -264,8 +264,8 @@
         </Component>
         <Component class="javax.swing.JButton" name="returnButton">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\C&#xe9;sar Reyes Torres\Documents\NetBeansProjects\Reyes_Torres\src\main\java\imgLevels\Retrun-Button.png"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(&quot;Return-Button.png&quot;)" type="code"/>
             </Property>
           </Properties>
           <Events>
@@ -279,8 +279,8 @@
         </Component>
         <Component class="javax.swing.JButton" name="lvl1button">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\C&#xe9;sar Reyes Torres\Documents\NetBeansProjects\Reyes_Torres\src\main\java\imgLevels\level1-Front.png"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(&quot;levelBlock-Front.png&quot;)" type="code"/>
             </Property>
           </Properties>
           <Events>
@@ -294,8 +294,8 @@
         </Component>
         <Component class="javax.swing.JButton" name="lvl2button">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\C&#xe9;sar Reyes Torres\Documents\NetBeansProjects\Reyes_Torres\src\main\java\imgLevels\level2-Front.png"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(&quot;levelBlock-Front.png&quot;)" type="code"/>
             </Property>
           </Properties>
           <Events>
@@ -309,8 +309,8 @@
         </Component>
         <Component class="javax.swing.JButton" name="lvl3button">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\C&#xe9;sar Reyes Torres\Documents\NetBeansProjects\Reyes_Torres\src\main\java\imgLevels\level3-Front.png"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(&quot;levelBlock-Front.png&quot;)" type="code"/>
             </Property>
           </Properties>
           <Constraints>
@@ -321,8 +321,8 @@
         </Component>
         <Component class="javax.swing.JButton" name="lvl4button">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\C&#xe9;sar Reyes Torres\Documents\NetBeansProjects\Reyes_Torres\src\main\java\imgLevels\level4-Front.png"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(&quot;levelBlock-Front.png&quot;)" type="code"/>
             </Property>
           </Properties>
           <Constraints>
@@ -333,8 +333,8 @@
         </Component>
         <Component class="javax.swing.JButton" name="lvl5button">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\C&#xe9;sar Reyes Torres\Documents\NetBeansProjects\Reyes_Torres\src\main\java\imgLevels\level5-Front.png"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(&quot;levelBlock-Front.png&quot;)" type="code"/>
             </Property>
           </Properties>
           <Constraints>
@@ -345,8 +345,8 @@
         </Component>
         <Component class="javax.swing.JButton" name="lvl6button">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\C&#xe9;sar Reyes Torres\Documents\NetBeansProjects\Reyes_Torres\src\main\java\imgLevels\levelBlock-Front.png"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(&quot;levelBlock-Front.png&quot;)" type="code"/>
             </Property>
           </Properties>
           <Constraints>
@@ -357,10 +357,9 @@
         </Component>
         <Component class="javax.swing.JLabel" name="background">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\C&#xe9;sar Reyes Torres\Documents\NetBeansProjects\Reyes_Torres\src\main\java\imgLevels\Menu-Background.jpg"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(&quot;Menu-Background.jpg&quot;)" type="code"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel1"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

@@ -46,7 +46,7 @@ public class Menu_1 extends javax.swing.JFrame {
 
         jButton1.setBackground(new java.awt.Color(255, 204, 0));
         jButton1.setForeground(new java.awt.Color(255, 204, 0));
-        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\AngryBirds\\Boton.png")); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon("Boton.png"));
         jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -66,8 +66,7 @@ public class Menu_1 extends javax.swing.JFrame {
         });
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 550, 150, 50));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\Reyes_Torres\\src\\main\\java\\imgMenu\\Fondo.jpeg")); // NOI18N
-        jLabel1.setPreferredSize(null);
+        jLabel1.setIcon(new javax.swing.ImageIcon("Fondo.jpeg"));
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 630));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));

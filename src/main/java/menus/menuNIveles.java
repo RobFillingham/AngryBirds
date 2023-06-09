@@ -24,9 +24,6 @@ public class menuNIveles extends javax.swing.JFrame {
         
         initComponents();
         transparent();
-        star1lvl6.setVisible(false);
-        star2lvl6.setVisible(false);
-        star3lvl6.setVisible(false);
     }
 
     /**
@@ -73,61 +70,61 @@ public class menuNIveles extends javax.swing.JFrame {
         panelPrincipal.setPreferredSize(new java.awt.Dimension(1024, 631));
         panelPrincipal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        star1lvl1.setIcon(new javax.swing.ImageIcon("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\Reyes_Torres\\src\\main\\java\\imgLevels\\StarLevel.png")); // NOI18N
+        star1lvl1.setIcon(new javax.swing.ImageIcon("StarLevel.png"));
         panelPrincipal.add(star1lvl1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 240, 40, 40));
 
-        star2lvl1.setIcon(new javax.swing.ImageIcon("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\Reyes_Torres\\src\\main\\java\\imgLevels\\StarLevel.png")); // NOI18N
+        star2lvl1.setIcon(new javax.swing.ImageIcon("StarLevel.png"));
         panelPrincipal.add(star2lvl1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 240, -1, -1));
 
-        star3lvl1.setIcon(new javax.swing.ImageIcon("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\Reyes_Torres\\src\\main\\java\\imgLevels\\StarLevel.png")); // NOI18N
+        star3lvl1.setIcon(new javax.swing.ImageIcon("StarLevel.png"));
         panelPrincipal.add(star3lvl1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 240, -1, -1));
 
-        star1lvl2.setIcon(new javax.swing.ImageIcon("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\Reyes_Torres\\src\\main\\java\\imgLevels\\StarLevel.png")); // NOI18N
+        star1lvl2.setIcon(new javax.swing.ImageIcon("StarLevel.png"));
         panelPrincipal.add(star1lvl2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 240, -1, -1));
 
-        star2lvl2.setIcon(new javax.swing.ImageIcon("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\Reyes_Torres\\src\\main\\java\\imgLevels\\StarLevel.png")); // NOI18N
+        star2lvl2.setIcon(new javax.swing.ImageIcon("StarLevel.png"));
         panelPrincipal.add(star2lvl2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 240, -1, -1));
 
-        star3lvl2.setIcon(new javax.swing.ImageIcon("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\Reyes_Torres\\src\\main\\java\\imgLevels\\StarLevel.png")); // NOI18N
+        star3lvl2.setIcon(new javax.swing.ImageIcon("StarLevel.png"));
         panelPrincipal.add(star3lvl2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 240, -1, -1));
 
-        star1lvl3.setIcon(new javax.swing.ImageIcon("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\Reyes_Torres\\src\\main\\java\\imgLevels\\StarLevel.png")); // NOI18N
+        star1lvl3.setIcon(new javax.swing.ImageIcon("StarLevel.png"));
         panelPrincipal.add(star1lvl3, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 240, -1, -1));
 
-        star2lvl3.setIcon(new javax.swing.ImageIcon("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\Reyes_Torres\\src\\main\\java\\imgLevels\\StarLevel.png")); // NOI18N
+        star2lvl3.setIcon(new javax.swing.ImageIcon("StarLevel.png"));
         panelPrincipal.add(star2lvl3, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 240, -1, -1));
 
-        star3lvl3.setIcon(new javax.swing.ImageIcon("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\Reyes_Torres\\src\\main\\java\\imgLevels\\StarLevel.png")); // NOI18N
+        star3lvl3.setIcon(new javax.swing.ImageIcon("StarLevel.png"));
         panelPrincipal.add(star3lvl3, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 240, -1, -1));
 
-        star1lvl4.setIcon(new javax.swing.ImageIcon("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\Reyes_Torres\\src\\main\\java\\imgLevels\\StarLevel.png")); // NOI18N
+        star1lvl4.setIcon(new javax.swing.ImageIcon("StarLevel.png"));
         panelPrincipal.add(star1lvl4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 490, 40, 40));
 
-        star2lvl4.setIcon(new javax.swing.ImageIcon("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\Reyes_Torres\\src\\main\\java\\imgLevels\\StarLevel.png")); // NOI18N
+        star2lvl4.setIcon(new javax.swing.ImageIcon("StarLevel.png"));
         panelPrincipal.add(star2lvl4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 490, -1, -1));
 
-        star3lvl4.setIcon(new javax.swing.ImageIcon("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\Reyes_Torres\\src\\main\\java\\imgLevels\\StarLevel.png")); // NOI18N
+        star3lvl4.setIcon(new javax.swing.ImageIcon("StarLevel.png"));
         panelPrincipal.add(star3lvl4, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 490, -1, -1));
 
-        star1lvl5.setIcon(new javax.swing.ImageIcon("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\Reyes_Torres\\src\\main\\java\\imgLevels\\StarLevel.png")); // NOI18N
+        star1lvl5.setIcon(new javax.swing.ImageIcon("StarLevel.png"));
         panelPrincipal.add(star1lvl5, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 490, -1, -1));
 
-        star2lvl5.setIcon(new javax.swing.ImageIcon("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\Reyes_Torres\\src\\main\\java\\imgLevels\\StarLevel.png")); // NOI18N
+        star2lvl5.setIcon(new javax.swing.ImageIcon("StarLevel.png"));
         panelPrincipal.add(star2lvl5, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 490, -1, -1));
 
-        star3lvl5.setIcon(new javax.swing.ImageIcon("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\Reyes_Torres\\src\\main\\java\\imgLevels\\StarLevel.png")); // NOI18N
+        star3lvl5.setIcon(new javax.swing.ImageIcon("StarLevel.png"));
         panelPrincipal.add(star3lvl5, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 490, -1, -1));
 
-        star1lvl6.setIcon(new javax.swing.ImageIcon("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\Reyes_Torres\\src\\main\\java\\imgLevels\\StarLevel.png")); // NOI18N
+        star1lvl6.setIcon(new javax.swing.ImageIcon("StarLevel.png"));
         panelPrincipal.add(star1lvl6, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 490, -1, -1));
 
-        star2lvl6.setIcon(new javax.swing.ImageIcon("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\Reyes_Torres\\src\\main\\java\\imgLevels\\StarLevel.png")); // NOI18N
+        star2lvl6.setIcon(new javax.swing.ImageIcon("StarLevel.png"));
         panelPrincipal.add(star2lvl6, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 490, -1, -1));
 
-        star3lvl6.setIcon(new javax.swing.ImageIcon("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\Reyes_Torres\\src\\main\\java\\imgLevels\\StarLevel.png")); // NOI18N
+        star3lvl6.setIcon(new javax.swing.ImageIcon("StarLevel.png"));
         panelPrincipal.add(star3lvl6, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 490, -1, -1));
 
-        returnButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\Reyes_Torres\\src\\main\\java\\imgLevels\\Retrun-Button.png")); // NOI18N
+        returnButton.setIcon(new javax.swing.ImageIcon("Return-Button.png"));
         returnButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 returnButtonActionPerformed(evt);
@@ -135,7 +132,7 @@ public class menuNIveles extends javax.swing.JFrame {
         });
         panelPrincipal.add(returnButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 535, 100, 90));
 
-        lvl1button.setIcon(new javax.swing.ImageIcon("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\Reyes_Torres\\src\\main\\java\\imgLevels\\level1-Front.png")); // NOI18N
+        lvl1button.setIcon(new javax.swing.ImageIcon("levelBlock-Front.png"));
         lvl1button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lvl1buttonActionPerformed(evt);
@@ -143,7 +140,7 @@ public class menuNIveles extends javax.swing.JFrame {
         });
         panelPrincipal.add(lvl1button, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, 160, 220));
 
-        lvl2button.setIcon(new javax.swing.ImageIcon("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\Reyes_Torres\\src\\main\\java\\imgLevels\\level2-Front.png")); // NOI18N
+        lvl2button.setIcon(new javax.swing.ImageIcon("levelBlock-Front.png"));
         lvl2button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lvl2buttonActionPerformed(evt);
@@ -151,20 +148,19 @@ public class menuNIveles extends javax.swing.JFrame {
         });
         panelPrincipal.add(lvl2button, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 70, 160, 220));
 
-        lvl3button.setIcon(new javax.swing.ImageIcon("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\Reyes_Torres\\src\\main\\java\\imgLevels\\level3-Front.png")); // NOI18N
+        lvl3button.setIcon(new javax.swing.ImageIcon("levelBlock-Front.png"));
         panelPrincipal.add(lvl3button, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 70, 160, 220));
 
-        lvl4button.setIcon(new javax.swing.ImageIcon("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\Reyes_Torres\\src\\main\\java\\imgLevels\\level4-Front.png")); // NOI18N
+        lvl4button.setIcon(new javax.swing.ImageIcon("levelBlock-Front.png"));
         panelPrincipal.add(lvl4button, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 320, 160, 220));
 
-        lvl5button.setIcon(new javax.swing.ImageIcon("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\Reyes_Torres\\src\\main\\java\\imgLevels\\level5-Front.png")); // NOI18N
+        lvl5button.setIcon(new javax.swing.ImageIcon("levelBlock-Front.png"));
         panelPrincipal.add(lvl5button, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 320, 160, 220));
 
-        lvl6button.setIcon(new javax.swing.ImageIcon("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\Reyes_Torres\\src\\main\\java\\imgLevels\\levelBlock-Front.png")); // NOI18N
+        lvl6button.setIcon(new javax.swing.ImageIcon("levelBlock-Front.png"));
         panelPrincipal.add(lvl6button, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 320, 160, 220));
 
-        background.setIcon(new javax.swing.ImageIcon("C:\\Users\\César Reyes Torres\\Documents\\NetBeansProjects\\Reyes_Torres\\src\\main\\java\\imgLevels\\Menu-Background.jpg")); // NOI18N
-        background.setText("jLabel1");
+        background.setIcon(new javax.swing.ImageIcon("Menu-Background.jpg"));
         panelPrincipal.add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1030, 630));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
