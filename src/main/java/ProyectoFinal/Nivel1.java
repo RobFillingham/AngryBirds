@@ -206,12 +206,12 @@ public class Nivel1 extends SimulationFrame {
         private final List<SimulationBody> structure = new ArrayList<SimulationBody>();
         private final List<SimulationBody> pigs = new ArrayList<SimulationBody>();
         private final List<SimulationBody> blocks = new ArrayList<SimulationBody>();
-//<<<<<<< HEAD
+
         private final List<SimulationBody> bird = new ArrayList<SimulationBody>();
         private final List<SimulationBody> slingshot = new ArrayList<SimulationBody>();
-//=======
+
         private int totalBlocks;
-//>>>>>>> c48287fc0ee247313a616e4983a5f22987415acf
+
 	
 	private SimulationBody rim;
 	
@@ -432,9 +432,11 @@ public class Nivel1 extends SimulationFrame {
 					}
 				}else if (isBall(b1) && isPig(b2)){
                                     nCerdos--;
+                                    killSound();
                                 }
                                 else if(isBlock(b1) && isPig(b2)){
                                     nCerdos--;
+                                    killSound();
                                 }else if(isBird(b1)){
                                     if(nColisiones == 350){
                                         powerUsed = false;
@@ -590,6 +592,29 @@ public class Nivel1 extends SimulationFrame {
                 }
             }
         });
+        }
+        
+        private void killSound(){
+            new Thread(){
+                public void run(){
+                     try {
+                          AudioInputStream ab = AudioSystem.getAudioInputStream(new File("deadPig.wav"));
+                          Clip clip = AudioSystem.getClip();
+
+                          clip.open(ab);
+                          clip.start();
+
+                          // Wait for the clip to finish playing
+                          Thread.sleep(clip.getMicrosecondLength() / 1000);
+
+                          clip.stop();
+                          clip.close();
+                      } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e) {
+                          // Proper exception handling/logging here
+                          e.printStackTrace();
+                      }
+                }  
+            }.start();
         }
         
         //Add to the world a block
@@ -959,6 +984,8 @@ public class Nivel1 extends SimulationFrame {
                 new EndGame(score+(nPajaros*10000), nPajaros+1, 1, 1, this);
                 //System.out.println("GANASTE LA PARTIDA *************************");
             }
+            
+            this.stop();
             //this.dispose();
         }
         

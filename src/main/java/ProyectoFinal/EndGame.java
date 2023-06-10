@@ -21,6 +21,7 @@ public class EndGame extends javax.swing.JFrame {
     
     public EndGame(int score, int stars, int level, int result, SimulationFrame daddy) {
         this.daddy = (Nivel1) daddy;
+        this.setVisible(true);
         initComponents();
         if(result == -1){
             lost(); //disables stars, and does not call write on the file
