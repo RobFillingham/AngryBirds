@@ -2,6 +2,15 @@ package menus;
 
 import java.awt.Menu;
 import java.awt.Toolkit;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -12,13 +21,17 @@ import java.awt.Toolkit;
  * @author Ruben
  */
 public class Menu_1 extends javax.swing.JFrame {
-
+    
+    public Thread musica;
     /**
      * Creates new form Menu
      */
     public Menu_1() {
+        music();
         initComponents();
         pack();
+        
+       
     }
 
     /**
@@ -85,13 +98,56 @@ public class Menu_1 extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
          //if(evt.getSource() == btn2){
-            menuNIveles cF = new menuNIveles();
+            menuNIveles cF = new menuNIveles(this);
             cF.setVisible(true);
-            dispose();
+            this.setVisible(false);
+            //dispose();
         //}else if(e.getSource() == btn1){
         //}
     }//GEN-LAST:event_jButton1ActionPerformed
+    
+    public void music() {
+        
+        musica = new Thread(){
+            public void run(){
+                try{
+                AudioInputStream ab = AudioSystem.getAudioInputStream(new File("Angry-Birds-Theme.wav"));
+                Clip clip = AudioSystem.getClip();
 
+                clip.open(ab);
+                
+                while(true){
+                    clip.start();
+
+                    Thread.sleep(clip.getMicrosecondLength() / 1000);
+
+                    clip.stop();
+                    clip.close();
+                    
+                    if(musica.isInterrupted()){
+                        return;
+                    }
+                }   
+                   
+                   
+               }catch(UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e){
+                   e.printStackTrace();
+               }
+                
+               
+
+                       
+            }
+        };
+        musica.start();
+        
+        /*try {
+            Thread.sleep(5000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Menu_1.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
+    }
+    
     /**
      * @param args the command line arguments
      */
