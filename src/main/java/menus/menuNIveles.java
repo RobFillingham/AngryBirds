@@ -24,6 +24,12 @@ import javax.swing.JLabel;
  */
 public class menuNIveles extends javax.swing.JFrame {
     public Menu_1 daddy;
+    private boolean diplvl1;
+    private boolean diplvl2;
+    private boolean diplvl3;
+    private boolean diplvl4;
+    private boolean diplvl5;
+    private boolean diplvl6;
     /**
      * Creates new form menuNIveles
      */
@@ -157,15 +163,35 @@ public class menuNIveles extends javax.swing.JFrame {
         panelPrincipal.add(lvl2button, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 70, 160, 220));
 
         lvl3button.setIcon(new javax.swing.ImageIcon("levelBlock-Front.png"));
+        lvl3button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lvl3buttonActionPerformed(evt);
+            }
+        });
         panelPrincipal.add(lvl3button, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 70, 160, 220));
 
         lvl4button.setIcon(new javax.swing.ImageIcon("levelBlock-Front.png"));
+        lvl4button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lvl4buttonActionPerformed(evt);
+            }
+        });
         panelPrincipal.add(lvl4button, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 320, 160, 220));
 
         lvl5button.setIcon(new javax.swing.ImageIcon("levelBlock-Front.png"));
+        lvl5button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lvl5buttonActionPerformed(evt);
+            }
+        });
         panelPrincipal.add(lvl5button, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 320, 160, 220));
 
         lvl6button.setIcon(new javax.swing.ImageIcon("levelBlock-Front.png"));
+        lvl6button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lvl6buttonActionPerformed(evt);
+            }
+        });
         panelPrincipal.add(lvl6button, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 320, 160, 220));
 
         background.setIcon(new javax.swing.ImageIcon("Menu-Background.jpg"));
@@ -188,10 +214,19 @@ public class menuNIveles extends javax.swing.JFrame {
 
     private void lvl2buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lvl2buttonActionPerformed
         // TODO add your handling code here:
+        if(diplvl2 == true){
+            daddy.clip.stop();
+            /*
+            Nivel2 lvl2 = new Nivel2(this);
+            lvl2.setVisible(true);
+            lvl2.run();*/
+            dispose();
+        }
     }//GEN-LAST:event_lvl2buttonActionPerformed
 
     private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
         // TODO add your handling code here:
+        daddy.clip.stop();
         Menu_1 cF = new Menu_1();
         cF.setVisible(true);
         dispose();
@@ -199,16 +234,62 @@ public class menuNIveles extends javax.swing.JFrame {
 
     private void lvl1buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lvl1buttonActionPerformed
         // TODO add your handling code here:
-        //daddy.musica.interrupt();
-        daddy.clip.stop();
-        Nivel1 lvl1 = new Nivel1(this);
-        
-        lvl1.setVisible(true);
-        lvl1.run();
-        
-        
-        dispose();
+        if(diplvl1 == true){
+            daddy.clip.stop();
+            Nivel1 lvl1 = new Nivel1(this);
+            lvl1.setVisible(true);
+            lvl1.run();
+            dispose();
+        }
     }//GEN-LAST:event_lvl1buttonActionPerformed
+
+    private void lvl3buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lvl3buttonActionPerformed
+        // TODO add your handling code here:
+        if(diplvl3 == true){
+            daddy.clip.stop();
+            /*
+            Nivel3 lvl3 = new Nivel3(this);
+            lvl3.setVisible(true);
+            lvl3.run();*/
+            dispose();
+        }
+    }//GEN-LAST:event_lvl3buttonActionPerformed
+
+    private void lvl4buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lvl4buttonActionPerformed
+        // TODO add your handling code here:
+        if(diplvl4 == true){
+            daddy.clip.stop();
+            /*
+            Nivel4 lvl4 = new Nivel4(this);
+            lvl4.setVisible(true);
+            lvl4.run();*/
+            dispose();
+        }
+    }//GEN-LAST:event_lvl4buttonActionPerformed
+
+    private void lvl5buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lvl5buttonActionPerformed
+        // TODO add your handling code here:
+        if(diplvl5 == true){
+            daddy.clip.stop();
+            /*
+            Nivel4 lvl4 = new Nivel5(this);
+            lvl5.setVisible(true);
+            lvl5.run();*/
+            dispose();
+        }
+    }//GEN-LAST:event_lvl5buttonActionPerformed
+
+    private void lvl6buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lvl6buttonActionPerformed
+        // TODO add your handling code here:
+        if(diplvl6 == true){
+            daddy.clip.stop();
+            /*
+            Nivel6 lvl6 = new Nivel6(this);
+            lvl6.setVisible(true);
+            lvl6.run();*/
+            dispose();
+        }
+    }//GEN-LAST:event_lvl6buttonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -282,12 +363,12 @@ public class menuNIveles extends javax.swing.JFrame {
            reference = (Score)is.readObject();
            System.out.println(reference.levels.get(0).available);
             
-           arrangeLevel(lvl1button, star1lvl1, star2lvl1, star3lvl1, reference.levels.get(0).available, reference.levels.get(0).completed, reference.levels.get(0).stars, "level1-Front.png");
-           arrangeLevel(lvl2button, star1lvl2, star2lvl2, star3lvl2, reference.levels.get(1).available, reference.levels.get(1).completed, reference.levels.get(1).stars, "level2-Front.png");
-           arrangeLevel(lvl3button, star1lvl3, star2lvl3, star3lvl3, reference.levels.get(2).available, reference.levels.get(2).completed, reference.levels.get(2).stars, "level3-Front.png");
-           arrangeLevel(lvl4button, star1lvl4, star2lvl4, star3lvl4, reference.levels.get(3).available, reference.levels.get(3).completed, reference.levels.get(3).stars, "level4-Front.png");
-           arrangeLevel(lvl5button, star1lvl5, star2lvl5, star3lvl5, reference.levels.get(4).available, reference.levels.get(4).completed, reference.levels.get(4).stars, "level5-Front.png");
-           arrangeLevel(lvl6button, star1lvl6, star2lvl6, star3lvl6, reference.levels.get(5).available, reference.levels.get(5).completed, reference.levels.get(5).stars, "level6-Front.png");
+           diplvl1 = arrangeLevel(lvl1button, star1lvl1, star2lvl1, star3lvl1, reference.levels.get(0).available, reference.levels.get(0).completed, reference.levels.get(0).stars, "level1-Front.png");
+           diplvl2 = arrangeLevel(lvl2button, star1lvl2, star2lvl2, star3lvl2, reference.levels.get(1).available, reference.levels.get(1).completed, reference.levels.get(1).stars, "level2-Front.png");
+           diplvl3 = arrangeLevel(lvl3button, star1lvl3, star2lvl3, star3lvl3, reference.levels.get(2).available, reference.levels.get(2).completed, reference.levels.get(2).stars, "level3-Front.png");
+           diplvl4 = arrangeLevel(lvl4button, star1lvl4, star2lvl4, star3lvl4, reference.levels.get(3).available, reference.levels.get(3).completed, reference.levels.get(3).stars, "level4-Front.png");
+           diplvl5 = arrangeLevel(lvl5button, star1lvl5, star2lvl5, star3lvl5, reference.levels.get(4).available, reference.levels.get(4).completed, reference.levels.get(4).stars, "level5-Front.png");
+           diplvl6 = arrangeLevel(lvl6button, star1lvl6, star2lvl6, star3lvl6, reference.levels.get(5).available, reference.levels.get(5).completed, reference.levels.get(5).stars, "level6-Front.png");
            
         }catch(IOException | ClassNotFoundException e){
             e.printStackTrace();
@@ -297,17 +378,10 @@ public class menuNIveles extends javax.swing.JFrame {
         
     }
     
-    private void arrangeLevel(JButton b, JLabel star1, JLabel star2, JLabel star3, boolean available, boolean completed, 
+    private boolean arrangeLevel(JButton b, JLabel star1, JLabel star2, JLabel star3, boolean available, boolean completed, 
             int stars, String image){
         
         System.out.println(available+""+completed+""+stars);
-        if(available){
-            b.setEnabled(true);
-            b.setIcon(new ImageIcon(image));
-        }else{
-            
-            b.setIcon(new ImageIcon("levelBlock-Front.png"));
-        }
         if(completed){
             
             if(stars == 1){
@@ -327,6 +401,14 @@ public class menuNIveles extends javax.swing.JFrame {
             star1.setEnabled(false);
             star2.setEnabled(false);
             star3.setEnabled(false);
+        }
+        if(available){
+            b.setEnabled(true);
+            b.setIcon(new ImageIcon(image));
+            return true;
+        }else{
+            b.setIcon(new ImageIcon("levelBlock-Front.png"));
+            return false;
         }
     }
     

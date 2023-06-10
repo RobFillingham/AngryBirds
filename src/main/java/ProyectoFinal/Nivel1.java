@@ -940,12 +940,7 @@ public class Nivel1 extends SimulationFrame {
                             circle.setLinearVelocity(this.direction.x * this.power, this.direction.y * this.power);
                             bird.add(circle);
                             this.world.addBody(circle);
-                           
-                            
-                            
                         }
-                       
-                    
 		}
 		for (SimulationBody b : this.toRemove) {
 			this.world.removeBody(b);
@@ -967,6 +962,11 @@ public class Nivel1 extends SimulationFrame {
 			bud.enteredScoreBegin = false;
 			bud.enteredScoreComplete = false;
 		}
+                
+                if(isSlingshot(body)){
+                    //Resortera
+                    System.out.println("ESTURAAAA");
+                }
 	}
 	
         //Funcion que determine el final del juego (Cuando gasta todos sus pajaros o mata a todos los cerdos)
@@ -975,18 +975,16 @@ public class Nivel1 extends SimulationFrame {
                 // Lamada al frame de puntuacion (con un -1 de parámetro que indica derrota)
                 new EndGame(score, 0, 1, -1, this);
                 System.out.println("PERDISTE");
-                
-                //System.out.println("PERDISTE LA PARTIDA *************************");
             }else{  //Ganó la partida (puede que tenga pajaros de sobra, o no)
                 // Lamada al frame de puntuacion (con un numero positivo de parámetro que indica los pajaros restantes)
                 //calcular puntuacion
                 System.out.println("GANASTE");
                 new EndGame(score+(nPajaros*10000), nPajaros+1, 1, 1, this);
-                //System.out.println("GANASTE LA PARTIDA *************************");
             }
             
             this.stop();
             //this.dispose();
+            this.stop();
         }
         
         
