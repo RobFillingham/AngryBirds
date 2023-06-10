@@ -910,6 +910,10 @@ public class Nivel1 extends SimulationFrame {
 			bud.enteredScoreBegin = false;
 			bud.enteredScoreComplete = false;
 		}
+                
+                if(isSlingshot(body)){
+                    //Resortera
+                }
 	}
 	
         //Funcion que determine el final del juego (Cuando gasta todos sus pajaros o mata a todos los cerdos)
