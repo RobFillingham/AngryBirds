@@ -2,9 +2,16 @@ package menus;
 
 
 import ProyectoFinal.Nivel1;
+import ProyectoFinal.Score;
 import menus.Menu_1;
 import java.awt.Toolkit;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -16,14 +23,15 @@ import javax.swing.JFrame;
  * @author César Reyes Torres
  */
 public class menuNIveles extends javax.swing.JFrame {
-
+    public Menu_1 daddy;
     /**
      * Creates new form menuNIveles
      */
-    public menuNIveles() {
-        
+    public menuNIveles(JFrame daddy) {
+        this.daddy = (Menu_1)daddy;
         initComponents();
         transparent();
+        readScoreFile();
     }
 
     /**
@@ -191,9 +199,14 @@ public class menuNIveles extends javax.swing.JFrame {
 
     private void lvl1buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lvl1buttonActionPerformed
         // TODO add your handling code here:
-        Nivel1 lvl1 = new Nivel1();
+        //daddy.musica.interrupt();
+        daddy.clip.stop();
+        Nivel1 lvl1 = new Nivel1(this);
+        
         lvl1.setVisible(true);
         lvl1.run();
+        
+        
         dispose();
     }//GEN-LAST:event_lvl1buttonActionPerformed
 
@@ -205,7 +218,7 @@ public class menuNIveles extends javax.swing.JFrame {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+         *//*
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -221,15 +234,15 @@ public class menuNIveles extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(menuNIveles.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(menuNIveles.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        }*/
         //</editor-fold>
         
-        new menuNIveles().setVisible(true);
+        //new menuNIveles(this).setVisible(true);
 
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(() -> {
-            new menuNIveles().setVisible(true);
-        });*/
+        //Create and display the form 
+        //java.awt.EventQueue.invokeLater(() -> {
+        //    new menuNIveles().setVisible(true);
+        //});
     }
 
     //FUNCIONES ---
@@ -255,6 +268,66 @@ public class menuNIveles extends javax.swing.JFrame {
         lvl6button.setOpaque(false);
         lvl6button.setContentAreaFilled(false);
         lvl6button.setBorderPainted(false);
+    }
+    
+    public void readScoreFile(){
+        FileInputStream archFIS;
+        ObjectInputStream is;
+        Score reference;
+        
+        try{
+           archFIS = new FileInputStream("Score.angryBirds");
+           is = new ObjectInputStream(archFIS);
+           
+           reference = (Score)is.readObject();
+           System.out.println(reference.levels.get(0).available);
+            
+           arrangeLevel(lvl1button, star1lvl1, star2lvl1, star3lvl1, reference.levels.get(0).available, reference.levels.get(0).completed, reference.levels.get(0).stars, "level1-Front.png");
+           arrangeLevel(lvl2button, star1lvl2, star2lvl2, star3lvl2, reference.levels.get(1).available, reference.levels.get(1).completed, reference.levels.get(1).stars, "level2-Front.png");
+           arrangeLevel(lvl3button, star1lvl3, star2lvl3, star3lvl3, reference.levels.get(2).available, reference.levels.get(2).completed, reference.levels.get(2).stars, "level3-Front.png");
+           arrangeLevel(lvl4button, star1lvl4, star2lvl4, star3lvl4, reference.levels.get(3).available, reference.levels.get(3).completed, reference.levels.get(3).stars, "level4-Front.png");
+           arrangeLevel(lvl5button, star1lvl5, star2lvl5, star3lvl5, reference.levels.get(4).available, reference.levels.get(4).completed, reference.levels.get(4).stars, "level5-Front.png");
+           arrangeLevel(lvl6button, star1lvl6, star2lvl6, star3lvl6, reference.levels.get(5).available, reference.levels.get(5).completed, reference.levels.get(5).stars, "level6-Front.png");
+           
+        }catch(IOException | ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        
+        
+        
+    }
+    
+    private void arrangeLevel(JButton b, JLabel star1, JLabel star2, JLabel star3, boolean available, boolean completed, 
+            int stars, String image){
+        
+        System.out.println(available+""+completed+""+stars);
+        if(available){
+            b.setEnabled(true);
+            b.setIcon(new ImageIcon(image));
+        }else{
+            
+            b.setIcon(new ImageIcon("levelBlock-Front.png"));
+        }
+        if(completed){
+            
+            if(stars == 1){
+                star1.setEnabled(true);
+                star2.setEnabled(false);
+                star3.setEnabled(false);
+            }else if(stars == 2){
+                star1.setEnabled(true);
+                star2.setEnabled(true);
+                star3.setEnabled(false);
+            }else if(stars== 3){
+                star1.setEnabled(true);
+                star2.setEnabled(true);
+                star3.setEnabled(true);
+            }
+        }else{
+            star1.setEnabled(false);
+            star2.setEnabled(false);
+            star3.setEnabled(false);
+        }
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

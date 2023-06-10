@@ -41,13 +41,17 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import menus.menuNIveles;
 
 import org.dyn4j.collision.AxisAlignedBounds;
 import org.dyn4j.collision.CategoryFilter;
@@ -190,13 +194,17 @@ public class Nivel1 extends SimulationFrame {
         private boolean huevaso;
         private int nColisiones;
         private boolean blockPower;
+        protected menuNIveles papa;
         
         private final List<SimulationBody> structure = new ArrayList<SimulationBody>();
         private final List<SimulationBody> pigs = new ArrayList<SimulationBody>();
         private final List<SimulationBody> blocks = new ArrayList<SimulationBody>();
+//<<<<<<< HEAD
         private final List<SimulationBody> bird = new ArrayList<SimulationBody>();
         private final List<SimulationBody> slingshot = new ArrayList<SimulationBody>();
-        private int cont = 10;  //Limita la cantidad de veces que se puede decrementar el color en la colision de un bloque
+//=======
+        private int totalBlocks;
+//>>>>>>> c48287fc0ee247313a616e4983a5f22987415acf
 	
 	private SimulationBody rim;
 	
@@ -216,10 +224,12 @@ public class Nivel1 extends SimulationFrame {
 	/**
 	 * Default constructor.
 	 */
-	public Nivel1() {
+	public Nivel1(JFrame daddy) {
 		super("Angry Birds - Level 1");
 		
                 super.setMousePickingEnabled(false);
+                
+                this.papa = (menuNIveles)daddy;
                 
 		this.up = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_UP);
 		this.down = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_DOWN);
@@ -368,6 +378,29 @@ public class Nivel1 extends SimulationFrame {
 			}
 		};
 		this.world.addBoundsListener(bl);
+                
+                //CREATE 
+                /*
+                FileOutputStream archFOS;
+                ObjectOutputStream os;
+                
+                Score initializer = new Score();
+                initializer.levels.add(new Level(true, false, 0, 0));
+                initializer.levels.add(new Level(false, false, 0, 0));
+                initializer.levels.add(new Level(false, false, 0, 0));
+                initializer.levels.add(new Level(false, false, 0, 0));
+                initializer.levels.add(new Level(false, false, 0, 0));
+                initializer.levels.add(new Level(false, false, 0, 0));
+                
+                try{
+                    archFOS = new FileOutputStream("Score.angryBirds");
+                    os = new ObjectOutputStream(archFOS);
+                    
+                    os.writeObject(initializer);
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+                */
 		
 		// use a CollisionListener to detect when the body is in the scoring zones
 		CollisionListener<SimulationBody, BodyFixture> cl = new CollisionListenerAdapter<SimulationBody, BodyFixture>() {
@@ -467,17 +500,17 @@ public class Nivel1 extends SimulationFrame {
 				}
                                 
                                 if(isBlock(b2) && isBall(b1)){
-                                   
+                                   score+=1000;
                                     b2.quality -= (b1.getLinearVelocity().getMagnitude()/4);
                                    
                                     if (b2.quality<=0){ 
                                         toRemove.add(b2);
+                                        score+=5000;
                                     }else{ // si la calidad sigue siendo buena entonces solo hacemos mas oscuro el bloque
                                         b2.setColor(b2.underColor);
                                     }
-                                }else{
-                                    cont = 10;
-                                }
+                                }  
+                                
 				return super.collision(collision);
 			}
 		};
@@ -501,10 +534,7 @@ public class Nivel1 extends SimulationFrame {
 						bud.scored = true;
 						
 						// was it a two pointer or three pointer?
-						if (bud.start.x < -14) 
-							score += 3;
-						else
-							score += 2;
+						
 					} else {
 						bud.enteredScoreBegin = false;
 						bud.enteredScoreComplete = false;
@@ -870,7 +900,7 @@ public class Nivel1 extends SimulationFrame {
 		super.onBodyMousePickingStart(body);
 		
 		// if the user picks up a ball using the mouse
-		// disable scoring for that ball
+		// disable scoring for that ball   
 		if (isBall(body)) {
 			BallUserData bud = (BallUserData)body.getUserData();
 			bud.scored = true;
@@ -883,13 +913,16 @@ public class Nivel1 extends SimulationFrame {
         private void endgame(){
             if(nPajaros == 0 && nCerdos !=0){ //Perdió la partida (Se quedó sin pajaros y no mató a todos los cerdos)
                 // Lamada al frame de puntuacion (con un -1 de parámetro que indica derrota)
+                new EndGame(score, 0, 1, -1, this);
+                
                 //System.out.println("PERDISTE LA PARTIDA *************************");
             }else{  //Ganó la partida (puede que tenga pajaros de sobra, o no)
                 // Lamada al frame de puntuacion (con un numero positivo de parámetro que indica los pajaros restantes)
                 //calcular puntuacion
-                
+                new EndGame(score+(nPajaros*10000), nPajaros+1, 1, 1, this);
                 //System.out.println("GANASTE LA PARTIDA *************************");
             }
+            //this.dispose();
         }
         
         
@@ -897,8 +930,8 @@ public class Nivel1 extends SimulationFrame {
 	 * Entry point for the example application.
 	 * @param args command line arguments
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		Nivel1 simulation = new Nivel1();
 		simulation.run();
-	}
+	}*/
 }
