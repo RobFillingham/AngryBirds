@@ -215,6 +215,6 @@ public class MousePickingInputHandler extends AbstractMouseInputHandler implemen
 	}
 	
 	public void onPickingEnd(SimulationBody body) {
-		
+            //Editar aqui para la "resortera"
 	}
 }

@@ -654,8 +654,8 @@ public abstract class SimulationFrame extends JFrame {
                     }
                 }
                 //El rango elegido en y (-220  -  -100)
-                if(camera.offsetY < -220){  //Reajustar en caso de que se exceda
-                    this.camera.offsetY = -220;
+                if(camera.offsetY < -200){  //Reajustar en caso de que se exceda
+                    this.camera.offsetY = -200;
                 }else{
                     
                     if(camera.offsetY > -100){
