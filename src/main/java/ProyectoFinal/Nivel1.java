@@ -47,8 +47,15 @@ import java.io.InputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import menus.menuNIveles;
@@ -854,7 +861,29 @@ public class Nivel1 extends SimulationFrame {
 			this.shoot.setHasBeenHandled(true);
                         System.out.println(nPajaros + "  " + canMove);
 			if(nPajaros > 0 && canMove == true){  //Limita los pajaros (No permite que se lancen mas del limite) Y solo lo permite cuando nada se mueve
-                             
+                            //shooting audio resortera
+                            new Thread(){
+                                public void run(){
+                                     try {
+                                          AudioInputStream ab = AudioSystem.getAudioInputStream(new File("Shoot.wav"));
+                                          Clip clip = AudioSystem.getClip();
+
+                                          clip.open(ab);
+                                          clip.start();
+
+                                          // Wait for the clip to finish playing
+                                          Thread.sleep(clip.getMicrosecondLength() / 1000);
+
+                                          clip.stop();
+                                          clip.close();
+                                      } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e) {
+                                          // Proper exception handling/logging here
+                                          e.printStackTrace();
+                                      }
+                                }  
+                            }.start();
+                            
+                            
                             //Borramos cuerpo anterior (Resortera)
                             toRemove.add(world.getBody(world.getBodyCount()-1));
                             
@@ -886,8 +915,6 @@ public class Nivel1 extends SimulationFrame {
                             circle.setLinearVelocity(this.direction.x * this.power, this.direction.y * this.power);
                             bird.add(circle);
                             this.world.addBody(circle);
-                            
-                            
                         }
 		}
 		for (SimulationBody b : this.toRemove) {
@@ -932,6 +959,7 @@ public class Nivel1 extends SimulationFrame {
                 //System.out.println("GANASTE LA PARTIDA *************************");
             }
             //this.dispose();
+            this.stop();
         }
         
         
