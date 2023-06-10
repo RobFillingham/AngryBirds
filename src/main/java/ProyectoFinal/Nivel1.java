@@ -940,6 +940,7 @@ public class Nivel1 extends SimulationFrame {
                 
                 if(isSlingshot(body)){
                     //Resortera
+                    System.out.println("ESTURAAAA");
                 }
 	}
 	
@@ -949,14 +950,11 @@ public class Nivel1 extends SimulationFrame {
                 // Lamada al frame de puntuacion (con un -1 de parámetro que indica derrota)
                 new EndGame(score, 0, 1, -1, this);
                 System.out.println("PERDISTE");
-                
-                //System.out.println("PERDISTE LA PARTIDA *************************");
             }else{  //Ganó la partida (puede que tenga pajaros de sobra, o no)
                 // Lamada al frame de puntuacion (con un numero positivo de parámetro que indica los pajaros restantes)
                 //calcular puntuacion
                 System.out.println("GANASTE");
                 new EndGame(score+(nPajaros*10000), nPajaros+1, 1, 1, this);
-                //System.out.println("GANASTE LA PARTIDA *************************");
             }
             //this.dispose();
             this.stop();
