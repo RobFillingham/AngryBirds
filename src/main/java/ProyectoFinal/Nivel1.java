@@ -261,7 +261,7 @@ public class Nivel1 extends SimulationFrame {
 		this.path.install();
                 
                 this.nP = 3;    //Constantes
-                this.nC = 0;    //Constantes
+                this.nC = 1;    //Constantes
                 this.nPajaros = nP;
                 this.nCerdos = nC;
                 this.canMove = true;
@@ -440,7 +440,7 @@ public class Nivel1 extends SimulationFrame {
                                         powerUsed = false;
                                         toRemove.add(world.getBody(world.getBodyCount()-1));
                                         // Mostrar el siguiente pajaro en la resortera
-                                          // Dibijar en la resortera el siguiente pajaro
+                                          // Dibiuar en la resortera el siguiente pajaro
                                           
                                         if(nPajaros >0){    
                                             SimulationBody birdRR;
@@ -468,7 +468,7 @@ public class Nivel1 extends SimulationFrame {
                                     }else{
                                         nColisiones++;
                                     }
-                                }
+                                }//System.out.println("power " + powerUsed + "   " + blockPower + "    " + nPajaros + "  " );
                                 if(isBall(b1) && b1 == world.getBody(world.getBodyCount()-1) && powerUsed == false){
                                     powerUsed = true;
                                     blockPower = true;  //Bloquea el uso del poder cuando el pajaro ya chocó y no uso su poder
@@ -753,8 +753,10 @@ public class Nivel1 extends SimulationFrame {
                     //powerUsed = false;  //Resetear la posibilidad de usar poder
                     blockPower = false;  //Resetear la posibilidad
                     if(nPajaros == 0 || nCerdos == 0){ //Si gasto todos los pajaros o Si mató a todos los cerdos
-                        canMove = true;  //Ayuda a que no se pueda lanzar otro pajaro, a menos que todo este inmovil
+                        canMove = false;  //Ayuda a que no se pueda lanzar otro pajaro, a menos que todo este inmovil
                         endgame(); //Fin del juego
+                    }else{
+                        canMove = true;
                     }
                 } else {
                     // Al menos un objeto se está moviendo
@@ -857,6 +859,7 @@ public class Nivel1 extends SimulationFrame {
 		
 		if (this.shoot.isActiveButNotHandled()) {
 			this.shoot.setHasBeenHandled(true);
+                        System.out.println(nPajaros + "  " + canMove);
 			if(nPajaros > 0 && canMove == true){  //Limita los pajaros (No permite que se lancen mas del limite) Y solo lo permite cuando nada se mueve
                             //shooting audio resortera
                             new Thread(){
@@ -946,11 +949,13 @@ public class Nivel1 extends SimulationFrame {
             if(nPajaros == 0 && nCerdos !=0){ //Perdió la partida (Se quedó sin pajaros y no mató a todos los cerdos)
                 // Lamada al frame de puntuacion (con un -1 de parámetro que indica derrota)
                 new EndGame(score, 0, 1, -1, this);
+                System.out.println("PERDISTE");
                 
                 //System.out.println("PERDISTE LA PARTIDA *************************");
             }else{  //Ganó la partida (puede que tenga pajaros de sobra, o no)
                 // Lamada al frame de puntuacion (con un numero positivo de parámetro que indica los pajaros restantes)
                 //calcular puntuacion
+                System.out.println("GANASTE");
                 new EndGame(score+(nPajaros*10000), nPajaros+1, 1, 1, this);
                 //System.out.println("GANASTE LA PARTIDA *************************");
             }
