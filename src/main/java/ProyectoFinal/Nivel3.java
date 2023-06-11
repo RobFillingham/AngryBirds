@@ -979,10 +979,10 @@ public class Nivel3 extends SimulationFrame{
         private void endgame(){
             if(nPajaros == 0 && nCerdos !=0){ //Perdió la partida (Se quedó sin pajaros y no mató a todos los cerdos)
                 // Llamada al frame de puntuación (con un -1 de parámetro que indica derrota)
-                new EndGame(score, 0, 1, -1, this);
+                new EndGame(score, 0, 3, -1, this);
             }else{  //Ganó la partida (puede que tenga pajaros de sobra, o no)
                 //calcular puntuacion
-                new EndGame(score+(nPajaros*10000), nPajaros+1, 1, 1, this);
+                new EndGame(score+(nPajaros*10000), nPajaros+1, 3, 1, this);
             }
             this.stop();
             //this.dispose();
