@@ -395,7 +395,7 @@ public class Nivel4 extends SimulationFrame{
                                     canKill = false;
                                     killPig(b1);
                                     killSound();
-                                }else if(isBlock(b1) && isPig(b2) && canKill == true){
+                                }else if(isBlock(b1) && isPig(b2) ){
                                     canKill = false;
                                     killPig(b2);
                                     killSound();
@@ -513,6 +513,7 @@ public class Nivel4 extends SimulationFrame{
                             circle.translate(position.x,position.y-1);
                             world.addBody(circle);
                             blocks.add(circle);
+                            System.out.println("a");
                         }
                     
                 }
