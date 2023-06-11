@@ -103,14 +103,14 @@
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="180" y="520" width="70" height="60"/>
+          <AbsoluteConstraints x="180" y="490" width="90" height="100"/>
         </Constraint>
       </Constraints>
     </Component>
     <Component class="javax.swing.JLabel" name="pig">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="new ImageIcon(&quot;PigA.png&quot;)" type="code"/>
+          <Connection code="new ImageIcon(&quot;Pig2A.png&quot;)" type="code"/>
         </Property>
       </Properties>
       <Constraints>
@@ -182,7 +182,7 @@
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="80" y="521" width="70" height="60"/>
+          <AbsoluteConstraints x="60" y="501" width="90" height="80"/>
         </Constraint>
       </Constraints>
     </Component>

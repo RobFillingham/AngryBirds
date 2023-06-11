@@ -391,11 +391,11 @@ public class Nivel4 extends SimulationFrame{
                                     canKill = false;
                                     killPig(b2);
                                     killSound();
-                                }else if (isBird(b2 ) && isPig(b1) && canKill == true){
+                                }else if (isBird(b2 ) && isPig(b1) ){  //MODIFIED
                                     canKill = false;
                                     killPig(b1);
                                     killSound();
-                                }else if(isBlock(b1) && isPig(b2) ){
+                                }else if(isBlock(b1) && isPig(b2) ){   //MODIFIED
                                     canKill = false;
                                     killPig(b2);
                                     killSound();
@@ -869,6 +869,7 @@ public class Nivel4 extends SimulationFrame{
             if(nPajaros == 0 && nCerdos !=0){ //Perdió la partida (Se quedó sin pajaros y no mató a todos los cerdos)
                 // Llamada al frame de puntuación (con un -1 de parámetro que indica derrota)
                 new EndGame(score, 0, 4, -1, this);
+                System.out.println(nPajaros + " "+nCerdos);
             }else{  //Ganó la partida (puede que tenga pajaros de sobra, o no)
                 //calcular puntuacion
                 new EndGame(score+(nPajaros*10000), nPajaros+1, 4, 1, this);

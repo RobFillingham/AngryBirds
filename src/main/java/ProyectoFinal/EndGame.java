@@ -108,9 +108,9 @@ public class EndGame extends javax.swing.JFrame {
                 OKAYActionPerformed(evt);
             }
         });
-        getContentPane().add(OKAY, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 520, 70, 60));
+        getContentPane().add(OKAY, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 490, 90, 100));
 
-        pig.setIcon(new ImageIcon("PigA.png"));
+        pig.setIcon(new ImageIcon("Pig2A.png"));
         getContentPane().add(pig, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, 180, 140));
 
         star3.setIcon(new ImageIcon("right-star.png"));
@@ -136,7 +136,7 @@ public class EndGame extends javax.swing.JFrame {
                 OKAY1ActionPerformed(evt);
             }
         });
-        getContentPane().add(OKAY1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 521, 70, 60));
+        getContentPane().add(OKAY1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 501, 90, 80));
 
         jLabel1.setIcon(new ImageIcon("black.jpg"));
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, 630));
