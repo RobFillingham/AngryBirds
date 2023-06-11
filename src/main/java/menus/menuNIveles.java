@@ -236,7 +236,7 @@ public class menuNIveles extends javax.swing.JFrame {
     private void lvl2buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lvl2buttonActionPerformed
         // TODO add your handling code here:
         if(diplvl2 == true){
-            daddy.clip.stop();
+            stop();
             
             Nivel2 lvl2 = new Nivel2();
             lvl2.setVisible(true);
@@ -247,7 +247,7 @@ public class menuNIveles extends javax.swing.JFrame {
 
     private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
         // TODO add your handling code here:
-        daddy.clip.stop();
+        stop();
         Menu_1 cF = new Menu_1();
         cF.setVisible(true);
         dispose();
@@ -256,7 +256,7 @@ public class menuNIveles extends javax.swing.JFrame {
     private void lvl1buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lvl1buttonActionPerformed
         // TODO add your handling code here:
         if(diplvl1 == true){
-            daddy.clip.stop();
+            stop();
             Nivel1 lvl1 = new Nivel1(this);
             lvl1.setVisible(true);
             lvl1.run();
@@ -280,7 +280,7 @@ public class menuNIveles extends javax.swing.JFrame {
     private void lvl4buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lvl4buttonActionPerformed
         // TODO add your handling code here:
         if(diplvl4 == true){
-            daddy.clip.stop();
+            stop();
             /*
             Nivel4 lvl4 = new Nivel4(this);
             lvl4.setVisible(true);
@@ -292,7 +292,7 @@ public class menuNIveles extends javax.swing.JFrame {
     private void lvl5buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lvl5buttonActionPerformed
         // TODO add your handling code here:
         if(diplvl5 == true){
-            daddy.clip.stop();
+            stop();
             /*
             Nivel4 lvl4 = new Nivel5(this);
             lvl5.setVisible(true);
@@ -304,7 +304,7 @@ public class menuNIveles extends javax.swing.JFrame {
     private void lvl6buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lvl6buttonActionPerformed
         // TODO add your handling code here:
         if(diplvl6 == true){
-            daddy.clip.stop();
+            stop();
             /*
             Nivel6 lvl6 = new Nivel6(this);
             lvl6.setVisible(true);
