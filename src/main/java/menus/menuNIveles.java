@@ -267,7 +267,8 @@ public class menuNIveles extends javax.swing.JFrame {
     private void lvl3buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lvl3buttonActionPerformed
         // TODO add your handling code here:
         if(diplvl3 == true){
-            daddy.clip.stop();
+            stop();
+            //daddy.clip.stop();
             
             Nivel3 lvl3 = new Nivel3();
             lvl3.setVisible(true);
@@ -348,6 +349,13 @@ public class menuNIveles extends javax.swing.JFrame {
     }
 
     //FUNCIONES ---
+    
+    private void stop(){
+        if(daddy!=null){
+            daddy.clip.stop();
+        }
+    }
+    
     public void transparent(){
         returnButton.setOpaque(false);
         returnButton.setContentAreaFilled(false);

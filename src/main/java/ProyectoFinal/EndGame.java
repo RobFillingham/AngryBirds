@@ -72,8 +72,8 @@ public class EndGame extends javax.swing.JFrame {
         star3 = new javax.swing.JLabel();
         star2 = new javax.swing.JLabel();
         score1 = new javax.swing.JLabel();
-        black = new javax.swing.JLabel();
         OKAY1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -108,10 +108,10 @@ public class EndGame extends javax.swing.JFrame {
                 OKAYActionPerformed(evt);
             }
         });
-        getContentPane().add(OKAY, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 520, 70, 60));
+        getContentPane().add(OKAY, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 520, 70, 60));
 
         pig.setIcon(new ImageIcon("Pig2.png"));
-        getContentPane().add(pig, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 210, 180, 140));
+        getContentPane().add(pig, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, 180, 140));
 
         star3.setIcon(new ImageIcon("right-star.png"));
         getContentPane().add(star3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 180, 110, 110));
@@ -126,11 +126,6 @@ public class EndGame extends javax.swing.JFrame {
         score1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         getContentPane().add(score1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 260, -1));
 
-        black.setBackground(new java.awt.Color(0, 0, 0));
-        black.setForeground(new java.awt.Color(0, 0, 0));
-        black.setIcon(new ImageIcon("black.jpg"));
-        getContentPane().add(black, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, 630));
-
         OKAY1.setBackground(new java.awt.Color(0, 0, 0));
         OKAY1.setForeground(new java.awt.Color(0, 0, 0));
         OKAY1.setIcon(new ImageIcon("Return-Button.png"));
@@ -141,7 +136,10 @@ public class EndGame extends javax.swing.JFrame {
                 OKAY1ActionPerformed(evt);
             }
         });
-        getContentPane().add(OKAY1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 522, 70, 60));
+        getContentPane().add(OKAY1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 521, 70, 60));
+
+        jLabel1.setIcon(new ImageIcon("black.jpg"));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, 630));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -160,7 +158,17 @@ public class EndGame extends javax.swing.JFrame {
         
         switch(level){
             case 1:
-                new Nivel1();
+                new Nivel1().run();
+                clip.stop();
+                break;
+                
+            case 2:
+                new Nivel2().run();
+                clip.stop();
+                break;
+            
+            case 3:
+                new Nivel3().run();
                 clip.stop();
                 break;
         }
@@ -312,7 +320,7 @@ public class EndGame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton OKAY;
     private javax.swing.JButton OKAY1;
-    private javax.swing.JLabel black;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel pig;
     private javax.swing.JLabel result;
     private javax.swing.JLabel score;

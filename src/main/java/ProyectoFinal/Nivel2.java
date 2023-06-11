@@ -415,7 +415,7 @@ public class Nivel2 extends SimulationFrame {
                 body.setMass(MassType.INFINITE);
                 body.translate(-24.0,2);
                 this.world.addBody(body);
-		
+		         
 		// listen for basketballs leaving the bounds
 		BoundsListener<SimulationBody, BodyFixture> bl = new BoundsListenerAdapter<SimulationBody, BodyFixture>() {
 			@Override
@@ -427,7 +427,7 @@ public class Nivel2 extends SimulationFrame {
                                             SimulationBody birdRR;
                                             switch(nPajaros){  // Cambiar dependiendo el pajaro (Incluso agregar case)
                                                 case 2: {
-                                                    birdRR = new ImageBody(YELLOW_BIRD);
+                                                    birdRR = new ImageBody(RED_BIRD);
                                                     BodyFixture bf = birdRR.addFixture(Geometry.createCircle(1.0));
                                                     bf.setFilter(backgroundFilter);
                                                     birdRR.setMass(MassType.INFINITE);
@@ -436,7 +436,7 @@ public class Nivel2 extends SimulationFrame {
                                                     break;
                                                 }
                                                 case 1: {
-                                                    birdRR = new ImageBody(WHITE_BIRD);
+                                                    birdRR = new ImageBody(RED_BIRD);
                                                     BodyFixture bf = birdRR.addFixture(Geometry.createCircle(1.0));
                                                     bf.setFilter(backgroundFilter);
                                                     birdRR.setMass(MassType.INFINITE);
@@ -497,7 +497,7 @@ public class Nivel2 extends SimulationFrame {
                                             SimulationBody birdRR;
                                             switch(nPajaros){  // Cambiar dependiendo el pajaro (Incluso agregar case)
                                                 case 2: {
-                                                    birdRR = new ImageBody(YELLOW_BIRD);
+                                                    birdRR = new ImageBody(RED_BIRD);
                                                     BodyFixture bf = birdRR.addFixture(Geometry.createCircle(1.0));
                                                     bf.setFilter(backgroundFilter);
                                                     birdRR.setMass(MassType.INFINITE);
@@ -506,7 +506,7 @@ public class Nivel2 extends SimulationFrame {
                                                     break;
                                                 }
                                                 case 1: {
-                                                    birdRR = new ImageBody(WHITE_BIRD);
+                                                    birdRR = new ImageBody(RED_BIRD);
                                                     BodyFixture bf = birdRR.addFixture(Geometry.createCircle(1.0));
                                                     bf.setFilter(backgroundFilter);
                                                     birdRR.setMass(MassType.INFINITE);
@@ -739,18 +739,19 @@ public class Nivel2 extends SimulationFrame {
                 //Bloques
                 createBlock(bf, Color.DARK_GRAY, 1, 8, 9, 15, MassType.NORMAL, 13, -2, 800); // a la calidad se le resta la velocidad del otro objeto en una colision,
                 createBlock(bf, Color.DARK_GRAY, 1, 8, 9, 15, MassType.NORMAL, 18, -2,1500); // cuando la calidad sea negativa el objeto se remueve del mundo
-                createBlockNotInArray(bf, Color.DARK_GRAY, 6, 1, 9, 15, MassType.NORMAL, 15, 6, 1500); // a la calidad se le resta la velocidad del otro objeto en una colision,
-                //createBlock(bf, Color.DARK_GRAY, 1, 5, 9, 15, MassType.NORMAL, 14, 9, 1500); // a la calidad se le resta la velocidad del otro objeto en una colision,
-                //createBlock(bf, Color.DARK_GRAY, 1, 5, 9, 15, MassType.NORMAL, 17, 9,1500);
-                //createBlock(bf, Color.DARK_GRAY, 6, 1, 9, 15, MassType.NORMAL, 15, 14, 1500); // a la calidad se le resta la velocidad del otro objeto en una colision,
-                
+                createBlockNotInArray(bf, Color.DARK_GRAY, 6, 1, 9, 15, MassType.NORMAL, 15.5, 5, 1500); // a la calidad se le resta la velocidad del otro objeto en una colision,
+                createBlock(bf, Color.DARK_GRAY, 1, 5, 9, 15, MassType.NORMAL, 13.3, 7, 1500); // a la calidad se le resta la velocidad del otro objeto en una colision,
+                createBlock(bf, Color.DARK_GRAY, 1, 5, 9, 15, MassType.NORMAL, 17.7, 7,1500);
+                createBlock(bf, Color.DARK_GRAY, 6, 1, 9, 15, MassType.NORMAL, 15.5, 12, 1500); // a la calidad se le resta la velocidad del otro objeto en una colision,
+                createBlock(bf, Color.DARK_GRAY, 1, 6.6, 9, 15, MassType.INFINITE, 10, -0.5, 800);
+                createBlock(bf, Color.DARK_GRAY, 1, 7, 9, 15, MassType.INFINITE, 10, 8.7, 800);
                 
                 createBlockNotInArray(bf, new Color(172, 216, 250), 5, 1, 3, 15, MassType.NORMAL, 23, -2, 700);
                 createBlockNotInArray(bf, new Color(172, 216, 250), 2, 1, 3, 15, MassType.NORMAL, 16, -2, 700);
 
 
-                createPig(bf, "pigHelmet.png", 1.5, 1, 0.2, MassType.NORMAL, 15,  6);
-                createPig(bf, "pig.png", 1.0, 1, 0.2, MassType.NORMAL, 23,  -2);
+                createPig(bf, "pigHelmet.png", 1.5, 1, 0.2, MassType.NORMAL, 15.5,  5);
+                createPig(bf, "pig.png", 1.0, 1, 0.2, MassType.NORMAL, 23,  -1);
                 createPig(bf, "pig.png", 0.7, 1, 0.2, MassType.NORMAL, 16,  -1);
 
             }
@@ -992,9 +993,9 @@ public class Nivel2 extends SimulationFrame {
 			
                             //Esta declarado "global", para acceder a el desde otras funciones (poderes de los pajaros)
                             if(nPajaros == 1){
-                                circle = new ImageBody(WHITE_BIRD);
+                                circle = new ImageBody(RED_BIRD);
                             }else if(nPajaros == 2){
-                                circle = new ImageBody(YELLOW_BIRD);
+                                circle = new ImageBody(RED_BIRD);
                             }else if(nPajaros == 3){
                                 circle = new ImageBody(RED_BIRD);  //Primer pajaro que sale
                             }
