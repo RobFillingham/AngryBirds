@@ -453,7 +453,7 @@ public class Nivel1 extends SimulationFrame {
                 
 
                 
-              createStructureAndPigs(bf);  
+           
 		
 
 		// use a CollisionListener to detect when the body is in the scoring zones
