@@ -4,7 +4,19 @@
  */
 package ProyectoFinal;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
+import menus.menuNIveles;
 import org.dyn4j.samples.framework.SimulationFrame;
 
 /**
@@ -16,17 +28,20 @@ public class EndGame extends javax.swing.JFrame {
     /**
      * Creates new form EndGame
      */
-    
+    private AudioInputStream ab;
+    private Clip clip ;
     private Nivel1 daddy;
+    private int level;
     
     public EndGame(int score, int stars, int level, int result, SimulationFrame daddy) {
         this.daddy = (Nivel1) daddy;
         this.setVisible(true);
+        this.level = level;
         initComponents();
         if(result == -1){
             lost(); //disables stars, and does not call write on the file
         }else if(result == 1){
-            writeFile(score, stars, level);
+            writeFile(score, stars, level-1);
         }
     }
     
@@ -50,91 +65,83 @@ public class EndGame extends javax.swing.JFrame {
     private void initComponents() {
 
         star1 = new javax.swing.JLabel();
-        star2 = new javax.swing.JLabel();
-        star3 = new javax.swing.JLabel();
         result = new javax.swing.JLabel();
         score = new javax.swing.JLabel();
         OKAY = new javax.swing.JButton();
         pig = new javax.swing.JLabel();
+        star3 = new javax.swing.JLabel();
+        star2 = new javax.swing.JLabel();
+        score1 = new javax.swing.JLabel();
+        black = new javax.swing.JLabel();
+        OKAY1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setAlwaysOnTop(true);
+        setLocation(new java.awt.Point(600, 130));
+        setResizable(false);
+        setSize(new java.awt.Dimension(0, 0));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        star1.setIcon(new ImageIcon("StarLevel.png"));
-        star1.setText("jLabel1");
-
-        star2.setIcon(new ImageIcon("StarLevel.png"));
-        star2.setText("jLabel1");
-
-        star3.setIcon(new ImageIcon("StarLevel.png"));
-        star3.setText("jLabel1");
+        star1.setIcon(new ImageIcon("left-star.png"));
+        getContentPane().add(star1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 110, 110));
 
         result.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
+        result.setForeground(new java.awt.Color(255, 255, 255));
         result.setText("LEVEL PASSED! ");
 
-        score.setFont(new java.awt.Font("Comic Sans MS", 0, 24)); // NOI18N
-        score.setText("1000000000");
+        getContentPane().add(result, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, -1, -1));
 
+        score.setFont(new java.awt.Font("Comic Sans MS", 1, 36)); // NOI18N
+        score.setForeground(new java.awt.Color(255, 255, 255));
+        score.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        score.setText("Score:");
+        score.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(score, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 260, -1));
+
+        OKAY.setBackground(new java.awt.Color(0, 0, 0));
+        OKAY.setForeground(new java.awt.Color(0, 0, 0));
         OKAY.setIcon(new ImageIcon("Return-Button.png"));
+        OKAY.setBorder(null);
+        OKAY.setBorderPainted(false);
         OKAY.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 OKAYActionPerformed(evt);
             }
         });
+        getContentPane().add(OKAY, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 520, 70, 60));
 
         pig.setIcon(new ImageIcon("Pig2.png"));
-        pig.setText("jLabel1");
+        getContentPane().add(pig, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 210, 180, 140));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(110, 110, 110)
-                                .addComponent(score))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addComponent(star1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(pig, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addComponent(star3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(153, 153, 153)
-                        .addComponent(star2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(116, 116, 116)
-                        .addComponent(result))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(136, 136, 136)
-                        .addComponent(OKAY, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(128, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(result)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(star2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(pig, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(star1)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(99, 99, 99)
-                        .addComponent(star3)))
-                .addGap(38, 38, 38)
-                .addComponent(score)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(OKAY, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
-        );
+        star3.setIcon(new ImageIcon("right-star.png"));
+        getContentPane().add(star3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 180, 110, 110));
+
+        star2.setIcon(new ImageIcon("center-star.png"));
+        getContentPane().add(star2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 120, 100));
+
+        score1.setFont(new java.awt.Font("Comic Sans MS", 1, 36)); // NOI18N
+        score1.setForeground(new java.awt.Color(255, 255, 255));
+        score1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        score1.setText("1000000000");
+        score1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(score1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 260, -1));
+
+        black.setBackground(new java.awt.Color(0, 0, 0));
+        black.setForeground(new java.awt.Color(0, 0, 0));
+        black.setIcon(new ImageIcon("black.jpg"));
+        getContentPane().add(black, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, 630));
+
+        OKAY1.setBackground(new java.awt.Color(0, 0, 0));
+        OKAY1.setForeground(new java.awt.Color(0, 0, 0));
+        OKAY1.setIcon(new ImageIcon("Return-Button.png"));
+        OKAY1.setBorder(null);
+        OKAY1.setBorderPainted(false);
+        OKAY1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OKAY1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(OKAY1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 522, 70, 60));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -144,30 +151,130 @@ public class EndGame extends javax.swing.JFrame {
         this.daddy.papa.readScoreFile();
         daddy.dispose();
         this.dispose();
+        clip.stop();
+        new menuNIveles().setVisible(true);
     }//GEN-LAST:event_OKAYActionPerformed
+
+    private void OKAY1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKAY1ActionPerformed
+        // TODO add your handling code here:
+        
+        switch(level){
+            case 1:
+                new Nivel1();
+                clip.stop();
+                break;
+        }
+        this.dispose();
+    }//GEN-LAST:event_OKAY1ActionPerformed
     
     private void lost(){
         star1.setVisible(false);
         star2.setVisible(false);
         star3.setVisible(false);
         pig.setVisible(true);
-        result.setText("You lost!");
-        score.setText("0");
+        result.setText("Level Failed!");
+        score1.setText("0");
+        new Thread() {
+            public void run() {
+                try {
+                    ab = AudioSystem.getAudioInputStream(new File("failedLevel.wav"));
+                    clip = AudioSystem.getClip();
+
+                    clip.open(ab);
+                    clip.start();
+
+                    // Wait for the clip to finish playing
+                    Thread.sleep(clip.getMicrosecondLength() / 1000);
+
+                    clip.stop();
+                    clip.close();
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e) {
+                    // Proper exception handling/logging here
+                    e.printStackTrace();
+                }
+               }
+        }.start();
+        
+        
+    
     }
     
     private void writeFile(int score, int stars, int level){
         pig.setVisible(false);
         if(stars==1){
             star2.setVisible(false);
-            star3.setVisible(false);
+            star1.setVisible(false);
             
         }else if(stars==2){
-            star3.setVisible(false);
+            star1.setVisible(false);
         }
         
-        this.score.setText(score+"");
+        this.score1.setText(score+"");
         
-        //modify the file
+        FileInputStream archFIS = null;
+        ObjectInputStream is;
+        Score reference = null;
+        
+        FileOutputStream archFOS = null;
+        ObjectOutputStream os;
+        
+        
+        try{
+           archFIS = new FileInputStream("Score.angryBirds");
+           is = new ObjectInputStream(archFIS);
+           
+           reference = (Score)is.readObject();
+           System.out.println(reference.levels.get(0).available);
+           reference.levels.get(level).completed = true;
+           reference.levels.get(level).score = score;
+           reference.levels.get(level).stars = stars;
+           reference.levels.get(level+1).available= true;
+         
+        }catch(IOException | ClassNotFoundException e){
+            e.printStackTrace();
+        }finally{
+            try{
+                if(archFIS != null){ archFIS.close(); }
+               
+            } catch(IOException e){ System.out.println(e.getMessage());}
+        }
+        
+        try{
+           archFOS = new FileOutputStream("Score.angryBirds");
+           os = new ObjectOutputStream(archFOS);
+           
+           os.writeObject(reference);
+         
+        }catch(IOException e){
+            e.printStackTrace();
+        }finally{
+            try{
+                if(archFIS != null){ archFIS.close(); }
+               
+            } catch(IOException e){ System.out.println(e.getMessage());}
+        }
+        
+        new Thread() {
+            public void run() {
+                
+                try {
+                    ab = AudioSystem.getAudioInputStream(new File("Angry-Birds-Theme.wav"));
+                    clip = AudioSystem.getClip();
+
+                    clip.open(ab);
+                    clip.start();
+
+                    // Wait for the clip to finish playing
+                    Thread.sleep(clip.getMicrosecondLength() / 1000);
+
+                    clip.stop();
+                    clip.close();
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e) {
+                    // Proper exception handling/logging here
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
     
     /**
@@ -204,9 +311,12 @@ public class EndGame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton OKAY;
+    private javax.swing.JButton OKAY1;
+    private javax.swing.JLabel black;
     private javax.swing.JLabel pig;
     private javax.swing.JLabel result;
     private javax.swing.JLabel score;
+    private javax.swing.JLabel score1;
     private javax.swing.JLabel star1;
     private javax.swing.JLabel star2;
     private javax.swing.JLabel star3;

@@ -3,11 +3,21 @@ package menus;
 
 import ProyectoFinal.Nivel1;
 import ProyectoFinal.Score;
+import ProyectoFinal.Sqr;
 import menus.Menu_1;
 import java.awt.Toolkit;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -30,6 +40,7 @@ public class menuNIveles extends javax.swing.JFrame {
     private boolean diplvl4;
     private boolean diplvl5;
     private boolean diplvl6;
+    
     /**
      * Creates new form menuNIveles
      */
@@ -38,6 +49,14 @@ public class menuNIveles extends javax.swing.JFrame {
         initComponents();
         transparent();
         readScoreFile();
+    }
+    
+    public menuNIveles() {
+        this.daddy = (Menu_1)daddy;
+        initComponents();
+        transparent();
+        readScoreFile();
+        
     }
 
     /**
@@ -361,7 +380,7 @@ public class menuNIveles extends javax.swing.JFrame {
            is = new ObjectInputStream(archFIS);
            
            reference = (Score)is.readObject();
-           System.out.println(reference.levels.get(0).available);
+           //System.out.println(reference.levels.get(0).available);
             
            diplvl1 = arrangeLevel(lvl1button, star1lvl1, star2lvl1, star3lvl1, reference.levels.get(0).available, reference.levels.get(0).completed, reference.levels.get(0).stars, "level1-Front.png");
            diplvl2 = arrangeLevel(lvl2button, star1lvl2, star2lvl2, star3lvl2, reference.levels.get(1).available, reference.levels.get(1).completed, reference.levels.get(1).stars, "level2-Front.png");
@@ -374,6 +393,30 @@ public class menuNIveles extends javax.swing.JFrame {
             e.printStackTrace();
         }
         
+        //RESTART THE GAME LEVELS
+        /*FileOutputStream archFOS;
+                ObjectOutputStream os;
+                
+                Score a = new Score();
+                a.levels.add(new Sqr(true, false, 0, 0));
+                a.levels.add(new Sqr(false, false, 0, 0));
+                a.levels.add(new Sqr(false, false, 0, 0));
+                a.levels.add(new Sqr(false, false, 0, 0));
+                a.levels.add(new Sqr(false, false, 0, 0));
+                a.levels.add(new Sqr(false, false, 0, 0));
+                        
+                 
+                
+                try{
+                    archFOS = new FileOutputStream("Score.angryBirds");
+                    os = new ObjectOutputStream(archFOS);
+                    
+                    os.writeObject(a);
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+        */        
+                
         
         
     }

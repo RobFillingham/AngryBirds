@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package ProyectoFinal;
 
 
@@ -27,6 +31,7 @@ package ProyectoFinal;
  */
 
 
+import ProyectoFinal.EndGame;
 import org.dyn4j.samples.*;
 import java.awt.Color;
 import java.awt.Font;
@@ -93,7 +98,7 @@ import org.dyn4j.world.listener.ContactListenerAdapter;
  * @version 5.0.0
  * @since 5.0.0
  */
-public class Nivel1 extends SimulationFrame {
+public class Nivel2 extends SimulationFrame {
 	/** Generated serial version id */
 	private static final long serialVersionUID = 8357585473409415833L;
 	
@@ -232,7 +237,7 @@ public class Nivel1 extends SimulationFrame {
 	 * Default constructor.
 	 */
         
-        public Nivel1() {
+        public Nivel2() {
 		super("Angry Birds - Level 1");
 		
                 super.setMousePickingEnabled(false);
@@ -273,7 +278,7 @@ public class Nivel1 extends SimulationFrame {
         
 	}
         
-	public Nivel1(JFrame daddy) {
+	public Nivel2(JFrame daddy) {
 		super("Angry Birds - Level 1");
 		
                 super.setMousePickingEnabled(false);
@@ -654,10 +659,26 @@ public class Nivel1 extends SimulationFrame {
 
             this.world.addBody(blockC);
         }
+        
+        private void createBlockNotInArray(BodyFixture bf, Color color, double width, double height, double density, double friction, MassType m, double x, double y, int quality){
+
+            SimulationBody blockC = new SimulationBody(color, quality);
+            bf = blockC.addFixture(Geometry.createRectangle(width, height));
+            bf.setFilter(ballFilter);
+            bf.setDensity(density);
+            bf.setFriction(friction);
+            blockC.setMass(m);
+            blockC.translate(x, y);
+            blockC.setLinearDamping(0.8);
+            
+
+            this.world.addBody(blockC);
+        }
+        
 
         private void createPig(BodyFixture bf, String classPath, double radius, double density, double friction, MassType m, double x, double y){
             //Cerdos
-            ImageBody circle = new ImageBody(NORMAL_PIG);
+            ImageBody circle = new ImageBody(getImageSuppressExceptions(classPath));
             //circle.setUserData(data);
             bf = circle.addFixture(Geometry.createCircle(radius), density, friction, 0.5);
             bf.setFilter(ballFilter);
@@ -722,14 +743,17 @@ public class Nivel1 extends SimulationFrame {
         private void createStructureAndPigs(BodyFixture bf){
 
             //Bloques
-            createBlock(bf, Color.DARK_GRAY, 1, 6, 4, 15, MassType.NORMAL, 18, 0, 1500); // a la calidad se le resta la velocidad del otro objeto en una colision,
-            createBlock(bf, Color.DARK_GRAY, 1, 6, 4, 15, MassType.NORMAL, 24, 0,1500); // cuando la calidad sea negativa el objeto se remueve del mundo
-            createBlock(bf, new Color(121,92,50), 8, 1, 4, 15, MassType.NORMAL, 21, 3, 800);
-            createBlock(bf, new Color(121, 92, 50), 0.8, 3.5, 4, 15, MassType.NORMAL, 19, 4, 800);
-            createBlock(bf, new Color(121, 92, 50), 0.8, 3.5, 4, 15, MassType.NORMAL, 23, 4, 800);
-            createBlock(bf, new Color(121, 92, 50), 5, 0.5, 4, 15, MassType.NORMAL, 21, 6, 800);
+            createBlock(bf, Color.DARK_GRAY, 1, 8, 9, 15, MassType.NORMAL, 14, 0, 1500); // a la calidad se le resta la velocidad del otro objeto en una colision,
+            createBlock(bf, Color.DARK_GRAY, 1, 8, 9, 15, MassType.NORMAL, 18, 0,1500); // cuando la calidad sea negativa el objeto se remueve del mundo
+            createBlockNotInArray(bf, Color.DARK_GRAY, 5, 1, 9, 15, MassType.NORMAL, 16, 8, 1500); // a la calidad se le resta la velocidad del otro objeto en una colision,
+            
+            
+            createBlockNotInArray(bf, new Color(172, 216, 250), 5, 1, 3, 15, MassType.NORMAL, 23, -2, 700);
+            
 
-            createPig(bf, "pig2.png", 1.5, 1, 0.2, MassType.NORMAL, 21,  -2);
+            createPig(bf, "pigHelmet.png", 2.0, 1, 0.2, MassType.NORMAL, 16,  9);
+            createPig(bf, "pig.png", 1.0, 1, 0.2, MassType.NORMAL, 23,  -2);
+            createPig(bf, "pig.png", 0.7, 1, 0.2, MassType.NORMAL, 16,  -2);
 
         }
         
@@ -1014,8 +1038,8 @@ public class Nivel1 extends SimulationFrame {
 	 * Entry point for the example application.
 	 * @param args command line arguments
 	 */
-	/*public static void main(String[] args) {
-		Nivel1 simulation = new Nivel1();
+	public static void main(String[] args) {
+		Nivel2 simulation = new Nivel2();
 		simulation.run();
-	}*/
+	}
 }

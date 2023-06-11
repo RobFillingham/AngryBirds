@@ -14,10 +14,10 @@ import java.util.List;
  */
 public class Score implements Serializable{
 
-    public ArrayList<Level> levels;
+    public ArrayList<Sqr> levels;
 
     public Score() {
-        this.levels = new ArrayList();
+        this.levels = new ArrayList<Sqr>();
     }
     
     
