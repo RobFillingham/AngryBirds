@@ -30,11 +30,11 @@ public class EndGame extends javax.swing.JFrame {
      */
     private AudioInputStream ab;
     private Clip clip ;
-    private Nivel1 daddy;
+    private SimulationFrame daddy;
     private int level;
     
     public EndGame(int score, int stars, int level, int result, SimulationFrame daddy) {
-        this.daddy = (Nivel1) daddy;
+        this.daddy =  daddy;
         this.setVisible(true);
         this.level = level;
         initComponents();
@@ -117,7 +117,7 @@ public class EndGame extends javax.swing.JFrame {
         getContentPane().add(star3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 180, 110, 110));
 
         star2.setIcon(new ImageIcon("center-star.png"));
-        getContentPane().add(star2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 120, 100));
+        getContentPane().add(star2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 130, 120, 100));
 
         score1.setFont(new java.awt.Font("Comic Sans MS", 1, 36)); // NOI18N
         score1.setForeground(new java.awt.Color(255, 255, 255));
@@ -148,8 +148,8 @@ public class EndGame extends javax.swing.JFrame {
 
     private void OKAYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKAYActionPerformed
         // TODO add your handling code here:
-        this.daddy.papa.readScoreFile();
-        daddy.dispose();
+        
+        
         this.dispose();
         clip.stop();
         new menuNIveles().setVisible(true);

@@ -2,6 +2,8 @@ package menus;
 
 
 import ProyectoFinal.Nivel1;
+import ProyectoFinal.Nivel2;
+import ProyectoFinal.Nivel3;
 import ProyectoFinal.Score;
 import ProyectoFinal.Sqr;
 import menus.Menu_1;
@@ -235,10 +237,10 @@ public class menuNIveles extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(diplvl2 == true){
             daddy.clip.stop();
-            /*
-            Nivel2 lvl2 = new Nivel2(this);
+            
+            Nivel2 lvl2 = new Nivel2();
             lvl2.setVisible(true);
-            lvl2.run();*/
+            lvl2.run();
             dispose();
         }
     }//GEN-LAST:event_lvl2buttonActionPerformed
@@ -266,10 +268,10 @@ public class menuNIveles extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(diplvl3 == true){
             daddy.clip.stop();
-            /*
-            Nivel3 lvl3 = new Nivel3(this);
+            
+            Nivel3 lvl3 = new Nivel3();
             lvl3.setVisible(true);
-            lvl3.run();*/
+            lvl3.run();
             dispose();
         }
     }//GEN-LAST:event_lvl3buttonActionPerformed
