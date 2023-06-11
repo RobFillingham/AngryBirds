@@ -295,8 +295,8 @@ public class Nivel3 extends SimulationFrame{
 		printControl("Move Down", "Down", "Use the down key to move the shoot position down");
 		printControl("Move Left", "Left", "Use the left key to move the shoot position left");
 		printControl("Move Right", "Right", "Use the right key to move the shoot position right");
-		printControl("Angle Up", "Pg Up", "Use the page up key to increase the shoot angle");
-		printControl("Angle Down", "Pg Down", "Use the page down key to decrease the shoot angle");
+		printControl("Angle Up", "W", "Use the page up key to increase the shoot angle");
+		printControl("Angle Down", "A", "Use the page down key to decrease the shoot angle");
 		printControl("Increase Power", "+", "Use the + key to increase the shoot power");
 		printControl("Decrease Power", "-", "Use the - key to decrease the shoot power");
 		printControl("Shoot", "s", "Use the s key to shoot a basketball");

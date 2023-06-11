@@ -284,8 +284,8 @@ public class Nivel1 extends SimulationFrame {
 		printControl("Move Down", "Down", "Use the down key to move the shoot position down");
 		printControl("Move Left", "Left", "Use the left key to move the shoot position left");
 		printControl("Move Right", "Right", "Use the right key to move the shoot position right");
-		printControl("Angle Up", "Pg Up", "Use the page up key to increase the shoot angle");
-		printControl("Angle Down", "Pg Down", "Use the page down key to decrease the shoot angle");
+		printControl("Angle Up", "W", "Use the page up key to increase the shoot angle");
+		printControl("Angle Down", "A", "Use the page down key to decrease the shoot angle");
 		printControl("Increase Power", "+", "Use the + key to increase the shoot power");
 		printControl("Decrease Power", "-", "Use the - key to decrease the shoot power");
 		printControl("Shoot", "s", "Use the s key to shoot a basketball");
@@ -340,7 +340,7 @@ public class Nivel1 extends SimulationFrame {
 		bf.setFilter(allFilter);
 		bf.getShape().translate(-1.0, 0.0);
 		rim.setMass(MassType.INFINITE);
-		rim.translate(9.5, 50.0);
+		rim.translate(-10.0, 50.0);
 		this.world.addBody(rim);
                 
 		// save for rendering later 
@@ -355,7 +355,7 @@ public class Nivel1 extends SimulationFrame {
 		bf = sensorScoreBegin.addFixture(Geometry.createRectangle(2.0, 2.0));
 		bf.setSensor(true); 
 		sensorScoreBegin.setMass(MassType.INFINITE);
-		sensorScoreBegin.translate(9.5, 5.0);
+		sensorScoreBegin.translate(-20.0, 50.0);
 		this.world.addBody(sensorScoreBegin);
 		
 		SimulationBody sensorScoreAdd = new SimulationBody(new Color(0, 255, 0, 0));
@@ -363,7 +363,7 @@ public class Nivel1 extends SimulationFrame {
 		bf = sensorScoreAdd.addFixture(Geometry.createRectangle(1.7, 1.25));
 		bf.setSensor(true);
 		sensorScoreAdd.setMass(MassType.INFINITE);
-		sensorScoreAdd.translate(9.5, 3.0);
+		sensorScoreAdd.translate(-26.0, 50.0);
 		this.world.addBody(sensorScoreAdd);
                 
                 //  Create the Slingshot
