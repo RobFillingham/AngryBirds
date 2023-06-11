@@ -171,6 +171,12 @@ public class EndGame extends javax.swing.JFrame {
                 new Nivel3().run();
                 clip.stop();
                 break;
+            case 4:
+                new Nivel4().run();
+                break;
+            case 5:
+                new Nivel5().run();
+                break;
         }
         this.dispose();
     }//GEN-LAST:event_OKAY1ActionPerformed

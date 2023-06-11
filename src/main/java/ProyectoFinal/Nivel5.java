@@ -99,7 +99,7 @@ import org.dyn4j.world.listener.ContactListenerAdapter;
  *
  * @author César Reyes Torres
  */
-public class Nivel4 extends SimulationFrame{
+public class Nivel5 extends SimulationFrame{
     	/** Generated serial version id */
 	private static final long serialVersionUID = 8357585473409415833L;
 	
@@ -235,7 +235,7 @@ public class Nivel4 extends SimulationFrame{
 	 * Default constructor.
 	 */
 	//public Nivel5(JFrame daddy) {
-        public Nivel4() {
+        public Nivel5() {
 		super("Angry Birds - Level 5");
 		
                 super.setMousePickingEnabled(false);
@@ -337,7 +337,7 @@ public class Nivel4 extends SimulationFrame{
                 createStructureAndPigs(bf);
 		
                 //  Create the Slingshot
-                body = new ImageBody(WHITE_BIRD);  // Primer pajaro a usar
+                body = new ImageBody(RED_BIRD);  // Primer pajaro a usar
                 bf = body.addFixture(Geometry.createCircle(1.0));
                 bf.setFilter(backgroundFilter);
                 body.setMass(MassType.INFINITE);
@@ -353,17 +353,26 @@ public class Nivel4 extends SimulationFrame{
                                     powerUsed = true;
                                     if(nPajaros >0){    
                                             SimulationBody birdRR;
-                                            // Cambiar dependiendo el pajaro (Incluso agregar case)
-                                                
+                                            switch(nPajaros){  // Cambiar dependiendo el pajaro (Incluso agregar case)
+                                                case 2: {
+                                                    birdRR = new ImageBody(YELLOW_BIRD);
+                                                    BodyFixture bf = birdRR.addFixture(Geometry.createCircle(1.0));
+                                                    bf.setFilter(backgroundFilter);
+                                                    birdRR.setMass(MassType.INFINITE);
+                                                    birdRR.translate(-24.0,2);
+                                                    world.addBody(birdRR);
+                                                    break;
+                                                }
+                                                case 1: {
                                                     birdRR = new ImageBody(WHITE_BIRD);
                                                     BodyFixture bf = birdRR.addFixture(Geometry.createCircle(1.0));
                                                     bf.setFilter(backgroundFilter);
                                                     birdRR.setMass(MassType.INFINITE);
                                                     birdRR.translate(-24.0,2);
                                                     world.addBody(birdRR);
-                                                    
-                                                
-                                            
+                                                    break;
+                                                }
+                                            }
                                         }
                                 }
 			}
@@ -423,16 +432,26 @@ public class Nivel4 extends SimulationFrame{
                                         // El otro caso esta en outside, cuando el pajaro sale del mundo delimitado
                                         if(nPajaros >0){    
                                             SimulationBody birdRR;
-                                            
-                                            birdRR = new ImageBody(WHITE_BIRD);
-                                            BodyFixture bf = birdRR.addFixture(Geometry.createCircle(1.0));
-                                            bf.setFilter(backgroundFilter);
-                                            birdRR.setMass(MassType.INFINITE);
-                                            birdRR.translate(-24.0,2);
-                                            world.addBody(birdRR);
-                                            
-                                                
-                                            
+                                            switch(nPajaros){  // Cambiar dependiendo el pajaro (Incluso agregar case)
+                                                case 2: {
+                                                    birdRR = new ImageBody(YELLOW_BIRD);
+                                                    BodyFixture bf = birdRR.addFixture(Geometry.createCircle(1.0));
+                                                    bf.setFilter(backgroundFilter);
+                                                    birdRR.setMass(MassType.INFINITE);
+                                                    birdRR.translate(-24.0,2);
+                                                    world.addBody(birdRR);
+                                                    break;
+                                                }
+                                                case 1: {
+                                                    birdRR = new ImageBody(WHITE_BIRD);
+                                                    BodyFixture bf = birdRR.addFixture(Geometry.createCircle(1.0));
+                                                    bf.setFilter(backgroundFilter);
+                                                    birdRR.setMass(MassType.INFINITE);
+                                                    birdRR.translate(-24.0,2);
+                                                    world.addBody(birdRR);
+                                                    break;
+                                                }
+                                            }
                                         }
                                     }else{
                                         nColisiones++;
@@ -442,20 +461,34 @@ public class Nivel4 extends SimulationFrame{
                                     powerUsed = true;
                                     blockPower = true;  //Bloquea el uso del poder cuando el pajaro ya chocó y no uso su poder
                                 }
-                                if (isBall(b1) && b1 == world.getBody(world.getBodyCount()-1) && powerUsed == true  && blockPower == false) {  //Para diferenciar el pajaro del huevo
+                                if (isBall(b1) && b1 == world.getBody(world.getBodyCount()-1) && powerUsed == true && nPajaros == 0 && blockPower == false) {  //Para diferenciar el pajaro del huevo
                                     if(huevaso == false){  //Limitar a un huevo
                                         
                                         
                                         
                                         huevaso = true;  //Se puede dejar asi, solo cuando haya un solo pajaro blanco
-                                          //Obtener coordenadas del objeto en el mundo
+                                        Vector2 position = circle.getTransform().getTranslation();  //Obtener coordenadas del objeto en el mundo
                                         
-                                        
-                                        
+                                        // create a circle
+                                        BallUserData data = new BallUserData();
+                                        data.start.x = position.x;
+                                        data.start.y = position.y;
+                                        circle = new ImageBody(WHITE_BIRD_BOOM);
+                                        BodyFixture bf = circle.addFixture(Geometry.createCircle(3), 100.0, 0, 0.2);
+                                        bf.setFilter(ballFilter);
+                                        circle.setColor(Color.white);
+                                        circle.setUserData(data);
+                                        circle.setMass(MassType.NORMAL);
+                                        circle.translate(world.getBody(world.getBodyCount()-1).getWorldCenter().x , world.getBody(world.getBodyCount()-1).getWorldCenter().y + 5);
+                                        circle.setLinearVelocity(world.getBody(world.getBodyCount()-1).getWorldCenter().x*0,world.getBody(world.getBodyCount()-1).getWorldCenter().y * (-2.7));
+                                        //Se añade "bomba de huevo"
+                                        world.addBody(circle);
                                     }else{
-                                        
-                                        if(nColisiones == 0){  //Elimina el huevo lanzado
+                                        if(nColisiones == 20){//  Detecta el limite de colisiones, para eliminar el objeto "bomba"
                                             toRemove.add(world.getBody(world.getBodyCount()-1));
+                                        }
+                                        if(nColisiones == 0){  //Elimina el huevo lanzado
+                                            toRemove.add(world.getBody(world.getBodyCount()-2));
                                         }
                                         nColisiones++;
                                     }
@@ -493,7 +526,12 @@ public class Nivel4 extends SimulationFrame{
             @Override
             public void mousePressed(MouseEvent e) {  //PODERES de los pajaros
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                      //Cambiar a numPajaro-1 (Pajaro blanco)
+                    if(nPajaros == 1){ //Cambiar a numPajaro-1 (Pajaro amarillo)
+                        if(powerUsed == false && blockPower == false){  //Limitar el poder a solo un uso
+                            powerUsed = true;
+                            circle.setLinearVelocity(circle.getLinearVelocity().x*3, circle.getLinearVelocity().y*3);
+                        }
+                    }else if(nPajaros == 0){ //Cambiar a numPajaro-1 (Pajaro blanco)
                         if(powerUsed == false && blockPower == false){  //Limitar el poder a solo un uso
                             powerUsed = true;
                             circle.setLinearVelocity(45.0, 45.0);
@@ -512,9 +550,8 @@ public class Nivel4 extends SimulationFrame{
                             circle.setMass(MassType.NORMAL);
                             circle.translate(position.x,position.y-1);
                             world.addBody(circle);
-                            blocks.add(circle);
                         }
-                    
+                    }
                 }
             }
         });
@@ -632,20 +669,43 @@ public class Nivel4 extends SimulationFrame{
         }
 
         private void createStructureAndPigs(BodyFixture bf){
-            createAllowedBlock(bf, Color.GRAY, 50, 5, 9, 15, MassType.INFINITE, 6, -2, 800);
-                
-                createAllowedBlock(bf, new Color(121, 92, 50), 10, 5, 9, 15, MassType.NORMAL, 12, 1, 800);
-                createAllowedBlock(bf, new Color(121, 92, 50), 10, 5, 9, 15, MassType.NORMAL, 26, 1, 800);
-                
-                
-                createAllowedBlock(bf, new Color(121, 92, 50), 10, 5, 9, 15, MassType.NORMAL, -0.2, 1, 800);
-                createAllowedBlock(bf, new Color(121, 92, 50), 11.6, 5, 9, 15, MassType.NORMAL, -13.2, 1, 800);
-
-                //createBlock(bf, new Color(121, 92, 50), 10, 5, 9, 15, MassType.NORMAL, 25.8, 1, 800);
-                
-                createPig(bf, OTHER_PIG_3, 1.5, 1, 0.2, MassType.NORMAL, 19,  1);
-                createPig(bf, OTHER_PIG_3, 1, 1, 0.2, MassType.NORMAL, 5.8,  1);
-                createPig(bf, OTHER_PIG_3, 1, 1, 0.2, MassType.NORMAL, -6.3,  1);
+            //Bloques
+            //createBlock(bf, new Color(75, 60, 30), 35, 2, 14, 30, MassType.INFINITE, 30, -2.5, 99999);
+            createBlock(bf, Color.DARK_GRAY, 2, 6, 14, 300, MassType.NORMAL, 23, -1, 350);
+            createBlock(bf, new Color(121, 92, 50), 2, 6, 14, 300, MassType.NORMAL, 36, -1, 100);
+            createBlock(bf, Color.DARK_GRAY, 2, 6, 14, 30, MassType.NORMAL, 49, -1, 350);
+            //createBlock(bf, new Color(121, 92, 50), 2, 6, 14, 30, MassType.NORMAL, 29, -1, 100);
+            createBlock(bf, new Color(121, 92, 50), 14, 1, 14, 300, MassType.NORMAL, 29, 2.5, 100);
+            createBlock(bf, new Color(121, 92, 50), 13, 1, 14, 300, MassType.NORMAL, 28.5, 3.5, 100);
+            createBlock(bf, new Color(121, 92, 50), 14, 1, 14, 300, MassType.NORMAL, 43, 2.5, 100);
+            createBlock(bf, new Color(121, 92, 50), 13, 1, 14, 300, MassType.NORMAL, 43.5, 3.5, 100);
+            createBlock(bf, Color.DARK_GRAY, 2, 6, 14, 300, MassType.NORMAL, 23, 7, 350);
+            createBlock(bf, new Color(121, 92, 50), 2, 6, 14, 300, MassType.NORMAL, 36, 6, 100);
+            createBlock(bf, Color.DARK_GRAY, 2, 6, 14, 30, MassType.NORMAL, 49, 7, 350);
+            createBlock(bf, new Color(121, 92, 50), 24, 1, 14, 300, MassType.NORMAL, 36, 9.5, 100);
+            //Tercer piso
+            createBlock(bf, new Color(121, 92, 50), 1, 7, 14, 300, MassType.NORMAL, 34, 13.5, 100);
+            createBlock(bf, new Color(121, 92, 50), 1, 7, 14, 300, MassType.NORMAL, 38, 13.5, 100);
+            createBlock(bf, new Color(121, 92, 50), 7, 1, 14, 300, MassType.NORMAL, 36, 17.5, 100);
+            
+            createAllowedBlock(bf, new Color(121, 92, 50), 1.5, 0.5, 4, 300, MassType.NORMAL, 36, 18.3, 5);
+            createAllowedBlock(bf, new Color(121, 92, 50), 1.5, 0.5, 4, 300, MassType.NORMAL, 27, 4.2, 5);
+            createAllowedBlock(bf, new Color(121, 92, 50), 1.5, 0.5, 4, 300, MassType.NORMAL, 32, 4.2, 5);
+            createAllowedBlock(bf, new Color(121, 92, 50), 1.5, 0.5, 4, 300, MassType.NORMAL, 40, 4.2, 5);
+            createAllowedBlock(bf, new Color(121, 92, 50), 1.5, 0.5, 4, 300, MassType.NORMAL, 45, 4.2, 5);
+            //createBlock(bf, Color.DARK_GRAY, 2, 2, 14, 30, MassType.NORMAL, 21, 3, 600);
+            //createBlock(bf, Color.DARK_GRAY, 2, 2, 14, 30, MassType.NORMAL, 37, 3, 600);
+            
+            //Cerdos
+            createPig(bf, OTHER_PIG_3, 1, 0.0, 0.0, MassType.NORMAL, 27,  5.5);
+            createPig(bf, OTHER_PIG_3, 1, 0.0, 0.0, MassType.NORMAL, 32,  5.5);
+            createPig(bf,OTHER_PIG_3, 1, 0.0, 0.0, MassType.NORMAL, 40,  5.5);
+            createPig(bf, OTHER_PIG_3, 1, 0.0, 0.0, MassType.NORMAL, 45,  5.5);
+            
+            createPig(bf, OTHER_PIG_4, 2, 1, 100, MassType.NORMAL, 29.5,  -2);
+            createPig(bf, OTHER_PIG_4, 2, 1, 100, MassType.NORMAL, 42.5,  -2);
+            
+            createPig(bf, NORMAL_PIG, 1.5, 1, 100, MassType.NORMAL, 36,  20);
         }
         
 	
@@ -834,21 +894,28 @@ public class Nivel4 extends SimulationFrame{
                             data.start.y = start.y;
 			
                             //Esta declarado "global", para acceder a el desde otras funciones (poderes de los pajaros)
-                         
-                              circle = new ImageBody(WHITE_BIRD);
+                            if(nPajaros == 3){
+                                circle = new ImageBody(RED_BIRD);
                                 BodyFixture bf = circle.addFixture(Geometry.createCircle(1.0), 20.0, 30.0, 0.0);
                                 bf.setFilter(ballFilter);
-                            
+                            }else if(nPajaros == 2){
+                                circle = new ImageBody(YELLOW_BIRD);
+                                BodyFixture bf = circle.addFixture(Geometry.createCircle(1.0), 10.0, 30.0, 0.0);
+                                bf.setFilter(ballFilter);
+                            }else if(nPajaros == 1){
+                                circle = new ImageBody(WHITE_BIRD);
+                                BodyFixture bf = circle.addFixture(Geometry.createCircle(1.0), 10.0, 30.0, 0.0);
+                                bf.setFilter(ballFilter);
+                            }
                             //Se lanzará un pajaro
                             nPajaros--;
                             blockPower = false; //Reiniciar posibiliad de usar su poder
                             powerUsed = false;  //Posible solucion
                             nColisiones = 0;
                             nColisionesEG = 0;
-                            huevaso = false;
                             
                             circle.setUserData(data);
-                            bf = circle.addFixture(Geometry.createCircle(1.0), 10.0, 30.0, 0.0);
+                            BodyFixture bf = circle.addFixture(Geometry.createCircle(1.0), 10.0, 30.0, 0.0);
                             bf.setFilter(ballFilter);
                             circle.setMass(MassType.NORMAL);
                             //circle.translate(start);
@@ -867,10 +934,10 @@ public class Nivel4 extends SimulationFrame{
         private void endgame(){
             if(nPajaros == 0 && nCerdos !=0){ //Perdió la partida (Se quedó sin pajaros y no mató a todos los cerdos)
                 // Llamada al frame de puntuación (con un -1 de parámetro que indica derrota)
-                new EndGame(score, 0, 4, -1, this);
+                new EndGame(score, 0, 5, -1, this);
             }else{  //Ganó la partida (puede que tenga pajaros de sobra, o no)
                 //calcular puntuacion
-                new EndGame(score+(nPajaros*10000), nPajaros+1, 4, 1, this);
+                new EndGame(score+(nPajaros*10000), nPajaros+1, 5, 1, this);
             }
             this.stop();
             //this.dispose();
@@ -882,10 +949,7 @@ public class Nivel4 extends SimulationFrame{
 	 * @param args command line arguments
 	 */
 	public static void main(String[] args) {
-		Nivel4 simulation = new Nivel4();
+		Nivel5 simulation = new Nivel5();
 		simulation.run();
 	}
 }
-
-
-

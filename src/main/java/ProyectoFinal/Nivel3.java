@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package ProyectoFinal;
-
 /*
  * Copyright (c) 2010-2022 William Bittle  http://www.dyn4j.org/
  * All rights reserved.
@@ -170,13 +169,11 @@ public class Nivel3 extends SimulationFrame{
 	
 	private static final long ALL = Long.MAX_VALUE;
 	private static final long BALL = 1;
-	private static final long RIM = 2;
 	private static final long OTHER = 4;
 	
-	private static final CategoryFilter ballFilter = new CategoryFilter(BALL, ALL ^ RIM);
-	private static final CategoryFilter rimFilter = new CategoryFilter(RIM, ALL ^ BALL);
+	private static final CategoryFilter ballFilter = new CategoryFilter(BALL,ALL);
 	private static final CategoryFilter allFilter = new CategoryFilter(OTHER, ALL);
-        private static final CategoryFilter backgroundFilter = new CategoryFilter(OTHER, ALL ^ RIM ^ BALL ^ OTHER);
+        private static final CategoryFilter backgroundFilter = new CategoryFilter(OTHER, ALL ^ BALL ^ OTHER);
 	
 	// input control
 	
@@ -227,14 +224,8 @@ public class Nivel3 extends SimulationFrame{
 	// cache of bodies to remove
 	private final List<SimulationBody> toRemove = new ArrayList<SimulationBody>();
 	
-	private final Object SCORE_BEGIN_IDENTIFIER = new Object();
-	private final Object SCORE_COMPLETE_IDENTIFIER = new Object();
-	
 	private final class BallUserData {
 		public final Vector2 start = new Vector2();
-		public boolean enteredScoreBegin = false;
-		public boolean enteredScoreComplete = false;
-		public boolean scored = false;
 	}
 	
 	/**
@@ -291,10 +282,6 @@ public class Nivel3 extends SimulationFrame{
 	protected void printControls() {
 		super.printControls();
 		
-		printControl("Move Up", "Up", "Use the up key to move the shoot position up");
-		printControl("Move Down", "Down", "Use the down key to move the shoot position down");
-		printControl("Move Left", "Left", "Use the left key to move the shoot position left");
-		printControl("Move Right", "Right", "Use the right key to move the shoot position right");
 		printControl("Angle Up", "W", "Use the page up key to increase the shoot angle");
 		printControl("Angle Down", "A", "Use the page down key to decrease the shoot angle");
 		printControl("Increase Power", "+", "Use the + key to increase the shoot power");
@@ -344,40 +331,6 @@ public class Nivel3 extends SimulationFrame{
                 
                 createStructureAndPigs(bf);
 		
-		// create the rim
-		SimulationBody rim = new SimulationBody(new Color(255, 69, 0));
-		bf = rim.addFixture(Geometry.createRectangle(2.0, 0.2));
-		bf.setFilter(rimFilter);
-		bf = rim.addFixture(Geometry.createRectangle(0.2, 0.2));
-		bf.setFilter(allFilter);
-		bf.getShape().translate(-10.0, 50.0);
-		rim.setMass(MassType.INFINITE);
-		rim.translate(-16.0, 50.0);
-		this.world.addBody(rim);
-                
-		// save for rendering later 
-		// NOTE: in the real world you'd implement rendering a smarter
-		// way by grouping objects into layers
-		this.rim = rim;
-		
-                
-		// for scoring setup some sensor bodies
-		SimulationBody sensorScoreBegin = new SimulationBody(new Color(255, 0, 0, 0));
-		sensorScoreBegin.setUserData(SCORE_BEGIN_IDENTIFIER);
-		bf = sensorScoreBegin.addFixture(Geometry.createRectangle(2.0, 2.0));
-		bf.setSensor(true); 
-		sensorScoreBegin.setMass(MassType.INFINITE);
-		sensorScoreBegin.translate(-21.0, 50.0);
-		this.world.addBody(sensorScoreBegin);
-		
-		SimulationBody sensorScoreAdd = new SimulationBody(new Color(0, 255, 0, 0));
-		sensorScoreAdd.setUserData(SCORE_COMPLETE_IDENTIFIER);
-		bf = sensorScoreAdd.addFixture(Geometry.createRectangle(1.7, 1.25));
-		bf.setSensor(true);
-		sensorScoreAdd.setMass(MassType.INFINITE);
-		sensorScoreAdd.translate(.26, 50.0);
-		this.world.addBody(sensorScoreAdd);
-                
                 //  Create the Slingshot
                 body = new ImageBody(RED_BIRD);  // Primer pajaro a usar
                 bf = body.addFixture(Geometry.createCircle(1.0));
@@ -412,29 +365,14 @@ public class Nivel3 extends SimulationFrame{
 		};
 		this.world.addBoundsListener(bl);
                 
-		// use a CollisionListener to detect when the body is in the scoring zones
+		// Detectar colisiones entre diferentes objetos
 		CollisionListener<SimulationBody, BodyFixture> cl = new CollisionListenerAdapter<SimulationBody, BodyFixture>() {
-                        
                         
 			@Override
 			public boolean collision(NarrowphaseCollisionData<SimulationBody, BodyFixture> collision) {
 				SimulationBody b1 = collision.getBody1();
 				SimulationBody b2 = collision.getBody2();
-                                System.out.println(" " + nCerdos);
-				if (isBall(b1) && isScoreBegin(b2)) {
-					BallUserData bud = (BallUserData)b1.getUserData();
-					if (!bud.scored) {
-						bud.enteredScoreBegin = true;
-						bud.enteredScoreComplete = false;
-					}
-				} else if (isBall(b1) && isScoreComplete(b2)) {
-					BallUserData bud = (BallUserData)b1.getUserData();
-					if (!bud.scored && bud.enteredScoreBegin) {
-						bud.enteredScoreComplete = true;
-					} else {
-						bud.enteredScoreBegin = false;
-					}
-				}else if (isBall(b1) && isPig(b2) && canKill == true){  //Todo esto no permite matar dos cerdos seguidos (Para arreglar bug)
+				if (isBall(b1) && isPig(b2) && canKill == true){  //Todo esto no permite matar dos cerdos seguidos (Para arreglar bug)
                                     canKill = false;
                                     killPig(b2);
                                     killSound();
@@ -517,35 +455,6 @@ public class Nivel3 extends SimulationFrame{
 		};
 		this.world.addCollisionListener(cl);
 		
-		// use a ContactListener to detect when the body leaves the scoring zone
-		ContactListener<SimulationBody> ccl = new ContactListenerAdapter<SimulationBody>() {
-			@Override
-			public void end(ContactCollisionData<SimulationBody> collision, Contact contact) {
-				SimulationBody b1 = collision.getBody1();
-				SimulationBody b2 = collision.getBody2();
-				
-				if (isBall(b1) && isScoreComplete(b2)) {
-					BallUserData bud = (BallUserData)b1.getUserData();
-					// 1. if the ball hasn't been scored yet
-					// 2. if the ball entered the score begin region
-					// 3. if the ball entered the score complete region
-					// 4. if it's now exiting the score complete region
-					// then count it as a score
-					if (!bud.scored && bud.enteredScoreBegin && bud.enteredScoreComplete) {
-						bud.scored = true;
-						
-						// was it a two pointer or three pointer?
-						
-					} else {
-						bud.enteredScoreBegin = false;
-						bud.enteredScoreComplete = false;
-					}
-				}
-				super.end(collision, contact);
-			}
-		};
-		this.world.addContactListener(ccl);
-                
         // Create and add the custom MouseAdapter (Para actualizar velocidad y direccion de los pajaros, etc)
         canvas.addMouseListener(new MouseAdapter() {
             @Override
@@ -629,17 +538,6 @@ public class Nivel3 extends SimulationFrame{
             this.world.addBody(circle);
         }
         
-        private void createImgBlock(BodyFixture bf, double w, double h, double density, double friction, MassType m, double x, double y, BufferedImage img){
-            //Bloques con imagen
-            ImageBody circle = new ImageBody(img);
-            bf = circle.addFixture(Geometry.createRectangle(w, h), density, friction, 0.5);
-            bf.setFilter(ballFilter);
-            circle.setMass(m);
-            circle.translate(x, y);
-            blocks.add(circle);
-            this.world.addBody(circle);
-        }
-        
         private boolean isPig(SimulationBody b2){
             for(SimulationBody c : pigs){
                 if(b2==c){
@@ -691,8 +589,8 @@ public class Nivel3 extends SimulationFrame{
             createBlock(bf, new Color(121, 92, 50), 2, 6, 14, 30, MassType.NORMAL, 16, 2, 10);
             createBlock(bf, new Color(121, 92, 50), 2, 6, 14, 30, MassType.NORMAL, 32, 2, 100);
             createBlock(bf, new Color(121, 92, 50), 2, 6, 14, 30, MassType.NORMAL, 24, 2, 100);
-            createBlock(bf, new Color(121, 92, 50), 14, 1, 14, 30, MassType.NORMAL, 24, 5.5, 200);
-            createBlock(bf, new Color(121, 92, 50), 14, 1, 14, 30, MassType.NORMAL, 24, 6.5, 200);
+            createBlock(bf, new Color(121, 92, 50), 14, 1, 14, 30, MassType.NORMAL, 24, 5.5, 250);
+            createBlock(bf, new Color(121, 92, 50), 14, 1, 14, 30, MassType.NORMAL, 24, 6.5, 250);
             createAllowedBlock(bf, new Color(121, 92, 50), 2, 2, 4, 30, MassType.NORMAL, 20, 0, 5);
             createAllowedBlock(bf, new Color(121, 92, 50), 2, 2, 4, 30, MassType.NORMAL, 28, 0, 5);
             createBlock(bf, Color.DARK_GRAY, 2, 2, 14, 30, MassType.NORMAL, 16, 6, 600);
@@ -712,14 +610,6 @@ public class Nivel3 extends SimulationFrame{
 	
 	private boolean isBall(SimulationBody body) {
 		return body.getUserData() instanceof BallUserData;
-	}
-	
-	private boolean isScoreBegin(SimulationBody body) {
-		return body.getUserData() == SCORE_BEGIN_IDENTIFIER;
-	}
-	
-	private boolean isScoreComplete(SimulationBody body) {
-		return body.getUserData() == SCORE_COMPLETE_IDENTIFIER;
 	}
 	
 	/* (non-Javadoc)
@@ -839,10 +729,6 @@ public class Nivel3 extends SimulationFrame{
 				y += vy * t * scale;
 			}
 		}
-		
-		// render the rim again because we want it to 
-		// look like the bballs are going through the hoop
-		this.render(g, elapsedTime, this.rim);
 	}
 	
 	/* (non-Javadoc)
@@ -851,26 +737,6 @@ public class Nivel3 extends SimulationFrame{
 	@Override
 	protected void handleEvents() {
 		super.handleEvents();
-		
-                /*
-		if (this.left.isActive()) {
-			this.start.x -= 0.05;
-		}
-		if (this.right.isActive()) {
-			this.start.x += 0.05;
-			if (this.start.x >= 7.5) {
-				this.start.x = 7.5;
-			}
-		}
-		if (this.down.isActive()) {
-			this.start.y -= 0.05;
-		}
-		if (this.up.isActive()) {
-			this.start.y += 0.05;
-			if (this.start.y >= 3.0) {
-				this.start.y = 3.0;
-			}
-		}*/
 		if (this.angleUp.isActive()) {
                     if(Math.toDegrees(this.direction.getDirection()) < 65){   //Limita el angulo a 65 grados max
                         this.direction.rotate(0.01);
@@ -958,23 +824,6 @@ public class Nivel3 extends SimulationFrame{
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see org.dyn4j.samples.framework.SimulationFrame#onPickingStart(org.dyn4j.samples.framework.SimulationBody)
-	 */
-	@Override
-	protected void onBodyMousePickingStart(SimulationBody body) {
-		super.onBodyMousePickingStart(body);
-		
-		// if the user picks up a ball using the mouse
-		// disable scoring for that ball   
-		if (isBall(body)) {
-			BallUserData bud = (BallUserData)body.getUserData();
-			bud.scored = true;
-			bud.enteredScoreBegin = false;
-			bud.enteredScoreComplete = false;
-		}
-	}
-	
         //Funcion que determine el final del juego (Cuando gasta todos sus pajaros o mata a todos los cerdos)
         private void endgame(){
             if(nPajaros == 0 && nCerdos !=0){ //Perdió la partida (Se quedó sin pajaros y no mató a todos los cerdos)
@@ -993,8 +842,8 @@ public class Nivel3 extends SimulationFrame{
 	 * Entry point for the example application.
 	 * @param args command line arguments
 	 */
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		Nivel3 simulation = new Nivel3();
 		simulation.run();
-	}*/
+	}
 }

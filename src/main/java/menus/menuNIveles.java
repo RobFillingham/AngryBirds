@@ -4,6 +4,8 @@ package menus;
 import ProyectoFinal.Nivel1;
 import ProyectoFinal.Nivel2;
 import ProyectoFinal.Nivel3;
+import ProyectoFinal.Nivel4;
+import ProyectoFinal.Nivel5;
 import ProyectoFinal.Score;
 import ProyectoFinal.Sqr;
 import menus.Menu_1;
@@ -236,8 +238,11 @@ public class menuNIveles extends javax.swing.JFrame {
     private void lvl2buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lvl2buttonActionPerformed
         // TODO add your handling code here:
         if(diplvl2 == true){
+
             stop();
             
+
+
             Nivel2 lvl2 = new Nivel2();
             lvl2.setVisible(true);
             lvl2.run();
@@ -268,7 +273,6 @@ public class menuNIveles extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(diplvl3 == true){
             stop();
-            //daddy.clip.stop();
             
             Nivel3 lvl3 = new Nivel3();
             lvl3.setVisible(true);
@@ -281,10 +285,10 @@ public class menuNIveles extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(diplvl4 == true){
             stop();
-            /*
-            Nivel4 lvl4 = new Nivel4(this);
+            
+            Nivel4 lvl4 = new Nivel4();
             lvl4.setVisible(true);
-            lvl4.run();*/
+            lvl4.run();
             dispose();
         }
     }//GEN-LAST:event_lvl4buttonActionPerformed
@@ -292,11 +296,12 @@ public class menuNIveles extends javax.swing.JFrame {
     private void lvl5buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lvl5buttonActionPerformed
         // TODO add your handling code here:
         if(diplvl5 == true){
+
             stop();
-            /*
-            Nivel4 lvl4 = new Nivel5(this);
+            Nivel5 lvl5 = new Nivel5();
+
             lvl5.setVisible(true);
-            lvl5.run();*/
+            lvl5.run();
             dispose();
         }
     }//GEN-LAST:event_lvl5buttonActionPerformed
