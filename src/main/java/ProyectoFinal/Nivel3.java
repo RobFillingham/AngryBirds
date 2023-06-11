@@ -4,7 +4,6 @@
  */
 package ProyectoFinal;
 
-
 /*
  * Copyright (c) 2010-2022 William Bittle  http://www.dyn4j.org/
  * All rights reserved.
@@ -30,8 +29,6 @@ package ProyectoFinal;
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
-import ProyectoFinal.EndGame;
 import org.dyn4j.samples.*;
 import java.awt.Color;
 import java.awt.Font;
@@ -98,8 +95,13 @@ import org.dyn4j.world.listener.ContactListenerAdapter;
  * @version 5.0.0
  * @since 5.0.0
  */
-public class Nivel2 extends SimulationFrame {
-	/** Generated serial version id */
+
+/**
+ *
+ * @author César Reyes Torres
+ */
+public class Nivel3 extends SimulationFrame{
+    	/** Generated serial version id */
 	private static final long serialVersionUID = 8357585473409415833L;
 	
 	// images * @since 5.0.0
@@ -214,8 +216,10 @@ public class Nivel2 extends SimulationFrame {
 
         private final List<SimulationBody> bird = new ArrayList<SimulationBody>();
         private final List<SimulationBody> slingshot = new ArrayList<SimulationBody>();
+        private final List<SimulationBody> allowedBlocks = new ArrayList<SimulationBody>();
 
         private int totalBlocks;
+        private boolean canKill;
 
 	
 	private SimulationBody rim;
@@ -236,19 +240,20 @@ public class Nivel2 extends SimulationFrame {
 	/**
 	 * Default constructor.
 	 */
-        
-        public Nivel2() {
-		super("Angry Birds - Level 1");
+	//public Nivel3(JFrame daddy) {
+        public Nivel3() {
+		super("Angry Birds - Level 3");
 		
                 super.setMousePickingEnabled(false);
-               
+                
+                //this.papa = (menuNIveles)daddy;
                 
 		this.up = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_UP);
 		this.down = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_DOWN);
 		this.left = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_LEFT);
 		this.right = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_RIGHT);
-		this.angleUp = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_PAGE_UP);
-		this.angleDown = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_PAGE_DOWN);
+		this.angleUp = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_W);
+		this.angleDown = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_A);
 		this.plus = new BooleanStateKeyboardInputHandler(this.canvas, new Key(KeyEvent.VK_PLUS), new Key(KeyEvent.VK_ADD), new Key(KeyEvent.VK_EQUALS, KeyEvent.SHIFT_DOWN_MASK));
 		this.minus = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_MINUS, KeyEvent.VK_SUBTRACT);
 		this.shoot = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_S);
@@ -265,8 +270,8 @@ public class Nivel2 extends SimulationFrame {
 		this.shoot.install();
 		this.path.install();
                 
-                this.nP = 3;    //Constantes
-                this.nC = 1;    //Constantes
+                this.nP = 2;    //Constantes
+                this.nC = 3;    //Constantes
                 this.nPajaros = nP;
                 this.nCerdos = nC;
                 this.canMove = true;
@@ -275,48 +280,7 @@ public class Nivel2 extends SimulationFrame {
                 this.huevaso = false;
                 this.nColisiones = 4;
                 this.blockPower = false;
-        
-	}
-        
-	public Nivel2(JFrame daddy) {
-		super("Angry Birds - Level 1");
-		
-                super.setMousePickingEnabled(false);
-                
-                this.papa = (menuNIveles)daddy;
-                
-		this.up = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_UP);
-		this.down = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_DOWN);
-		this.left = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_LEFT);
-		this.right = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_RIGHT);
-		this.angleUp = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_PAGE_UP);
-		this.angleDown = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_PAGE_DOWN);
-		this.plus = new BooleanStateKeyboardInputHandler(this.canvas, new Key(KeyEvent.VK_PLUS), new Key(KeyEvent.VK_ADD), new Key(KeyEvent.VK_EQUALS, KeyEvent.SHIFT_DOWN_MASK));
-		this.minus = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_MINUS, KeyEvent.VK_SUBTRACT);
-		this.shoot = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_S);
-		this.path = new ToggleStateKeyboardInputHandler(this.canvas, KeyEvent.VK_P);
-		
-		this.up.install();
-		this.down.install();
-		this.left.install();
-		this.right.install();
-		this.angleDown.install();
-		this.angleUp.install();
-		this.plus.install();
-		this.minus.install();
-		this.shoot.install();
-		this.path.install();
-                
-                this.nP = 3;    //Constantes
-                this.nC = 1;    //Constantes
-                this.nPajaros = nP;
-                this.nCerdos = nC;
-                this.canMove = true;
-                this.circle = new ImageBody(RED_BIRD);
-                this.powerUsed = false;
-                this.huevaso = false;
-                this.nColisiones = 4;
-                this.blockPower = false;
+                this.canKill = true;
         
 	}
 	
@@ -331,8 +295,8 @@ public class Nivel2 extends SimulationFrame {
 		printControl("Move Down", "Down", "Use the down key to move the shoot position down");
 		printControl("Move Left", "Left", "Use the left key to move the shoot position left");
 		printControl("Move Right", "Right", "Use the right key to move the shoot position right");
-		printControl("Angle Up", "Pg Up", "Use the page up key to increase the shoot angle");
-		printControl("Angle Down", "Pg Down", "Use the page down key to decrease the shoot angle");
+		printControl("Angle Up", "W", "Use the page up key to increase the shoot angle");
+		printControl("Angle Down", "A", "Use the page down key to decrease the shoot angle");
 		printControl("Increase Power", "+", "Use the + key to increase the shoot power");
 		printControl("Decrease Power", "-", "Use the - key to decrease the shoot power");
 		printControl("Shoot", "s", "Use the s key to shoot a basketball");
@@ -343,17 +307,18 @@ public class Nivel2 extends SimulationFrame {
 	 * Creates game objects and adds them to the world.
 	 */
 	protected void initializeWorld() {
-                this.start.set(-28.0, 0.95);
-		//this.start.set(-10.0, -3.0);
-		this.direction.set(new Vector2(Math.toRadians(45)));
-		this.power = 20.0;
+                this.start.set(-25.0, 1.0);
+		this.direction.set(new Vector2(Math.toRadians(15)));
+		this.power = 15.0;
                 
-                nPajaros = nP;  //Para reseteo
+                //Para reseteo
+                nPajaros = nP;  
                 nCerdos = nC;
                 powerUsed = false;
                 huevaso = false;
                 nColisiones = 0;
                 blockPower = false;
+                canKill = true;
 		
                 //Limites del mundo (Cualquiera que exceda, se elimina)
 		AxisAlignedBounds bounds = new AxisAlignedBounds(146, 200);
@@ -385,9 +350,9 @@ public class Nivel2 extends SimulationFrame {
 		bf.setFilter(rimFilter);
 		bf = rim.addFixture(Geometry.createRectangle(0.2, 0.2));
 		bf.setFilter(allFilter);
-		bf.getShape().translate(-1.0, 0.0);
+		bf.getShape().translate(-10.0, 50.0);
 		rim.setMass(MassType.INFINITE);
-		rim.translate(9.5, 50.0);
+		rim.translate(-16.0, 50.0);
 		this.world.addBody(rim);
                 
 		// save for rendering later 
@@ -402,7 +367,7 @@ public class Nivel2 extends SimulationFrame {
 		bf = sensorScoreBegin.addFixture(Geometry.createRectangle(2.0, 2.0));
 		bf.setSensor(true); 
 		sensorScoreBegin.setMass(MassType.INFINITE);
-		sensorScoreBegin.translate(9.5, 5.0);
+		sensorScoreBegin.translate(-21.0, 50.0);
 		this.world.addBody(sensorScoreBegin);
 		
 		SimulationBody sensorScoreAdd = new SimulationBody(new Color(0, 255, 0, 0));
@@ -410,7 +375,7 @@ public class Nivel2 extends SimulationFrame {
 		bf = sensorScoreAdd.addFixture(Geometry.createRectangle(1.7, 1.25));
 		bf.setSensor(true);
 		sensorScoreAdd.setMass(MassType.INFINITE);
-		sensorScoreAdd.translate(9.5, 3.0);
+		sensorScoreAdd.translate(.26, 50.0);
 		this.world.addBody(sensorScoreAdd);
                 
                 //  Create the Slingshot
@@ -426,18 +391,27 @@ public class Nivel2 extends SimulationFrame {
 			@Override
 			public void outside(SimulationBody body) {
 				toRemove.add(body);
-                                if(isBird(body)){  //(INTENTO)Arrgelar problema donde el huevo no se elimina y genera otra oportunidad de poder
+                                if(isBird(body)){  //Arrgelar problema donde el huevo no se elimina y genera otra oportunidad de poder
                                     powerUsed = true;
+                                    if(nPajaros >0){    
+                                            SimulationBody birdRR;
+                                            switch(nPajaros){  // Cambiar dependiendo el pajaro (Incluso agregar case)
+                                                case 1: {
+                                                    birdRR = new ImageBody(YELLOW_BIRD);
+                                                    BodyFixture bf = birdRR.addFixture(Geometry.createCircle(1.0));
+                                                    bf.setFilter(backgroundFilter);
+                                                    birdRR.setMass(MassType.INFINITE);
+                                                    birdRR.translate(-24.0,2);
+                                                    world.addBody(birdRR);
+                                                    break;
+                                                }
+                                            }
+                                        }
                                 }
 			}
 		};
 		this.world.addBoundsListener(bl);
                 
-                
-     
-
-                
-		
 		// use a CollisionListener to detect when the body is in the scoring zones
 		CollisionListener<SimulationBody, BodyFixture> cl = new CollisionListenerAdapter<SimulationBody, BodyFixture>() {
                         
@@ -446,6 +420,7 @@ public class Nivel2 extends SimulationFrame {
 			public boolean collision(NarrowphaseCollisionData<SimulationBody, BodyFixture> collision) {
 				SimulationBody b1 = collision.getBody1();
 				SimulationBody b2 = collision.getBody2();
+                                System.out.println(" " + nCerdos);
 				if (isBall(b1) && isScoreBegin(b2)) {
 					BallUserData bud = (BallUserData)b1.getUserData();
 					if (!bud.scored) {
@@ -459,34 +434,43 @@ public class Nivel2 extends SimulationFrame {
 					} else {
 						bud.enteredScoreBegin = false;
 					}
-				}else if (isBall(b1) && isPig(b2)){
-                                    nCerdos--;
+				}else if (isBall(b1) && isPig(b2) && canKill == true){  //Todo esto no permite matar dos cerdos seguidos (Para arreglar bug)
+                                    canKill = false;
+                                    killPig(b2);
+                                    killSound();
+                                }else if (isBird(b2 ) && isPig(b1) && canKill == true){
+                                    canKill = false;
+                                    killPig(b1);
+                                    killSound();
+                                }else if(isBlock(b1) && isPig(b2) && canKill == true){
+                                    canKill = false;
+                                    killPig(b2);
+                                    killSound();
+                                }else if(isBlock(b2) && isPig(b1) && canKill == true){
+                                    canKill = false;
+                                    killPig(b1);
                                     killSound();
                                 }
-                                else if(isBlock(b1) && isPig(b2)){
-                                    nCerdos--;
-                                    killSound();
-                                }else if(isBird(b1)){
-                                    if(nColisiones == 350){
+                                if(isBird(b1) && isBlock(b2)){
+                                    canKill = true;
+                                }else if(isBlock(b1) && isBird(b2)){
+                                    canKill = true;
+                                }else if(isBird(b1) && isAllowedBlock(b2)){
+                                    canKill = true;
+                                }else if(isAllowedBlock(b1) && isBird(b2)){
+                                    canKill = true;
+                                }
+                                if(isBird(b1)){
+                                    if(nColisiones == 200){
                                         powerUsed = false;
                                         toRemove.add(world.getBody(world.getBodyCount()-1));
-                                        // Mostrar el siguiente pajaro en la resortera
-                                          // Dibiuar en la resortera el siguiente pajaro
-                                          
+                                        // Mostrar el siguiente pajaro en la resortera (En caso de que muera desaparezca por colicion)
+                                        // El otro caso esta en outside, cuando el pajaro sale del mundo delimitado
                                         if(nPajaros >0){    
                                             SimulationBody birdRR;
-                                            switch(nPajaros){
-                                                case 2: {
-                                                    birdRR = new ImageBody(YELLOW_BIRD);
-                                                    BodyFixture bf = birdRR.addFixture(Geometry.createCircle(1.0));
-                                                    bf.setFilter(backgroundFilter);
-                                                    birdRR.setMass(MassType.INFINITE);
-                                                    birdRR.translate(-24.0,2);
-                                                    world.addBody(birdRR);
-                                                    break;
-                                                }
+                                            switch(nPajaros){  // Cambiar dependiendo el pajaro (Incluso agregar case)
                                                 case 1: {
-                                                    birdRR = new ImageBody(WHITE_BIRD);
+                                                    birdRR = new ImageBody(YELLOW_BIRD);
                                                     BodyFixture bf = birdRR.addFixture(Geometry.createCircle(1.0));
                                                     bf.setFilter(backgroundFilter);
                                                     birdRR.setMass(MassType.INFINITE);
@@ -499,45 +483,24 @@ public class Nivel2 extends SimulationFrame {
                                     }else{
                                         nColisiones++;
                                     }
-                                }//System.out.println("power " + powerUsed + "   " + blockPower + "    " + nPajaros + "  " );
+                                }
                                 if(isBall(b1) && b1 == world.getBody(world.getBodyCount()-1) && powerUsed == false){
                                     powerUsed = true;
                                     blockPower = true;  //Bloquea el uso del poder cuando el pajaro ya chocó y no uso su poder
                                 }
-                                if (isBall(b1) && b1 == world.getBody(world.getBodyCount()-1) && powerUsed == true && nPajaros == 0 && blockPower == false) {  //Para diferenciar el pajaro del huevo
-                                    if(huevaso == false){  //Limitar a un huevo
-                                        
-                                        if(nColisiones == 0){  //Elimina el huevo lanzado
-                                            toRemove.add(world.getBody(world.getBodyCount()-1));
-                                            nColisiones++;
-                                        }
-                                        
-                                        huevaso = true;  //Se puede dejar asi, solo cuando haya un solo pajaro blanco
-                                        Vector2 position = circle.getTransform().getTranslation();  //Obtener coordenadas del objeto en el mundo
-                                        
-                                        // create a circle
-                                        BallUserData data = new BallUserData();
-                                        data.start.x = position.x;
-                                        data.start.y = position.y;
-                                        circle = new ImageBody(WHITE_BIRD_BOOM);
-                                        BodyFixture bf = circle.addFixture(Geometry.createCircle(3), 200.0, 0, .5);
-                                        bf.setFilter(ballFilter);
-                                        circle.setColor(Color.white);
-                                        circle.setUserData(data);
-                                        circle.setMass(MassType.NORMAL);
-                                        circle.translate(world.getBody(world.getBodyCount()-1).getWorldCenter().x , world.getBody(world.getBodyCount()-1).getWorldCenter().y);
-                                        //Se añade "bomba de huevo"
-                                        world.addBody(circle);
-                                    }else{
-                                        if(nColisiones == 15){//  Detecta el limite de colisiones, para eliminar el objeto "bomba"
-                                            nColisiones++;
-                                            toRemove.add(world.getBody(world.getBodyCount()-1));
-                                        }
-                                        nColisiones++;
-                                    }
-				}
                                 
                                 if(isBlock(b2) && isBall(b1)){
+                                   score+=1000;
+                                    b2.quality -= (b1.getLinearVelocity().getMagnitude()/4);
+                                   
+                                    if (b2.quality<=0){ 
+                                        toRemove.add(b2);
+                                        score+=5000;
+                                    }else{ // si la calidad sigue siendo buena entonces solo hacemos mas oscuro el bloque
+                                        b2.setColor(b2.underColor);
+                                    }
+                                }  
+                                if(isAllowedBlock(b2) && isBall(b1)){
                                    score+=1000;
                                     b2.quality -= (b1.getLinearVelocity().getMagnitude()/4);
                                    
@@ -588,74 +551,17 @@ public class Nivel2 extends SimulationFrame {
             @Override
             public void mousePressed(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    
-                    if(nPajaros == 1){ //Cambiar a numPajaro-1
+                    if(nPajaros == 0){ //Cambiar a numPajaro-1 (Pajaro amarillo)
                         if(powerUsed == false && blockPower == false){  //Limitar el poder a solo un uso
                             powerUsed = true;
                             //Esta declarado "global", para acceder a el desde otras funciones (poderes de los pajaros)
                             circle.setLinearVelocity(circle.getLinearVelocity().x*3, circle.getLinearVelocity().y*3);
                         }
                     }
-                    if(nPajaros == 0){ //Cambiar a numPajaro-1
-                        if(powerUsed == false && blockPower == false){
-                            powerUsed = true;
-                            
-                            circle.setLinearVelocity(45.0, 45.0);
-                            Vector2 position = circle.getTransform().getTranslation();  //Obtener coordenadas del objeto en el mundo
-                            
-                            // create a circle
-                            BallUserData data = new BallUserData();
-                            data.start.x = position.x;
-                            data.start.y = position.y;
-			
-                            circle = new ImageBody(WHITE_BIRD_EGG);
-                            circle.setUserData(data);
-                            BodyFixture bf = circle.addFixture(Geometry.createCircle(0.5), 0.5, 100, 0.1);
-                            bf.setFilter(ballFilter);
-                            circle.setAngularVelocity(2.0);
-                            circle.setMass(MassType.NORMAL);
-                            circle.translate(position.x,position.y-1);
-                            world.addBody(circle);
-                        }
-                    }
                 }
             }
         });
         }
-        
-        
-            private void createStructureAndPigs(BodyFixture bf){
-
-                //Bloques
-                createBlock(bf, Color.DARK_GRAY, 1, 8, 9, 15, MassType.NORMAL, 14, 0, 1500); // a la calidad se le resta la velocidad del otro objeto en una colision,
-                createBlock(bf, Color.DARK_GRAY, 1, 8, 9, 15, MassType.NORMAL, 18, 0,1500); // cuando la calidad sea negativa el objeto se remueve del mundo
-                createBlockNotInArray(bf, Color.DARK_GRAY, 5, 1, 9, 15, MassType.NORMAL, 16, 8, 1500); // a la calidad se le resta la velocidad del otro objeto en una colision,
-
-
-                createBlockNotInArray(bf, new Color(172, 216, 250), 5, 1, 3, 15, MassType.NORMAL, 23, -2, 700);
-
-
-                createPig(bf, "pigHelmet.png", 2.0, 1, 0.2, MassType.NORMAL, 16,  9);
-                createPig(bf, "pig.png", 1.0, 1, 0.2, MassType.NORMAL, 23,  -2);
-                createPig(bf, "pig.png", 0.7, 1, 0.2, MassType.NORMAL, 16,  -2);
-
-            }
-            
-        private void createBlockNotInArray(BodyFixture bf, Color color, double width, double height, double density, double friction, MassType m, double x, double y, int quality){
-
-            SimulationBody blockC = new SimulationBody(color, quality);
-            bf = blockC.addFixture(Geometry.createRectangle(width, height));
-            bf.setFilter(ballFilter);
-            bf.setDensity(density);
-            bf.setFriction(friction);
-            blockC.setMass(m);
-            blockC.translate(x, y);
-            blockC.setLinearDamping(0.8);
-            
-
-            this.world.addBody(blockC);
-        }
-
         
         private void killSound(){
             new Thread(){
@@ -696,12 +602,23 @@ public class Nivel2 extends SimulationFrame {
             this.world.addBody(blockC);
         }
         
-        
-        
+        //Add to the world a allowed block (can touch birds)
+        private void createAllowedBlock(BodyFixture bf, Color color, double width, double height, double density, double friction, MassType m, double x, double y, int quality){
+            SimulationBody blockC = new SimulationBody(color, quality);
+            bf = blockC.addFixture(Geometry.createRectangle(width, height));
+            bf.setFilter(ballFilter);
+            bf.setDensity(density);
+            bf.setFriction(friction);
+            blockC.setMass(m);
+            blockC.translate(x, y);
+            blockC.setLinearDamping(0.8);
+            allowedBlocks.add(blockC);
+            this.world.addBody(blockC);
+        }
 
         private void createPig(BodyFixture bf, String classPath, double radius, double density, double friction, MassType m, double x, double y){
             //Cerdos
-            ImageBody circle = new ImageBody(getImageSuppressExceptions(classPath));
+            ImageBody circle = new ImageBody(NORMAL_PIG);
             //circle.setUserData(data);
             bf = circle.addFixture(Geometry.createCircle(radius), density, friction, 0.5);
             bf.setFilter(ballFilter);
@@ -726,17 +643,31 @@ public class Nivel2 extends SimulationFrame {
         private boolean isPig(SimulationBody b2){
             for(SimulationBody c : pigs){
                 if(b2==c){
-                    toRemove.add(b2);
-                    //System.out.println("Colission");
                     return true;
                 }
-                //System.out.println("for");
             }
-            //System.out.println("a");
             return false;
+        }
+        
+        private void killPig(SimulationBody b2){
+            for(SimulationBody c : pigs){
+                if(b2==c){
+                    toRemove.add(b2);
+                    nCerdos--;
+                }
+            }
         }
 
         private boolean isBlock(SimulationBody b2){
+            for(SimulationBody e : blocks){
+                if(b2 == e)
+                    return true;
+
+            }
+            return false;
+        }
+        
+        private boolean isAllowedBlock(SimulationBody b2){
             for(SimulationBody e : blocks){
                 if(b2 == e)
                     return true;
@@ -753,17 +684,30 @@ public class Nivel2 extends SimulationFrame {
             }
             return false;
         }
-        
-        private boolean isSlingshot(SimulationBody b2){
-            for(SimulationBody e : slingshot){
-                if(b2 == e)
-                    return true;
 
-            }
-            return false;
+        private void createStructureAndPigs(BodyFixture bf){
+            //Bloques
+            createBlock(bf, new Color(75, 60, 30), 19, 3, 14, 30, MassType.INFINITE, 24, -2.5, 99999);
+            createBlock(bf, new Color(121, 92, 50), 2, 6, 14, 30, MassType.NORMAL, 16, 2, 10);
+            createBlock(bf, new Color(121, 92, 50), 2, 6, 14, 30, MassType.NORMAL, 32, 2, 100);
+            createBlock(bf, new Color(121, 92, 50), 2, 6, 14, 30, MassType.NORMAL, 24, 2, 100);
+            createBlock(bf, new Color(121, 92, 50), 14, 1, 14, 30, MassType.NORMAL, 24, 5.5, 200);
+            createBlock(bf, new Color(121, 92, 50), 14, 1, 14, 30, MassType.NORMAL, 24, 6.5, 200);
+            createAllowedBlock(bf, new Color(121, 92, 50), 2, 2, 4, 30, MassType.NORMAL, 20, 0, 5);
+            createAllowedBlock(bf, new Color(121, 92, 50), 2, 2, 4, 30, MassType.NORMAL, 28, 0, 5);
+            createBlock(bf, Color.DARK_GRAY, 2, 2, 14, 30, MassType.NORMAL, 16, 6, 600);
+            createBlock(bf, Color.DARK_GRAY, 2, 2, 14, 30, MassType.NORMAL, 32, 6, 600);
+            createBlock(bf, new Color(125, 255, 255), 1.5, 6, 14, 30, MassType.NORMAL, 20, 10, 10);
+            createBlock(bf, new Color(125, 255, 255), 1.5, 6, 41, 30, MassType.NORMAL, 28, 10, 10);
+            createBlock(bf, new Color(121, 92, 50), 1.5, 6, 14, 30, MassType.NORMAL, 24, 10, 200);
+            createBlock(bf, new Color(121, 92, 50), 8, 1, 14, 30, MassType.NORMAL, 24, 13.5, 200);
+            createAllowedBlock(bf, new Color(121, 92, 50), 1, 1, 4, 30, MassType.NORMAL, 24, 14.5, 5);
+            
+            //Cerdos
+            createPig(bf, "pig2.png", 1.5, 1, 0.2, MassType.NORMAL, 20,  2.5);
+            createPig(bf, "pig2.png", 1.5, 1, 0.2, MassType.NORMAL, 28,  2.5);
+            createPig(bf, "pig2.png", 1.5, 1, 0.2, MassType.NORMAL, 24,  16.5);
         }
-
-        
         
 	
 	private boolean isBall(SimulationBody body) {
@@ -807,7 +751,7 @@ public class Nivel2 extends SimulationFrame {
 	protected void initializeSettings() {
 		super.initializeSettings();
 		this.start.set(-10.0, -3.0);
-		this.direction.set(new Vector2(Math.toRadians(45)));
+		this.direction.set(new Vector2(Math.toRadians(15)));
 		this.power = 15.0;
 	}
 	
@@ -829,7 +773,6 @@ public class Nivel2 extends SimulationFrame {
                 }
                 if (allObjectsStopped) {
                     // Todos los objetos están sin moverse
-                    //powerUsed = false;  //Resetear la posibilidad de usar poder
                     blockPower = false;  //Resetear la posibilidad
                     if(nPajaros == 0 || nCerdos == 0){ //Si gasto todos los pajaros o Si mató a todos los cerdos
                         canMove = false;  //Ayuda a que no se pueda lanzar otro pajaro, a menos que todo este inmovil
@@ -855,9 +798,13 @@ public class Nivel2 extends SimulationFrame {
 		// render the power and angle
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("SansSerif", Font.PLAIN, 12));
-		g.drawString(String.format("Power: %1$.2f", this.power), 20, 70);
-		g.drawString(String.format("Angle: %1$.2f", Math.toDegrees(this.direction.getDirection())), 20, 85);
-		g.drawString(String.format("Position: (%1$.2f, %2$.2f)", this.start.x, this.start.y), 20, 100);
+                g.drawString(String.format("Pause: space"), 20, 70);
+		g.drawString(String.format("Restart: R"), 20, 86);
+		g.drawString(String.format("Restart camera: H"), 20, 100);
+                g.drawString(String.format("Throw: S"), 20, 114);
+                
+                //Birds
+                g.drawString(String.format("%d  REMAINING BIRDS", nPajaros), 900, 50);
 		
 		g.setTransform(tx);
 		
@@ -875,13 +822,13 @@ public class Nivel2 extends SimulationFrame {
 		double t = this.world.getSettings().getStepFrequency();
 		
 		// draw the helper angle, power, position vector
-		g.setColor(Color.RED);
-		g.draw(new Line2D.Double(x, y, vx * scale * t * 20 + x, vy * scale * t * 20 + y));
+		g.setColor(Color.GRAY);
+		//g.draw(new Line2D.Double(x, y, vx * scale * t * 20 + x, vy * scale * t * 20 + y));
 		g.fill(new Ellipse2D.Double(x - 2, y - 2, 4, 4));
 		
-		if (this.path.isActive()) {
+		if (this.path.isActive() == false) {  //Que al inicar se dibuje (cuando no se preciona P)
 			g.setColor(new Color(150, 150, 150, 100));
-			for(int i = 0; i < 1000; i++) {
+                        for(int i = 0; i < 22; i++) {  //Original 1000 iteraciones
 				g.fill(new Ellipse2D.Double(x - 2, y - 2, 4, 4));
 				
 				// integrate to get new velocity
@@ -905,6 +852,7 @@ public class Nivel2 extends SimulationFrame {
 	protected void handleEvents() {
 		super.handleEvents();
 		
+                /*
 		if (this.left.isActive()) {
 			this.start.x -= 0.05;
 		}
@@ -922,23 +870,30 @@ public class Nivel2 extends SimulationFrame {
 			if (this.start.y >= 3.0) {
 				this.start.y = 3.0;
 			}
-		}
+		}*/
 		if (this.angleUp.isActive()) {
-			this.direction.rotate(0.01);
+                    if(Math.toDegrees(this.direction.getDirection()) < 65){   //Limita el angulo a 65 grados max
+                        this.direction.rotate(0.01);
+                    }
 		}
 		if (this.angleDown.isActive()) {
-			this.direction.rotate(-0.01);
+                    if(Math.toDegrees(this.direction.getDirection()) > 10){   //Limita el angulo a 10 grados min
+                        this.direction.rotate(-0.01);
+                    }
 		}
-		if (this.plus.isActive()) {
-			this.power += 0.05;
+		if (this.plus.isActive()) {   //Limita la fuerza a 35 max
+                    if(this.power < 35){
+                        this.power += 0.05;
+                    }
 		}
-		if (this.minus.isActive()) {
-			this.power -= 0.05;
+		if (this.minus.isActive()) {   //Limita la fuerza a 15 min
+                    if(this.power > 15){
+                        this.power -= 0.05;
+                    }
 		}
 		
 		if (this.shoot.isActiveButNotHandled()) {
 			this.shoot.setHasBeenHandled(true);
-                        System.out.println(nPajaros + "  " + canMove);
 			if(nPajaros > 0 && canMove == true){  //Limita los pajaros (No permite que se lancen mas del limite) Y solo lo permite cuando nada se mueve
                             //shooting audio resortera
                             new Thread(){
@@ -973,11 +928,13 @@ public class Nivel2 extends SimulationFrame {
 			
                             //Esta declarado "global", para acceder a el desde otras funciones (poderes de los pajaros)
                             if(nPajaros == 1){
-                                circle = new ImageBody(WHITE_BIRD);
-                            }else if(nPajaros == 2){
                                 circle = new ImageBody(YELLOW_BIRD);
-                            }else if(nPajaros == 3){
-                                circle = new ImageBody(RED_BIRD);  //Primer pajaro que sale
+                                BodyFixture bf = circle.addFixture(Geometry.createCircle(1.0), 20.0, 30.0, 0.0);
+                                bf.setFilter(ballFilter);
+                            }else if(nPajaros == 2){
+                                circle = new ImageBody(RED_BIRD);
+                                BodyFixture bf = circle.addFixture(Geometry.createCircle(1.0), 10.0, 30.0, 0.0);
+                                bf.setFilter(ballFilter);
                             }
                             //Se lanzará un pajaro
                             nPajaros--;
@@ -1016,29 +973,19 @@ public class Nivel2 extends SimulationFrame {
 			bud.enteredScoreBegin = false;
 			bud.enteredScoreComplete = false;
 		}
-                
-                if(isSlingshot(body)){
-                    //Resortera
-                    System.out.println("ESTURAAAA");
-                }
 	}
 	
         //Funcion que determine el final del juego (Cuando gasta todos sus pajaros o mata a todos los cerdos)
         private void endgame(){
             if(nPajaros == 0 && nCerdos !=0){ //Perdió la partida (Se quedó sin pajaros y no mató a todos los cerdos)
-                // Lamada al frame de puntuacion (con un -1 de parámetro que indica derrota)
+                // Llamada al frame de puntuación (con un -1 de parámetro que indica derrota)
                 new EndGame(score, 0, 1, -1, this);
-                System.out.println("PERDISTE");
             }else{  //Ganó la partida (puede que tenga pajaros de sobra, o no)
-                // Lamada al frame de puntuacion (con un numero positivo de parámetro que indica los pajaros restantes)
                 //calcular puntuacion
-                System.out.println("GANASTE");
                 new EndGame(score+(nPajaros*10000), nPajaros+1, 1, 1, this);
             }
-            
             this.stop();
             //this.dispose();
-            this.stop();
         }
         
         
@@ -1046,8 +993,8 @@ public class Nivel2 extends SimulationFrame {
 	 * Entry point for the example application.
 	 * @param args command line arguments
 	 */
-	public static void main(String[] args) {
-		Nivel2 simulation = new Nivel2();
+	/*public static void main(String[] args) {
+		Nivel3 simulation = new Nivel3();
 		simulation.run();
-	}
+	}*/
 }
