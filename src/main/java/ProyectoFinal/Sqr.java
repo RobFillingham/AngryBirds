@@ -10,14 +10,14 @@ import java.io.Serializable;
  *
  * @author famfi
  */
-public class Level implements Serializable{
+public class Sqr implements Serializable{
 
     public boolean completed;
     public boolean available;
     public int score;
     public int stars;
 
-    public Level(boolean available, boolean completed, int score, int stars){
+    public Sqr(boolean available, boolean completed, int score, int stars){
         this.available = available;
         this.completed=completed;
         this.score = score;

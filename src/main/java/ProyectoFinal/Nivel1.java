@@ -231,6 +231,48 @@ public class Nivel1 extends SimulationFrame {
 	/**
 	 * Default constructor.
 	 */
+        
+        public Nivel1() {
+		super("Angry Birds - Level 1");
+		
+                super.setMousePickingEnabled(false);
+               
+                
+		this.up = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_UP);
+		this.down = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_DOWN);
+		this.left = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_LEFT);
+		this.right = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_RIGHT);
+		this.angleUp = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_PAGE_UP);
+		this.angleDown = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_PAGE_DOWN);
+		this.plus = new BooleanStateKeyboardInputHandler(this.canvas, new Key(KeyEvent.VK_PLUS), new Key(KeyEvent.VK_ADD), new Key(KeyEvent.VK_EQUALS, KeyEvent.SHIFT_DOWN_MASK));
+		this.minus = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_MINUS, KeyEvent.VK_SUBTRACT);
+		this.shoot = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_S);
+		this.path = new ToggleStateKeyboardInputHandler(this.canvas, KeyEvent.VK_P);
+		
+		this.up.install();
+		this.down.install();
+		this.left.install();
+		this.right.install();
+		this.angleDown.install();
+		this.angleUp.install();
+		this.plus.install();
+		this.minus.install();
+		this.shoot.install();
+		this.path.install();
+                
+                this.nP = 3;    //Constantes
+                this.nC = 1;    //Constantes
+                this.nPajaros = nP;
+                this.nCerdos = nC;
+                this.canMove = true;
+                this.circle = new ImageBody(RED_BIRD);
+                this.powerUsed = false;
+                this.huevaso = false;
+                this.nColisiones = 4;
+                this.blockPower = false;
+        
+	}
+        
 	public Nivel1(JFrame daddy) {
 		super("Angry Birds - Level 1");
 		
@@ -409,6 +451,11 @@ public class Nivel1 extends SimulationFrame {
 		};
 		this.world.addBoundsListener(bl);
                 
+
+                
+           
+		
+
 		// use a CollisionListener to detect when the body is in the scoring zones
 		CollisionListener<SimulationBody, BodyFixture> cl = new CollisionListenerAdapter<SimulationBody, BodyFixture>() {
                         
@@ -983,8 +1030,8 @@ public class Nivel1 extends SimulationFrame {
 	 * Entry point for the example application.
 	 * @param args command line arguments
 	 */
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		Nivel1 simulation = new Nivel1();
 		simulation.run();
-	}*/
+	}
 }

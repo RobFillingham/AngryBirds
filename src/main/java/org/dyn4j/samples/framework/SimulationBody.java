@@ -60,7 +60,11 @@ public class SimulationBody extends Body {
 	public SimulationBody(Color color, int quality) {
 		this.color = color;
                 this.quality = quality;
-                this.underColor = new Color(color.getRed()-30, color.getGreen()-30, color.getBlue()-30);
+                try{    
+                    this.underColor = new Color(color.getRed()-30, color.getGreen()-30, color.getBlue()-30);
+                }catch(IllegalArgumentException e){
+                   
+                }
 	}
         
         public SimulationBody(Color color) {
