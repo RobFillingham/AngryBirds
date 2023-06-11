@@ -32,8 +32,6 @@ public class Menu_1 extends javax.swing.JFrame {
         music();
         initComponents();
         pack();
-        
-       
     }
 
     /**

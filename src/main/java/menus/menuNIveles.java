@@ -381,7 +381,6 @@ public class menuNIveles extends javax.swing.JFrame {
     private boolean arrangeLevel(JButton b, JLabel star1, JLabel star2, JLabel star3, boolean available, boolean completed, 
             int stars, String image){
         
-        System.out.println(available+""+completed+""+stars);
         if(completed){
             
             if(stars == 1){
