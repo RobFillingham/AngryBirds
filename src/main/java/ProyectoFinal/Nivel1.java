@@ -635,7 +635,9 @@ public class Nivel1 extends SimulationFrame {
                             world.addBody(circle);
                         }
                     }
+                    birdSound();
                 }
+                
             }
         });
         }
@@ -645,6 +647,29 @@ public class Nivel1 extends SimulationFrame {
                 public void run(){
                      try {
                           AudioInputStream ab = AudioSystem.getAudioInputStream(new File("deadPig.wav"));
+                          Clip clip = AudioSystem.getClip();
+
+                          clip.open(ab);
+                          clip.start();
+
+                          // Wait for the clip to finish playing
+                          Thread.sleep(clip.getMicrosecondLength() / 1000);
+
+                          clip.stop();
+                          clip.close();
+                      } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e) {
+                          // Proper exception handling/logging here
+                          e.printStackTrace();
+                      }
+                }  
+            }.start();
+        }
+        
+        private void birdSound(){
+            new Thread(){
+                public void run(){
+                     try {
+                          AudioInputStream ab = AudioSystem.getAudioInputStream(new File("BirdSound.wav"));
                           Clip clip = AudioSystem.getClip();
 
                           clip.open(ab);
@@ -681,7 +706,7 @@ public class Nivel1 extends SimulationFrame {
 
         private void createPig(BodyFixture bf, String classPath, double radius, double density, double friction, MassType m, double x, double y){
             //Cerdos
-            ImageBody circle = new ImageBody(NORMAL_PIG);
+            ImageBody circle = new ImageBody(getImageSuppressExceptions(classPath));
             //circle.setUserData(data);
             bf = circle.addFixture(Geometry.createCircle(radius), density, friction, 0.5);
             bf.setFilter(ballFilter);
@@ -741,7 +766,7 @@ public class Nivel1 extends SimulationFrame {
             createBlock(bf, new Color(121, 92, 50), 0.8, 3.5, 4, 15, MassType.NORMAL, 23, 4, 800);
             createBlock(bf, new Color(121, 92, 50), 5, 0.5, 4, 15, MassType.NORMAL, 21, 6, 800);
 
-            createPig(bf, "pig2.png", 1.5, 1, 0.2, MassType.NORMAL, 21,  -2);
+            createPig(bf, "Pig2.png", 1.5, 1, 0.2, MassType.NORMAL, 21,  -2);
 
         }
         

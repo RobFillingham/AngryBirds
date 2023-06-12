@@ -60,14 +60,14 @@ public class Menu_1 extends javax.swing.JFrame {
 
         jButton1.setBackground(new java.awt.Color(255, 204, 0));
         jButton1.setForeground(new java.awt.Color(255, 204, 0));
-        jButton1.setIcon(new javax.swing.ImageIcon("playBtn.png"));
+        jButton1.setIcon(new javax.swing.ImageIcon("Boton.png"));
         jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 190, 160, 80));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 130, 290, 140));
 
         jButton2.setBackground(new java.awt.Color(0, 0, 0));
         jButton2.setFont(new java.awt.Font("Arial", 1, 22)); // NOI18N

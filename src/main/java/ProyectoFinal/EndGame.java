@@ -51,6 +51,8 @@ public class EndGame extends javax.swing.JFrame {
         if(result == -1){
             lost(); //disables stars, and does not call write on the file
         }else if(result == 1){
+            if(stars>3)
+                stars=3;
             writeFile(score, stars, level);
         }
     }
@@ -162,11 +164,15 @@ public class EndGame extends javax.swing.JFrame {
                 clip.stop();
                 break;
             case 4:
-                new Nivel4().run();
+                new Nivel6().run();
                 clip.stop();
                 break;
             case 5:
                 new Nivel5().run();
+                clip.stop();
+                break;
+            case 6:
+                new Nivel6().run();
                 clip.stop();
                 break;
         }
@@ -221,10 +227,10 @@ public class EndGame extends javax.swing.JFrame {
         pig.setVisible(false);
         if(stars==1){
             star2.setVisible(false);
-            star1.setVisible(false);
+            star3.setVisible(false);
             
         }else if(stars==2){
-            star1.setVisible(false);
+            star3.setVisible(false);
         }
         
         this.score1.setText(score+"");

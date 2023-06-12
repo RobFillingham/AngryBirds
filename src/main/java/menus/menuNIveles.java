@@ -4,7 +4,7 @@ package menus;
 import ProyectoFinal.Nivel1;
 import ProyectoFinal.Nivel2;
 import ProyectoFinal.Nivel3;
-import ProyectoFinal.Nivel4;
+import ProyectoFinal.Nivel6;
 import ProyectoFinal.Nivel5;
 import ProyectoFinal.Score;
 import ProyectoFinal.Sqr;
@@ -286,10 +286,10 @@ public class menuNIveles extends javax.swing.JFrame {
         if(diplvl4 == true){
             stop();
             
-            Nivel4 lvl4 = new Nivel4();
+            /*Nivel4 lvl4 = new Nivel4();
             lvl4.setVisible(true);
             lvl4.run();
-            dispose();
+            dispose();*/
         }
     }//GEN-LAST:event_lvl4buttonActionPerformed
 
@@ -310,10 +310,10 @@ public class menuNIveles extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(diplvl6 == true){
             stop();
-            /*
-            Nivel6 lvl6 = new Nivel6(this);
+            
+            Nivel6 lvl6 = new Nivel6();
             lvl6.setVisible(true);
-            lvl6.run();*/
+            lvl6.run();
             dispose();
         }
     }//GEN-LAST:event_lvl6buttonActionPerformed
@@ -442,22 +442,30 @@ public class menuNIveles extends javax.swing.JFrame {
         if(completed){
             
             if(stars == 1){
-                star1.setEnabled(true);
-                star2.setEnabled(false);
-                star3.setEnabled(false);
+                
+                
+                star1.setVisible(true);
+                star2.setVisible(false);
+                star3.setVisible(false);
+                
             }else if(stars == 2){
-                star1.setEnabled(true);
-                star2.setEnabled(true);
-                star3.setEnabled(false);
+               
+                        
+                star1.setVisible(true);
+                star2.setVisible(true);
+                star3.setVisible(false);
             }else if(stars== 3){
-                star1.setEnabled(true);
-                star2.setEnabled(true);
-                star3.setEnabled(true);
+                
+                
+                star1.setVisible(true);
+                star2.setVisible(true);
+                star3.setVisible(true);
             }
         }else{
-            star1.setEnabled(false);
-            star2.setEnabled(false);
-            star3.setEnabled(false);
+          
+            star1.setVisible(false);
+            star2.setVisible(false);
+            star3.setVisible(false);
         }
         if(available){
             b.setEnabled(true);

@@ -750,9 +750,9 @@ public class Nivel2 extends SimulationFrame {
                 createBlockNotInArray(bf, new Color(172, 216, 250), 2, 1, 3, 15, MassType.NORMAL, 16, -2, 700);
 
 
-                createPig(bf, "pigHelmet.png", 1.5, 1, 0.2, MassType.NORMAL, 15.5,  5);
-                createPig(bf, "pig.png", 1.0, 1, 0.2, MassType.NORMAL, 23,  -1);
-                createPig(bf, "pig.png", 0.7, 1, 0.2, MassType.NORMAL, 16,  -1);
+                createPig(bf, "Pig3.png", 1.5, 1, 0.2, MassType.NORMAL, 15.5,  5);
+                createPig(bf, "Pig2.png", 1.0, 1, 0.2, MassType.NORMAL, 23,  -1);
+                createPig(bf, "Pig2.png", 0.7, 1, 0.2, MassType.NORMAL, 16,  -1);
 
             }
             
