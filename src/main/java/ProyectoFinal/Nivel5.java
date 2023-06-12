@@ -670,11 +670,9 @@ public class Nivel5 extends SimulationFrame{
 
         private void createStructureAndPigs(BodyFixture bf){
             //Bloques
-            //createBlock(bf, new Color(75, 60, 30), 35, 2, 14, 30, MassType.INFINITE, 30, -2.5, 99999);
             createBlock(bf, Color.DARK_GRAY, 2, 6, 14, 300, MassType.NORMAL, 23, -1, 350);
             createBlock(bf, new Color(121, 92, 50), 2, 6, 14, 300, MassType.NORMAL, 36, -1, 100);
             createBlock(bf, Color.DARK_GRAY, 2, 6, 14, 30, MassType.NORMAL, 49, -1, 350);
-            //createBlock(bf, new Color(121, 92, 50), 2, 6, 14, 30, MassType.NORMAL, 29, -1, 100);
             createBlock(bf, new Color(121, 92, 50), 14, 1, 14, 300, MassType.NORMAL, 29, 2.5, 100);
             createBlock(bf, new Color(121, 92, 50), 13, 1, 14, 300, MassType.NORMAL, 28.5, 3.5, 100);
             createBlock(bf, new Color(121, 92, 50), 14, 1, 14, 300, MassType.NORMAL, 43, 2.5, 100);
@@ -693,8 +691,6 @@ public class Nivel5 extends SimulationFrame{
             createAllowedBlock(bf, new Color(121, 92, 50), 1.5, 0.5, 4, 300, MassType.NORMAL, 32, 4.2, 5);
             createAllowedBlock(bf, new Color(121, 92, 50), 1.5, 0.5, 4, 300, MassType.NORMAL, 40, 4.2, 5);
             createAllowedBlock(bf, new Color(121, 92, 50), 1.5, 0.5, 4, 300, MassType.NORMAL, 45, 4.2, 5);
-            //createBlock(bf, Color.DARK_GRAY, 2, 2, 14, 30, MassType.NORMAL, 21, 3, 600);
-            //createBlock(bf, Color.DARK_GRAY, 2, 2, 14, 30, MassType.NORMAL, 37, 3, 600);
             
             //Cerdos
             createPig(bf, OTHER_PIG_3, 1, 0.0, 0.0, MassType.NORMAL, 27,  5.5);
@@ -934,10 +930,10 @@ public class Nivel5 extends SimulationFrame{
         private void endgame(){
             if(nPajaros == 0 && nCerdos !=0){ //Perdió la partida (Se quedó sin pajaros y no mató a todos los cerdos)
                 // Llamada al frame de puntuación (con un -1 de parámetro que indica derrota)
-                new EndGame(score, 0, 1, -1, this);
+                new EndGame(score, 0, 5, -1, this);
             }else{  //Ganó la partida (puede que tenga pajaros de sobra, o no)
                 //calcular puntuacion
-                new EndGame(score+(nPajaros*10000), nPajaros+1, 1, 1, this);
+                new EndGame(score+(nPajaros*10000), nPajaros+1, 5, 1, this);
             }
             this.stop();
             //this.dispose();

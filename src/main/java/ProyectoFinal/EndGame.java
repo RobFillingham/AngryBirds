@@ -100,7 +100,7 @@ public class EndGame extends javax.swing.JFrame {
 
         OKAY.setBackground(new java.awt.Color(0, 0, 0));
         OKAY.setForeground(new java.awt.Color(0, 0, 0));
-        OKAY.setIcon(new ImageIcon("Return-Button.png"));
+        OKAY.setIcon(new ImageIcon("Retry.png"));
         OKAY.setBorder(null);
         OKAY.setBorderPainted(false);
         OKAY.addActionListener(new java.awt.event.ActionListener() {
@@ -108,9 +108,9 @@ public class EndGame extends javax.swing.JFrame {
                 OKAYActionPerformed(evt);
             }
         });
-        getContentPane().add(OKAY, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 520, 70, 60));
+        getContentPane().add(OKAY, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 490, 90, 100));
 
-        pig.setIcon(new ImageIcon("Pig2.png"));
+        pig.setIcon(new ImageIcon("Pig2A.png"));
         getContentPane().add(pig, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, 180, 140));
 
         star3.setIcon(new ImageIcon("right-star.png"));
@@ -136,7 +136,7 @@ public class EndGame extends javax.swing.JFrame {
                 OKAY1ActionPerformed(evt);
             }
         });
-        getContentPane().add(OKAY1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 521, 70, 60));
+        getContentPane().add(OKAY1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 501, 90, 80));
 
         jLabel1.setIcon(new ImageIcon("black.jpg"));
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, 630));
@@ -146,17 +146,7 @@ public class EndGame extends javax.swing.JFrame {
 
     private void OKAYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKAYActionPerformed
         // TODO add your handling code here:
-        
-        
-        this.dispose();
-        clip.stop();
-        new menuNIveles().setVisible(true);
-    }//GEN-LAST:event_OKAYActionPerformed
-
-    private void OKAY1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKAY1ActionPerformed
-        // TODO add your handling code here:
-        
-        switch(level){
+          switch(level){
             case 1:
                 new Nivel1().run();
                 clip.stop();
@@ -171,8 +161,28 @@ public class EndGame extends javax.swing.JFrame {
                 new Nivel3().run();
                 clip.stop();
                 break;
+            case 4:
+                new Nivel4().run();
+                clip.stop();
+                break;
+            case 5:
+                new Nivel5().run();
+                clip.stop();
+                break;
         }
         this.dispose();
+        
+        
+    }//GEN-LAST:event_OKAYActionPerformed
+
+    private void OKAY1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKAY1ActionPerformed
+        // TODO add your handling code here:
+        
+        this.dispose();
+        clip.stop();
+        new menuNIveles().setVisible(true);
+        
+      
     }//GEN-LAST:event_OKAY1ActionPerformed
     
     private void lost(){
