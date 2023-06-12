@@ -113,7 +113,7 @@ public class Nivel5 extends SimulationFrame{
         private static final BufferedImage WHITE_BIRD_EGG = getImageSuppressExceptions("Egg.png");
         private static final BufferedImage WHITE_BIRD_BOOM = getImageSuppressExceptions("Boom.png");
         private static final BufferedImage NORMAL_PIG = getImageSuppressExceptions("Pig2.png");
-        private static final BufferedImage OTHER_PIG_3 = getImageSuppressExceptions("Pig3.png");
+        private static final BufferedImage OTHER_PIG_3 = getImageSuppressExceptions("pigHelmet.png");
         private static final BufferedImage OTHER_PIG_4 = getImageSuppressExceptions("Pig4.png");
         private static final BufferedImage BACKGROUND = getImageSuppressExceptions("backgroundR.png");
         

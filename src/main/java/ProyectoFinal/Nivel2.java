@@ -106,7 +106,7 @@ public class Nivel2 extends SimulationFrame {
         private static final BufferedImage WHITE_BIRD = getImageSuppressExceptions("White.png");
         private static final BufferedImage WHITE_BIRD_EGG = getImageSuppressExceptions("Egg.png");
         private static final BufferedImage WHITE_BIRD_BOOM = getImageSuppressExceptions("Boom.png");
-        private static final BufferedImage NORMAL_PIG = getImageSuppressExceptions("Pig.png");
+        private static final BufferedImage NORMAL_PIG = getImageSuppressExceptions("Pig2.png");
         private static final BufferedImage BACKGROUND = getImageSuppressExceptions("backgroundR.png");
         
 	/** Helper function to read the images from the class path */
@@ -751,8 +751,8 @@ public class Nivel2 extends SimulationFrame {
 
 
                 createPig(bf, "pigHelmet.png", 1.5, 1, 0.2, MassType.NORMAL, 15.5,  5);
-                createPig(bf, "pig.png", 1.0, 1, 0.2, MassType.NORMAL, 23,  -1);
-                createPig(bf, "pig.png", 0.7, 1, 0.2, MassType.NORMAL, 16,  -1);
+                createPig(bf, "Pig2.png", 1.0, 1, 0.2, MassType.NORMAL, 23,  -1);
+                createPig(bf, "Pig2.png", 0.7, 1, 0.2, MassType.NORMAL, 16,  -1);
 
             }
             
