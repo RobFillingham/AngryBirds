@@ -552,9 +552,33 @@ public class Nivel5 extends SimulationFrame{
                             world.addBody(circle);
                         }
                     }
+                    birdSound();
                 }
             }
         });
+        }
+        
+        private void birdSound(){
+            new Thread(){
+                public void run(){
+                     try {
+                          AudioInputStream ab = AudioSystem.getAudioInputStream(new File("BirdSound.wav"));
+                          Clip clip = AudioSystem.getClip();
+
+                          clip.open(ab);
+                          clip.start();
+
+                          // Wait for the clip to finish playing
+                          Thread.sleep(clip.getMicrosecondLength() / 1000);
+
+                          clip.stop();
+                          clip.close();
+                      } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e) {
+                          // Proper exception handling/logging here
+                          e.printStackTrace();
+                      }
+                }  
+            }.start();
         }
         
         private void killSound(){

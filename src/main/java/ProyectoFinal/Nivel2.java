@@ -634,6 +634,7 @@ public class Nivel2 extends SimulationFrame {
                             world.addBody(circle);
                         }
                     }
+                    birdSound();
                 }
             }
         });
@@ -742,8 +743,8 @@ public class Nivel2 extends SimulationFrame {
                 createBlock(bf, Color.DARK_GRAY, 1, 6.6, 9, 15, MassType.INFINITE, 10, -0.5, 800);
                 createBlock(bf, Color.DARK_GRAY, 1, 7, 9, 15, MassType.INFINITE, 10, 8.7, 800);
                 
-                createBlockNotInArray(bf, new Color(172, 216, 250), 5, 1, 3, 15, MassType.NORMAL, 23, -2, 700);
-                createBlockNotInArray(bf, new Color(172, 216, 250), 2, 1, 3, 15, MassType.NORMAL, 16, -2, 700);
+                createBlockNotInArray(bf, new Color(120, 150, 255), 5, 1, 3, 15, MassType.NORMAL, 23, -2, 700);
+                createBlockNotInArray(bf, new Color(120, 150, 255), 2, 1, 3, 15, MassType.NORMAL, 16, -2, 700);
 
 
 
@@ -768,6 +769,29 @@ public class Nivel2 extends SimulationFrame {
             
 
             this.world.addBody(blockC);
+        }
+        
+        private void birdSound(){
+            new Thread(){
+                public void run(){
+                     try {
+                          AudioInputStream ab = AudioSystem.getAudioInputStream(new File("BirdSound.wav"));
+                          Clip clip = AudioSystem.getClip();
+
+                          clip.open(ab);
+                          clip.start();
+
+                          // Wait for the clip to finish playing
+                          Thread.sleep(clip.getMicrosecondLength() / 1000);
+
+                          clip.stop();
+                          clip.close();
+                      } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e) {
+                          // Proper exception handling/logging here
+                          e.printStackTrace();
+                      }
+                }  
+            }.start();
         }
         
 	

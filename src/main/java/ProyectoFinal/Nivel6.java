@@ -265,7 +265,7 @@ public class Nivel6 extends SimulationFrame{
 		this.path.install();
                 
 
-                this.nP = 9;    //Constantes
+                this.nP = 4;    //Constantes
                 this.nC = 7;    //Constantes
 
                 
@@ -340,7 +340,7 @@ public class Nivel6 extends SimulationFrame{
                 createStructureAndPigs(bf);
 		
                 //  Create the Slingshot
-                body = new ImageBody(RED_BIRD);  // Primer pajaro a usar
+                body = new ImageBody(WHITE_BIRD);  // Primer pajaro a usar
                 bf = body.addFixture(Geometry.createCircle(1.0));
                 bf.setFilter(backgroundFilter);
                 body.setMass(MassType.INFINITE);
@@ -358,7 +358,7 @@ public class Nivel6 extends SimulationFrame{
                                             SimulationBody birdRR;
                                             // Cambiar dependiendo el pajaro (Incluso agregar case)
                                                 
-                                                    birdRR = new ImageBody(YELLOW_BIRD);
+                                                    birdRR = new ImageBody(WHITE_BIRD);
                                                     BodyFixture bf = birdRR.addFixture(Geometry.createCircle(1.0));
                                                     bf.setFilter(backgroundFilter);
                                                     birdRR.setMass(MassType.INFINITE);
@@ -431,7 +431,7 @@ public class Nivel6 extends SimulationFrame{
                                         if(nPajaros >0){    
                                             SimulationBody birdRR;
                                             
-                                            birdRR = new ImageBody(YELLOW_BIRD);
+                                            birdRR = new ImageBody(WHITE_BIRD);
                                             BodyFixture bf = birdRR.addFixture(Geometry.createCircle(1.0));
                                             bf.setFilter(backgroundFilter);
                                             birdRR.setMass(MassType.INFINITE);
@@ -450,22 +450,36 @@ public class Nivel6 extends SimulationFrame{
                                     powerUsed = true;
                                     blockPower = true;  //Bloquea el uso del poder cuando el pajaro ya chocó y no uso su poder
                                 }
-                                if (isBall(b1) && b1 == world.getBody(world.getBodyCount()-1) && powerUsed == true  && blockPower == false) {  //Para diferenciar el pajaro del huevo
+                                if (isBall(b1) && b1 == world.getBody(world.getBodyCount()-1) && powerUsed == true && blockPower == false) {  //Para diferenciar el pajaro del huevo
                                     if(huevaso == false){  //Limitar a un huevo
                                         
                                         
                                         
                                         huevaso = true;  //Se puede dejar asi, solo cuando haya un solo pajaro blanco
-                                          //Obtener coordenadas del objeto en el mundo
+                                        Vector2 position = circle.getTransform().getTranslation();  //Obtener coordenadas del objeto en el mundo
                                         
-                                        
-                                        
+                                        // create a circle
+                                        BallUserData data = new BallUserData();
+                                        data.start.x = position.x;
+                                        data.start.y = position.y;
+                                        circle = new ImageBody(WHITE_BIRD_BOOM);
+                                        BodyFixture bf = circle.addFixture(Geometry.createCircle(3), 100.0, 0, 0.2);
+                                        bf.setFilter(ballFilter);
+                                        circle.setColor(Color.white);
+                                        circle.setUserData(data);
+                                        circle.setMass(MassType.NORMAL);
+                                        circle.translate(world.getBody(world.getBodyCount()-1).getWorldCenter().x , world.getBody(world.getBodyCount()-1).getWorldCenter().y + 5);
+                                        circle.setLinearVelocity(world.getBody(world.getBodyCount()-1).getWorldCenter().x*0,world.getBody(world.getBodyCount()-1).getWorldCenter().y * (-2.7));
+                                        //Se añade "bomba de huevo"
+                                        world.addBody(circle);
                                     }else{
-                                        
-                                        //(nColisiones == 0){  //Elimina el huevo lanzado
+                                        if(nColisiones == 20){//  Detecta el limite de colisiones, para eliminar el objeto "bomba"
                                             toRemove.add(world.getBody(world.getBodyCount()-1));
-                                        
-                                        //nColisiones++;
+                                        }
+                                        if(nColisiones == 0){  //Elimina el huevo lanzado
+                                            toRemove.add(world.getBody(world.getBodyCount()-2));
+                                        }
+                                        nColisiones++;
                                     }
 				}
                                 if(isBlock(b2) && isBall(b1)){
@@ -501,15 +515,55 @@ public class Nivel6 extends SimulationFrame{
             @Override
             public void mousePressed(MouseEvent e) {  //PODERES de los pajaros
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    if(nPajaros == 1 || nPajaros == 0){ //Cambiar a numPajaro-1 (Pajaro amarillo)
+                     //Cambiar a numPajaro-1 (Pajaro amarillo)
+                         //Cambiar a numPajaro-1 (Pajaro blanco)
                         if(powerUsed == false && blockPower == false){  //Limitar el poder a solo un uso
                             powerUsed = true;
-                            circle.setLinearVelocity(circle.getLinearVelocity().x*3, circle.getLinearVelocity().y*3);
+                            circle.setLinearVelocity(45.0, 45.0);
+                            Vector2 position = circle.getTransform().getTranslation();  //Obtener coordenadas del objeto en el mundo
+                            
+                            // create a circle
+                            BallUserData data = new BallUserData();
+                            data.start.x = position.x;
+                            data.start.y = position.y;
+			
+                            circle = new ImageBody(WHITE_BIRD_EGG);
+                            circle.setUserData(data);
+                            BodyFixture bf = circle.addFixture(Geometry.createCircle(0.5), 0.5, 100, 0.1);
+                            bf.setFilter(ballFilter);
+                            circle.setAngularVelocity(2.0);
+                            circle.setMass(MassType.NORMAL);
+                            circle.translate(position.x,position.y-1);
+                            world.addBody(circle);
                         }
-                    }
+                    
+                  birdSound();  
                 }
             }
         });
+        }
+        
+        private void birdSound(){
+            new Thread(){
+                public void run(){
+                     try {
+                          AudioInputStream ab = AudioSystem.getAudioInputStream(new File("BirdSound.wav"));
+                          Clip clip = AudioSystem.getClip();
+
+                          clip.open(ab);
+                          clip.start();
+
+                          // Wait for the clip to finish playing
+                          Thread.sleep(clip.getMicrosecondLength() / 1000);
+
+                          clip.stop();
+                          clip.close();
+                      } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e) {
+                          // Proper exception handling/logging here
+                          e.printStackTrace();
+                      }
+                }  
+            }.start();
         }
         
         private void killSound(){
@@ -854,19 +908,11 @@ public class Nivel6 extends SimulationFrame{
                             data.start.y = start.y;
 			
                             //Esta declarado "global", para acceder a el desde otras funciones (poderes de los pajaros)
-                            if(nPajaros == 3){
-                                circle = new ImageBody(RED_BIRD);
-                                BodyFixture bf = circle.addFixture(Geometry.createCircle(1.0), 20.0, 30.0, 0.0);
-                                bf.setFilter(ballFilter);
-                            }else if(nPajaros == 2){
-                                circle = new ImageBody(YELLOW_BIRD);
+                            
+                                circle = new ImageBody(WHITE_BIRD);
                                 BodyFixture bf = circle.addFixture(Geometry.createCircle(1.0), 10.0, 30.0, 0.0);
                                 bf.setFilter(ballFilter);
-                            }else if(nPajaros == 1){
-                                circle = new ImageBody(YELLOW_BIRD);
-                                BodyFixture bf = circle.addFixture(Geometry.createCircle(1.0), 10.0, 30.0, 0.0);
-                                bf.setFilter(ballFilter);
-                            }
+                            
                             //Se lanzará un pajaro
                             nPajaros--;
                             blockPower = false; //Reiniciar posibiliad de usar su poder

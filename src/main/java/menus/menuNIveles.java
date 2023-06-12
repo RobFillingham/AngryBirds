@@ -408,29 +408,7 @@ public class menuNIveles extends javax.swing.JFrame {
             e.printStackTrace();
         }
         
-        //RESTART THE GAME LEVELS
-        /*FileOutputStream archFOS;
-                ObjectOutputStream os;
-                
-                Score a = new Score();
-                a.levels.add(new Sqr(true, false, 0, 0));
-                a.levels.add(new Sqr(false, false, 0, 0));
-                a.levels.add(new Sqr(false, false, 0, 0));
-                a.levels.add(new Sqr(false, false, 0, 0));
-                a.levels.add(new Sqr(false, false, 0, 0));
-                a.levels.add(new Sqr(false, false, 0, 0));
-                        
-                 
-                
-                try{
-                    archFOS = new FileOutputStream("Score.angryBirds");
-                    os = new ObjectOutputStream(archFOS);
-                    
-                    os.writeObject(a);
-                }catch(IOException e){
-                    e.printStackTrace();
-                }
-        */        
+              
                 
         
         

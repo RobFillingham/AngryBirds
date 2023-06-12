@@ -1,9 +1,13 @@
 package menus;
 
+import ProyectoFinal.Score;
+import ProyectoFinal.Sqr;
 import java.awt.Menu;
 import java.awt.Toolkit;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sound.sampled.AudioInputStream;
@@ -45,8 +49,9 @@ public class Menu_1 extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        Reset = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -58,16 +63,16 @@ public class Menu_1 extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(1024, 631));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setBackground(new java.awt.Color(255, 204, 0));
-        jButton1.setForeground(new java.awt.Color(255, 204, 0));
-        jButton1.setIcon(new javax.swing.ImageIcon("Boton.png"));
-        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        Reset.setBackground(new java.awt.Color(255, 0, 0));
+        Reset.setForeground(new java.awt.Color(255, 0, 0));
+        Reset.setIcon(new javax.swing.ImageIcon("Boton.png"));
+        Reset.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        Reset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                ResetActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 130, 290, 140));
+        jPanel1.add(Reset, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 10, 10));
 
         jButton2.setBackground(new java.awt.Color(0, 0, 0));
         jButton2.setFont(new java.awt.Font("Arial", 1, 22)); // NOI18N
@@ -79,6 +84,17 @@ public class Menu_1 extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 500, 120, 100));
+
+        jButton3.setBackground(new java.awt.Color(255, 204, 0));
+        jButton3.setForeground(new java.awt.Color(255, 204, 0));
+        jButton3.setIcon(new javax.swing.ImageIcon("Boton.png"));
+        jButton3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 130, 290, 140));
 
         jLabel1.setIcon(new javax.swing.ImageIcon("Fondo.jpeg"));
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 630));
@@ -96,16 +112,41 @@ public class Menu_1 extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void ResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetActionPerformed
         // TODO add your handling code here:
          //if(evt.getSource() == btn2){
-            menuNIveles cF = new menuNIveles(this);
-            cF.setVisible(true);
-            this.setVisible(false);
+                FileOutputStream archFOS;
+                ObjectOutputStream os;
+                
+                Score a = new Score();
+                a.levels.add(new Sqr(true, false, 0, 0));
+                a.levels.add(new Sqr(false, false, 0, 0));
+                a.levels.add(new Sqr(false, false, 0, 0));
+                a.levels.add(new Sqr(false, false, 0, 0));
+                a.levels.add(new Sqr(false, false, 0, 0));
+                a.levels.add(new Sqr(false, false, 0, 0));
+                        
+                 
+                
+                try{
+                    archFOS = new FileOutputStream("Score.angryBirds");
+                    os = new ObjectOutputStream(archFOS);
+                    
+                    os.writeObject(a);
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
             //dispose();
         //}else if(e.getSource() == btn1){
         //}
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_ResetActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+         menuNIveles cF = new menuNIveles(this);
+            cF.setVisible(true);
+            this.setVisible(false);
+    }//GEN-LAST:event_jButton3ActionPerformed
     
 public void music() {
     musica = new Thread() {
@@ -166,8 +207,9 @@ public void music() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton Reset;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
