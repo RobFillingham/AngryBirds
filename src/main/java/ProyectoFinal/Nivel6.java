@@ -113,7 +113,7 @@ public class Nivel6 extends SimulationFrame{
         private static final BufferedImage WHITE_BIRD_EGG = getImageSuppressExceptions("Egg.png");
         private static final BufferedImage WHITE_BIRD_BOOM = getImageSuppressExceptions("Boom.png");
         private static final BufferedImage NORMAL_PIG = getImageSuppressExceptions("Pig2.png");
-        private static final BufferedImage OTHER_PIG_3 = getImageSuppressExceptions("Pig3.png");
+        private static final BufferedImage OTHER_PIG_3 = getImageSuppressExceptions("pigHelmet.png");
         private static final BufferedImage OTHER_PIG_4 = getImageSuppressExceptions("Pig4.png");
         private static final BufferedImage BACKGROUND = getImageSuppressExceptions("backgroundR.png");
         
@@ -264,8 +264,11 @@ public class Nivel6 extends SimulationFrame{
 		this.shoot.install();
 		this.path.install();
                 
+
                 this.nP = 9;    //Constantes
                 this.nC = 7;    //Constantes
+
+                
                 this.nPajaros = nP;
                 this.nCerdos = nC;
                 this.canMove = true;
@@ -337,7 +340,7 @@ public class Nivel6 extends SimulationFrame{
                 createStructureAndPigs(bf);
 		
                 //  Create the Slingshot
-                body = new ImageBody(WHITE_BIRD);  // Primer pajaro a usar
+                body = new ImageBody(RED_BIRD);  // Primer pajaro a usar
                 bf = body.addFixture(Geometry.createCircle(1.0));
                 bf.setFilter(backgroundFilter);
                 body.setMass(MassType.INFINITE);
@@ -355,7 +358,7 @@ public class Nivel6 extends SimulationFrame{
                                             SimulationBody birdRR;
                                             // Cambiar dependiendo el pajaro (Incluso agregar case)
                                                 
-                                                    birdRR = new ImageBody(WHITE_BIRD);
+                                                    birdRR = new ImageBody(YELLOW_BIRD);
                                                     BodyFixture bf = birdRR.addFixture(Geometry.createCircle(1.0));
                                                     bf.setFilter(backgroundFilter);
                                                     birdRR.setMass(MassType.INFINITE);
@@ -395,6 +398,10 @@ public class Nivel6 extends SimulationFrame{
                                     canKill = false;
                                     killPig(b1);
                                     killSound();
+                                }else if (isBird(b1 ) && isPig(b2) ){  //MODIFIED
+                                    canKill = false;
+                                    killPig(b2);
+                                    killSound();
                                 }else if(isBlock(b1) && isPig(b2) ){   //MODIFIED
                                     canKill = false;
                                     killPig(b2);
@@ -424,14 +431,12 @@ public class Nivel6 extends SimulationFrame{
                                         if(nPajaros >0){    
                                             SimulationBody birdRR;
                                             
-                                            birdRR = new ImageBody(WHITE_BIRD);
+                                            birdRR = new ImageBody(YELLOW_BIRD);
                                             BodyFixture bf = birdRR.addFixture(Geometry.createCircle(1.0));
                                             bf.setFilter(backgroundFilter);
                                             birdRR.setMass(MassType.INFINITE);
                                             birdRR.translate(-24.0,2);
                                             world.addBody(birdRR);
-                                            
-                                                
                                             
                                         }
                                     }else{
@@ -496,29 +501,12 @@ public class Nivel6 extends SimulationFrame{
             @Override
             public void mousePressed(MouseEvent e) {  //PODERES de los pajaros
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                      //Cambiar a numPajaro-1 (Pajaro blanco)
+                    if(nPajaros == 1 || nPajaros == 0){ //Cambiar a numPajaro-1 (Pajaro amarillo)
                         if(powerUsed == false && blockPower == false){  //Limitar el poder a solo un uso
                             powerUsed = true;
-                            circle.setLinearVelocity(45.0, 45.0);
-                            Vector2 position = circle.getTransform().getTranslation();  //Obtener coordenadas del objeto en el mundo
-                            
-                            // create a circle
-                            BallUserData data = new BallUserData();
-                            data.start.x = position.x;
-                            data.start.y = position.y;
-			
-                            circle = new ImageBody(WHITE_BIRD_EGG);
-                            circle.setUserData(data);
-                            BodyFixture bf = circle.addFixture(Geometry.createCircle(0.5), 0.5, 100, 0.1);
-                            bf.setFilter(ballFilter);
-                            circle.setAngularVelocity(2.0);
-                            circle.setMass(MassType.NORMAL);
-                            circle.translate(position.x,position.y-1);
-                            world.addBody(circle);
-                            blocks.add(circle);
-                            System.out.println("a");
+                            circle.setLinearVelocity(circle.getLinearVelocity().x*3, circle.getLinearVelocity().y*3);
                         }
-                    
+                    }
                 }
             }
         });
@@ -636,6 +624,7 @@ public class Nivel6 extends SimulationFrame{
         }
 
         private void createStructureAndPigs(BodyFixture bf){
+
                 //BED
                 createAllowedBlock(bf, Color.DARK_GRAY, 50, 5, 9, 15, MassType.INFINITE, 6, -2, 800);
                 
@@ -675,6 +664,8 @@ public class Nivel6 extends SimulationFrame{
                 createPig(bf, OTHER_PIG_3, 1, 1, 0.2, MassType.NORMAL, -6.3,  1);
                 createPig(bf, getImageSuppressExceptions("king.png"), 3, 15, 300, MassType.NORMAL, 25.5,  5);
 
+
+           
         }
         
 	
@@ -863,11 +854,19 @@ public class Nivel6 extends SimulationFrame{
                             data.start.y = start.y;
 			
                             //Esta declarado "global", para acceder a el desde otras funciones (poderes de los pajaros)
-                         
-                              circle = new ImageBody(WHITE_BIRD);
+                            if(nPajaros == 3){
+                                circle = new ImageBody(RED_BIRD);
                                 BodyFixture bf = circle.addFixture(Geometry.createCircle(1.0), 20.0, 30.0, 0.0);
                                 bf.setFilter(ballFilter);
-                            
+                            }else if(nPajaros == 2){
+                                circle = new ImageBody(YELLOW_BIRD);
+                                BodyFixture bf = circle.addFixture(Geometry.createCircle(1.0), 10.0, 30.0, 0.0);
+                                bf.setFilter(ballFilter);
+                            }else if(nPajaros == 1){
+                                circle = new ImageBody(YELLOW_BIRD);
+                                BodyFixture bf = circle.addFixture(Geometry.createCircle(1.0), 10.0, 30.0, 0.0);
+                                bf.setFilter(ballFilter);
+                            }
                             //Se lanzará un pajaro
                             nPajaros--;
                             blockPower = false; //Reiniciar posibiliad de usar su poder
@@ -876,9 +875,6 @@ public class Nivel6 extends SimulationFrame{
                             nColisionesEG = 0;
                             huevaso = false;
                             
-                            circle.setUserData(data);
-                            bf = circle.addFixture(Geometry.createCircle(1.0), 10.0, 30.0, 0.0);
-                            bf.setFilter(ballFilter);
                             circle.setMass(MassType.NORMAL);
                             //circle.translate(start);
                             circle.translate(start);

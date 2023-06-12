@@ -106,7 +106,7 @@ public class Nivel1 extends SimulationFrame {
         private static final BufferedImage WHITE_BIRD = getImageSuppressExceptions("White.png");
         private static final BufferedImage WHITE_BIRD_EGG = getImageSuppressExceptions("Egg.png");
         private static final BufferedImage WHITE_BIRD_BOOM = getImageSuppressExceptions("Boom.png");
-        private static final BufferedImage NORMAL_PIG = getImageSuppressExceptions("Pig.png");
+        private static final BufferedImage NORMAL_PIG = getImageSuppressExceptions("Pig2.png");
         private static final BufferedImage BACKGROUND = getImageSuppressExceptions("backgroundR.png");
         
 	/** Helper function to read the images from the class path */
@@ -242,8 +242,8 @@ public class Nivel1 extends SimulationFrame {
 		this.down = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_DOWN);
 		this.left = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_LEFT);
 		this.right = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_RIGHT);
-		this.angleUp = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_PAGE_UP);
-		this.angleDown = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_PAGE_DOWN);
+		this.angleUp = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_W);
+		this.angleDown = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_A);
 		this.plus = new BooleanStateKeyboardInputHandler(this.canvas, new Key(KeyEvent.VK_PLUS), new Key(KeyEvent.VK_ADD), new Key(KeyEvent.VK_EQUALS, KeyEvent.SHIFT_DOWN_MASK));
 		this.minus = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_MINUS, KeyEvent.VK_SUBTRACT);
 		this.shoot = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_S);
@@ -322,10 +322,6 @@ public class Nivel1 extends SimulationFrame {
 	protected void printControls() {
 		super.printControls();
 		
-		printControl("Move Up", "Up", "Use the up key to move the shoot position up");
-		printControl("Move Down", "Down", "Use the down key to move the shoot position down");
-		printControl("Move Left", "Left", "Use the left key to move the shoot position left");
-		printControl("Move Right", "Right", "Use the right key to move the shoot position right");
 		printControl("Angle Up", "W", "Use the page up key to increase the shoot angle");
 		printControl("Angle Down", "A", "Use the page down key to decrease the shoot angle");
 		printControl("Increase Power", "+", "Use the + key to increase the shoot power");

@@ -99,7 +99,7 @@ import org.dyn4j.world.listener.ContactListenerAdapter;
  *
  * @author César Reyes Torres
  */
-public class Nivel5 extends SimulationFrame{
+public class Nivel4 extends SimulationFrame{
     	/** Generated serial version id */
 	private static final long serialVersionUID = 8357585473409415833L;
 	
@@ -235,7 +235,7 @@ public class Nivel5 extends SimulationFrame{
 	 * Default constructor.
 	 */
 	//public Nivel5(JFrame daddy) {
-        public Nivel5() {
+        public Nivel4() {
 		super("Angry Birds - Level 5");
 		
                 super.setMousePickingEnabled(false);
@@ -265,7 +265,7 @@ public class Nivel5 extends SimulationFrame{
 		this.path.install();
                 
                 this.nP = 3;    //Constantes
-                this.nC = 7;    //Constantes
+                this.nC = 3;    //Constantes
                 this.nPajaros = nP;
                 this.nCerdos = nC;
                 this.canMove = true;
@@ -670,38 +670,23 @@ public class Nivel5 extends SimulationFrame{
 
         private void createStructureAndPigs(BodyFixture bf){
             //Bloques
-            createBlock(bf, Color.DARK_GRAY, 2, 6, 14, 300, MassType.NORMAL, 23, -1, 350);
-            createBlock(bf, new Color(121, 92, 50), 2, 6, 14, 300, MassType.NORMAL, 36, -1, 100);
-            createBlock(bf, Color.DARK_GRAY, 2, 6, 14, 30, MassType.NORMAL, 49, -1, 350);
-            createBlock(bf, new Color(121, 92, 50), 14, 1, 14, 300, MassType.NORMAL, 29, 2.5, 100);
-            createBlock(bf, new Color(121, 92, 50), 13, 1, 14, 300, MassType.NORMAL, 28.5, 3.5, 100);
-            createBlock(bf, new Color(121, 92, 50), 14, 1, 14, 300, MassType.NORMAL, 43, 2.5, 100);
-            createBlock(bf, new Color(121, 92, 50), 13, 1, 14, 300, MassType.NORMAL, 43.5, 3.5, 100);
-            createBlock(bf, Color.DARK_GRAY, 2, 6, 14, 300, MassType.NORMAL, 23, 7, 350);
-            createBlock(bf, new Color(121, 92, 50), 2, 6, 14, 300, MassType.NORMAL, 36, 6, 100);
-            createBlock(bf, Color.DARK_GRAY, 2, 6, 14, 30, MassType.NORMAL, 49, 7, 350);
-            createBlock(bf, new Color(121, 92, 50), 24, 1, 14, 300, MassType.NORMAL, 36, 9.5, 100);
-            //Tercer piso
-            createBlock(bf, new Color(121, 92, 50), 1, 7, 14, 300, MassType.NORMAL, 34, 13.5, 100);
-            createBlock(bf, new Color(121, 92, 50), 1, 7, 14, 300, MassType.NORMAL, 38, 13.5, 100);
-            createBlock(bf, new Color(121, 92, 50), 7, 1, 14, 300, MassType.NORMAL, 36, 17.5, 100);
+            createBlock(bf, Color.GRAY, 10, 1.5, 9, 15, MassType.INFINITE, 10, 6, 999999);
+            createBlock(bf, Color.GRAY, 10, 1.5, 9, 15, MassType.INFINITE, 22.5, 19, 800);
+            createBlock(bf, Color.GRAY, 10, 1.5, 9, 15, MassType.INFINITE, 35, 6, 800);
+                
+            createBlock(bf, new Color(121, 92, 50), 2, 18, 9, 15, MassType.INFINITE, 22.5, 5, 800);
             
-            createAllowedBlock(bf, new Color(121, 92, 50), 1.5, 0.5, 4, 300, MassType.NORMAL, 36, 18.3, 5);
-            createAllowedBlock(bf, new Color(121, 92, 50), 1.5, 0.5, 4, 300, MassType.NORMAL, 27, 4.2, 5);
-            createAllowedBlock(bf, new Color(121, 92, 50), 1.5, 0.5, 4, 300, MassType.NORMAL, 32, 4.2, 5);
-            createAllowedBlock(bf, new Color(121, 92, 50), 1.5, 0.5, 4, 300, MassType.NORMAL, 40, 4.2, 5);
-            createAllowedBlock(bf, new Color(121, 92, 50), 1.5, 0.5, 4, 300, MassType.NORMAL, 45, 4.2, 5);
+            createBlock(bf, new Color(121, 92, 50), 1, 5, 9, 15, MassType.NORMAL, 10, 9, 800);
+            createBlock(bf, new Color(121, 92, 50), 1, 5, 9, 15, MassType.NORMAL, 22.5, 22, 800);
+            createBlock(bf, new Color(121, 92, 50), 1, 5, 9, 15, MassType.NORMAL, 35, 9, 800);
             
-            //Cerdos
-            createPig(bf, OTHER_PIG_3, 1, 0.0, 0.0, MassType.NORMAL, 27,  5.5);
-            createPig(bf, OTHER_PIG_3, 1, 0.0, 0.0, MassType.NORMAL, 32,  5.5);
-            createPig(bf,OTHER_PIG_3, 1, 0.0, 0.0, MassType.NORMAL, 40,  5.5);
-            createPig(bf, OTHER_PIG_3, 1, 0.0, 0.0, MassType.NORMAL, 45,  5.5);
-            
-            createPig(bf, OTHER_PIG_4, 2, 1, 100, MassType.NORMAL, 29.5,  -2);
-            createPig(bf, OTHER_PIG_4, 2, 1, 100, MassType.NORMAL, 42.5,  -2);
-            
-            createPig(bf, NORMAL_PIG, 1.5, 1, 100, MassType.NORMAL, 36,  20);
+            createAllowedBlock(bf, new Color(75, 60, 30), 1, 1, 9, 15, MassType.NORMAL, 10, 12, 800);
+            createAllowedBlock(bf, new Color(75, 60, 30), 1, 1, 9, 15, MassType.NORMAL, 35, 12, 800);
+            createAllowedBlock(bf,new Color(75, 60, 30), 1, 1, 9, 15, MassType.NORMAL, 22.5, 25, 800);
+                
+            createPig(bf, OTHER_PIG_3, 1.5, 1, 0.2, MassType.NORMAL, 10,  14);
+            createPig(bf, OTHER_PIG_3, 1.5, 1, 0.2, MassType.NORMAL, 22.5,  27);
+            createPig(bf, OTHER_PIG_3, 1.5, 1, 0.2, MassType.NORMAL, 35,  14);
         }
         
 	
@@ -930,10 +915,10 @@ public class Nivel5 extends SimulationFrame{
         private void endgame(){
             if(nPajaros == 0 && nCerdos !=0){ //Perdió la partida (Se quedó sin pajaros y no mató a todos los cerdos)
                 // Llamada al frame de puntuación (con un -1 de parámetro que indica derrota)
-                new EndGame(score, 0, 5, -1, this);
+                new EndGame(score, 0, 4, -1, this);
             }else{  //Ganó la partida (puede que tenga pajaros de sobra, o no)
                 //calcular puntuacion
-                new EndGame(score+(nPajaros*10000), nPajaros+1, 5, 1, this);
+                new EndGame(score+(nPajaros*10000), nPajaros+1, 4, 1, this);
             }
             this.stop();
             //this.dispose();
@@ -945,7 +930,8 @@ public class Nivel5 extends SimulationFrame{
 	 * @param args command line arguments
 	 */
 	public static void main(String[] args) {
-		Nivel5 simulation = new Nivel5();
+		Nivel4 simulation = new Nivel4();
 		simulation.run();
 	}
 }
+
