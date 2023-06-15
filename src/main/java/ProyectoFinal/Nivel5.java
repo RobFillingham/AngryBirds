@@ -412,7 +412,11 @@ public class Nivel5 extends SimulationFrame{
                                     canKill = false;
                                     killPig(b1);
                                     killSound();
-                                }
+                                }/*else if(isPig(b1) && !isAllowedBlock(b2)){
+                                    canKill = false;
+                                    killPig(b1);
+                                    killSound();
+                                }*/
                                 if(isBird(b1) && isBlock(b2)){
                                     canKill = true;
                                 }else if(isBlock(b1) && isBird(b2)){
@@ -552,7 +556,6 @@ public class Nivel5 extends SimulationFrame{
                             world.addBody(circle);
                         }
                     }
-                    birdSound();
                 }
             }
         });
@@ -777,10 +780,12 @@ public class Nivel5 extends SimulationFrame{
                 boolean allObjectsStopped = true;
                 for (SimulationBody body : world.getBodies()) {  //Verifica si algun objeto del mundo tiene velocidad
                     // Verificar la velocidad lineal del cuerpo
-                    if (!body.getLinearVelocity().isZero()) {
+                    //if (!body.getLinearVelocity().isZero() && (!isAllowedBlock(body) || !isBlock(body))) {
+                    if (!body.getLinearVelocity().isZero()){
                         allObjectsStopped = false;
                         break;
-                    }
+                    }else
+                        allObjectsStopped = true;
                 }
                 if (allObjectsStopped) {
                     // Todos los objetos están sin moverse
@@ -813,6 +818,8 @@ public class Nivel5 extends SimulationFrame{
 		g.drawString(String.format("Restart: R"), 20, 86);
 		g.drawString(String.format("Restart camera: H"), 20, 100);
                 g.drawString(String.format("Throw: S"), 20, 114);
+                g.drawString(String.format("Evaluate Endgame: ^"), 20, 128);
+
                 
                 //Birds
                 g.drawString(String.format("%d  REMAINING BIRDS", nPajaros), 900, 50);
@@ -858,6 +865,10 @@ public class Nivel5 extends SimulationFrame{
 	@Override
 	protected void handleEvents() {
 		super.handleEvents();
+                
+                if (this.up.isActive()) {
+			evaluate();
+		}
 		if (this.angleUp.isActive()) {
                     if(Math.toDegrees(this.direction.getDirection()) < 65){   //Limita el angulo a 65 grados max
                         this.direction.rotate(0.01);
@@ -880,6 +891,7 @@ public class Nivel5 extends SimulationFrame{
 		}
 		
 		if (this.shoot.isActiveButNotHandled()) {
+                    
 			this.shoot.setHasBeenHandled(true);
 			if(nPajaros > 0 && canMove == true){  //Limita los pajaros (No permite que se lancen mas del limite) Y solo lo permite cuando nada se mueve
                             //shooting audio resortera
@@ -934,6 +946,8 @@ public class Nivel5 extends SimulationFrame{
                             nColisiones = 0;
                             nColisionesEG = 0;
                             
+                            birdSound();
+                            
                             circle.setUserData(data);
                             BodyFixture bf = circle.addFixture(Geometry.createCircle(1.0), 10.0, 30.0, 0.0);
                             bf.setFilter(ballFilter);
@@ -943,6 +957,8 @@ public class Nivel5 extends SimulationFrame{
                             circle.setLinearVelocity(this.direction.x * this.power, this.direction.y * this.power);
                             bird.add(circle);
                             this.world.addBody(circle);
+                            
+                            
                         }
 		}
 		for (SimulationBody b : this.toRemove) {
@@ -961,6 +977,20 @@ public class Nivel5 extends SimulationFrame{
             }
             this.stop();
             //this.dispose();
+        }
+        
+        private void evaluate(){
+            if(nPajaros == 0 && nCerdos!=0){
+                new EndGame(score, 0, 5, -1, this);                
+                 this.stop();
+                this.dispose();
+            }else if( nCerdos <= 0){
+                new EndGame(score+(nPajaros*10000), nPajaros+1, 5, 1, this);                
+                 this.stop();
+                this.dispose();
+            }
+           
+            System.out.println("e");
         }
         
         
