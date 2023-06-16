@@ -410,11 +410,11 @@ public class Nivel6 extends SimulationFrame{
                                     canKill = false;
                                     killPig(b1);
                                     killSound();
-                                }/*else if(isPig(b1) && !isAllowedBlock(b2)){
+                                }else if(isPig(b1) && !isAllowedBlock(b2)){
                                     canKill = false;
                                     killPig(b1);
                                     killSound();
-                                }*/
+                                }
                                 if(isBird(b1) && isBlock(b2)){
                                     canKill = true;
                                 }else if(isBlock(b1) && isBird(b2)){
@@ -774,10 +774,13 @@ public class Nivel6 extends SimulationFrame{
                 boolean allObjectsStopped = true;
                 for (SimulationBody body : world.getBodies()) {  //Verifica si algun objeto del mundo tiene velocidad
                     // Verificar la velocidad lineal del cuerpo
-                    if (!body.getLinearVelocity().isZero()) {
+                    if (!body.getLinearVelocity().isZero() && !isAllowedBlock(body) && !isBlock(body)) {    
+                //if (!body.getLinearVelocity().isZero()) {
                         allObjectsStopped = false;
+                        System.out.println(body.getColor());
                         break;
-                    }
+                    }else
+                        allObjectsStopped=true;
                 }
                 if (allObjectsStopped) {
                     // Todos los objetos están sin moverse
@@ -882,7 +885,7 @@ public class Nivel6 extends SimulationFrame{
 		}
 		
 		if (this.shoot.isActiveButNotHandled()) {
-                    birdSound();
+                    
 			this.shoot.setHasBeenHandled(true);
 			if(nPajaros > 0 && canMove == true){  //Limita los pajaros (No permite que se lancen mas del limite) Y solo lo permite cuando nada se mueve
                             //shooting audio resortera
@@ -910,7 +913,7 @@ public class Nivel6 extends SimulationFrame{
                             
                             //Borramos cuerpo anterior (Resortera)
                             toRemove.add(world.getBody(world.getBodyCount()-1));
-                            
+                            birdSound();
                             // create a circle
                             BallUserData data = new BallUserData();
                             data.start.x = start.x;

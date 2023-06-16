@@ -412,11 +412,11 @@ public class Nivel5 extends SimulationFrame{
                                     canKill = false;
                                     killPig(b1);
                                     killSound();
-                                }/*else if(isPig(b1) && !isAllowedBlock(b2)){
+                                }else if(isPig(b1) && !isAllowedBlock(b2)){
                                     canKill = false;
                                     killPig(b1);
                                     killSound();
-                                }*/
+                                }
                                 if(isBird(b1) && isBlock(b2)){
                                     canKill = true;
                                 }else if(isBlock(b1) && isBird(b2)){
@@ -780,8 +780,8 @@ public class Nivel5 extends SimulationFrame{
                 boolean allObjectsStopped = true;
                 for (SimulationBody body : world.getBodies()) {  //Verifica si algun objeto del mundo tiene velocidad
                     // Verificar la velocidad lineal del cuerpo
-                    //if (!body.getLinearVelocity().isZero() && (!isAllowedBlock(body) || !isBlock(body))) {
-                    if (!body.getLinearVelocity().isZero()){
+                    if (!body.getLinearVelocity().isZero() && !isAllowedBlock(body) && !isBlock(body)) {
+                    //if (!body.getLinearVelocity().isZero()){
                         allObjectsStopped = false;
                         break;
                     }else

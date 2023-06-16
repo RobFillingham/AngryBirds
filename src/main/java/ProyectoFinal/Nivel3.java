@@ -388,6 +388,10 @@ public class Nivel3 extends SimulationFrame{
                                     canKill = false;
                                     killPig(b1);
                                     killSound();
+                                }else if(isPig(b1) && !isAllowedBlock(b2)){
+                                    canKill = false;
+                                    killPig(b1);
+                                    killSound();
                                 }
                                 if(isBird(b1) && isBlock(b2)){
                                     canKill = true;
@@ -680,7 +684,8 @@ public class Nivel3 extends SimulationFrame{
                 boolean allObjectsStopped = true;
                 for (SimulationBody body : world.getBodies()) {  //Verifica si algun objeto del mundo tiene velocidad
                     // Verificar la velocidad lineal del cuerpo
-                    if (!body.getLinearVelocity().isZero()) {
+                if (!body.getLinearVelocity().isZero() && !isAllowedBlock(body) && !isBlock(body)) {        
+                //if (!body.getLinearVelocity().isZero()) {
                         allObjectsStopped = false;
                         break;
                     }
@@ -868,10 +873,10 @@ public class Nivel3 extends SimulationFrame{
                 new EndGame(score+(nPajaros*10000), nPajaros+1, 3, 1, this);
             }
             this.stop();
-            //this.dispose();
+            this.dispose();
         }
         
-           private void evaluate(){
+        private void evaluate(){
             if(nPajaros == 0 && nCerdos!=0){
                 new EndGame(score, 0, 3, -1, this);                
                  this.stop();

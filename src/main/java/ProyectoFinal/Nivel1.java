@@ -825,7 +825,8 @@ public class Nivel1 extends SimulationFrame {
                 boolean allObjectsStopped = true;
                 for (SimulationBody body : world.getBodies()) {  //Verifica si algun objeto del mundo tiene velocidad
                     // Verificar la velocidad lineal del cuerpo
-                    if (!body.getLinearVelocity().isZero()) {
+                if (!body.getLinearVelocity().isZero() &&  !isBlock(body)) {        
+                //if (!body.getLinearVelocity().isZero()) {
                         allObjectsStopped = false;
                         break;
                     }
