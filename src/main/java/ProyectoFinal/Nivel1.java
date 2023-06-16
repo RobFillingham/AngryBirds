@@ -185,6 +185,7 @@ public class Nivel1 extends SimulationFrame {
 	
 	private final BooleanStateKeyboardInputHandler shoot;
 	private final ToggleStateKeyboardInputHandler path;
+        
 	
 	private final Vector2 start = new Vector2();
 	private final Vector2 direction = new Vector2();
@@ -248,7 +249,7 @@ public class Nivel1 extends SimulationFrame {
 		this.minus = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_MINUS, KeyEvent.VK_SUBTRACT);
 		this.shoot = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_S);
 		this.path = new ToggleStateKeyboardInputHandler(this.canvas, KeyEvent.VK_P);
-		
+                
 		this.up.install();
 		this.down.install();
 		this.left.install();
@@ -290,7 +291,8 @@ public class Nivel1 extends SimulationFrame {
 		this.minus = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_MINUS, KeyEvent.VK_SUBTRACT);
 		this.shoot = new BooleanStateKeyboardInputHandler(this.canvas, KeyEvent.VK_S);
 		this.path = new ToggleStateKeyboardInputHandler(this.canvas, KeyEvent.VK_P);
-		
+
+                
 		this.up.install();
 		this.down.install();
 		this.left.install();
@@ -631,7 +633,7 @@ public class Nivel1 extends SimulationFrame {
                             world.addBody(circle);
                         }
                     }
-                    birdSound();
+                    
                 }
                 
             }
@@ -863,6 +865,8 @@ public class Nivel1 extends SimulationFrame {
 		g.drawString(String.format("Restart camera: H"), 20, 100);
                 g.drawString(String.format("Throw: S"), 20, 114);
                 
+                g.drawString(String.format("Evaluate Endgame: ^"), 20, 128);
+                
                 //Birds
                 g.drawString(String.format("%d  REMAINING BIRDS", nPajaros), 900, 50);
 		
@@ -924,13 +928,18 @@ public class Nivel1 extends SimulationFrame {
 		}
 		if (this.down.isActive()) {
 			this.start.y -= 0.05;
-		}
+		}*/
 		if (this.up.isActive()) {
-			this.start.y += 0.05;
+			/*this.start.y += 0.05;
 			if (this.start.y >= 3.0) {
 				this.start.y = 3.0;
-			}
-		}*/
+			}*/
+                        evaluate();
+		}
+                
+                
+                
+                
 		if (this.angleUp.isActive()) {
                     if(Math.toDegrees(this.direction.getDirection()) < 65){   //Limita el angulo a 65 grados max
                         this.direction.rotate(0.01);
@@ -953,6 +962,7 @@ public class Nivel1 extends SimulationFrame {
 		}
 		
 		if (this.shoot.isActiveButNotHandled()) {
+                        birdSound();
 			this.shoot.setHasBeenHandled(true);
 			if(nPajaros > 0 && canMove == true){  //Limita los pajaros (No permite que se lancen mas del limite) Y solo lo permite cuando nada se mueve
                             //shooting audio resortera
@@ -1010,10 +1020,15 @@ public class Nivel1 extends SimulationFrame {
                             bird.add(circle);
                             this.world.addBody(circle);
                         }
-		}
+		
+                } // danger     
 		for (SimulationBody b : this.toRemove) {
 			this.world.removeBody(b);
 		}
+                
+                
+                
+                
 	}
 	
 	/* (non-Javadoc)
@@ -1044,6 +1059,20 @@ public class Nivel1 extends SimulationFrame {
             }
             this.stop();
             this.dispose();
+        }
+        
+        private void evaluate(){
+            if(nPajaros == 0 && nCerdos!=0){
+                new EndGame(score, 0, 1, -1, this);                
+                 this.stop();
+                this.dispose();
+            }else if( nCerdos <= 0){
+                new EndGame(score+(nPajaros*10000), nPajaros+1, 1, 1, this);                
+                 this.stop();
+                this.dispose();
+            }
+           
+            System.out.println("e");
         }
         
         

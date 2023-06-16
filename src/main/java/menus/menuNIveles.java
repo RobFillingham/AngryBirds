@@ -4,6 +4,7 @@ package menus;
 import ProyectoFinal.Nivel1;
 import ProyectoFinal.Nivel2;
 import ProyectoFinal.Nivel3;
+import ProyectoFinal.Nivel4;
 import ProyectoFinal.Nivel6;
 import ProyectoFinal.Nivel5;
 import ProyectoFinal.Score;
@@ -38,6 +39,8 @@ import javax.swing.JLabel;
  */
 public class menuNIveles extends javax.swing.JFrame {
     public Menu_1 daddy;
+    public Thread musica;
+    public Clip clip;
     private boolean diplvl1;
     private boolean diplvl2;
     private boolean diplvl3;
@@ -49,17 +52,25 @@ public class menuNIveles extends javax.swing.JFrame {
      * Creates new form menuNIveles
      */
     public menuNIveles(JFrame daddy) {
+        musica =  null;
+        clip =  null;
         this.daddy = (Menu_1)daddy;
         initComponents();
         transparent();
         readScoreFile();
+        
     }
     
     public menuNIveles() {
+        
+        musica = null;
+        clip = null;
+        music();
         this.daddy = (Menu_1)daddy;
         initComponents();
         transparent();
         readScoreFile();
+        
         
     }
 
@@ -286,10 +297,10 @@ public class menuNIveles extends javax.swing.JFrame {
         if(diplvl4 == true){
             stop();
             
-            /*Nivel4 lvl4 = new Nivel4();
+            Nivel4 lvl4 = new Nivel4();
             lvl4.setVisible(true);
             lvl4.run();
-            dispose();*/
+            dispose();
         }
     }//GEN-LAST:event_lvl4buttonActionPerformed
 
@@ -355,9 +366,40 @@ public class menuNIveles extends javax.swing.JFrame {
 
     //FUNCIONES ---
     
+    
+    public void music() {
+        musica = new Thread() {
+            public void run() {
+                try {
+                    AudioInputStream ab = AudioSystem.getAudioInputStream(new File("Angry-Birds-Theme.wav"));
+                    clip = AudioSystem.getClip();
+
+                    clip.open(ab);
+                    clip.start();
+
+                    // Wait for the clip to finish playing
+                    Thread.sleep(clip.getMicrosecondLength() / 1000);
+
+                    clip.stop();
+                    clip.close();
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e) {
+                    // Proper exception handling/logging here
+                    e.printStackTrace();
+                }
+            }
+        };
+        musica.start();
+    }
+    
+
+       
+    
     private void stop(){
         if(daddy!=null){
             daddy.clip.stop();
+        }
+        if(clip!=null){
+            clip.stop();
         }
     }
     

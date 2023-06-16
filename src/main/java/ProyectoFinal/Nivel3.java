@@ -467,7 +467,7 @@ public class Nivel3 extends SimulationFrame{
                             circle.setLinearVelocity(circle.getLinearVelocity().x*3, circle.getLinearVelocity().y*3);
                         }
                     }
-                    birdSound();
+                    
                 }
             }
         });
@@ -716,6 +716,8 @@ public class Nivel3 extends SimulationFrame{
 		g.drawString(String.format("Restart: R"), 20, 86);
 		g.drawString(String.format("Restart camera: H"), 20, 100);
                 g.drawString(String.format("Throw: S"), 20, 114);
+                g.drawString(String.format("Evaluate Endgame: ^"), 20, 128);
+
                 
                 //Birds
                 g.drawString(String.format("%d  REMAINING BIRDS", nPajaros), 900, 50);
@@ -760,8 +762,15 @@ public class Nivel3 extends SimulationFrame{
 	 */
 	@Override
 	protected void handleEvents() {
+            
+            
 		super.handleEvents();
-		if (this.angleUp.isActive()) {
+		
+                if (this.up.isActive()) {
+			evaluate();
+		}
+                
+                if (this.angleUp.isActive()) {
                     if(Math.toDegrees(this.direction.getDirection()) < 65){   //Limita el angulo a 65 grados max
                         this.direction.rotate(0.01);
                     }
@@ -783,6 +792,7 @@ public class Nivel3 extends SimulationFrame{
 		}
 		
 		if (this.shoot.isActiveButNotHandled()) {
+                        
 			this.shoot.setHasBeenHandled(true);
 			if(nPajaros > 0 && canMove == true){  //Limita los pajaros (No permite que se lancen mas del limite) Y solo lo permite cuando nada se mueve
                             //shooting audio resortera
@@ -807,7 +817,7 @@ public class Nivel3 extends SimulationFrame{
                                 }  
                             }.start();
                             
-                            
+                            birdSound();
                             //Borramos cuerpo anterior (Resortera)
                             toRemove.add(world.getBody(world.getBodyCount()-1));
                             
@@ -859,6 +869,20 @@ public class Nivel3 extends SimulationFrame{
             }
             this.stop();
             //this.dispose();
+        }
+        
+           private void evaluate(){
+            if(nPajaros == 0 && nCerdos!=0){
+                new EndGame(score, 0, 3, -1, this);                
+                 this.stop();
+                this.dispose();
+            }else if( nCerdos <= 0){
+                new EndGame(score+(nPajaros*10000), nPajaros+1, 3, 1, this);                
+                 this.stop();
+                this.dispose();
+            }
+           
+            System.out.println("e");
         }
         
         

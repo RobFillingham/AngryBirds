@@ -164,7 +164,7 @@ public class EndGame extends javax.swing.JFrame {
                 clip.stop();
                 break;
             case 4:
-                new Nivel6().run();
+                new Nivel4().run();
                 clip.stop();
                 break;
             case 5:
@@ -176,6 +176,7 @@ public class EndGame extends javax.swing.JFrame {
                 clip.stop();
                 break;
         }
+        daddy.dispose();
         this.dispose();
         
         
@@ -251,7 +252,9 @@ public class EndGame extends javax.swing.JFrame {
            System.out.println(reference.levels.get(0).available);
            reference.levels.get(level).completed = true;
            reference.levels.get(level).score = score;
-           reference.levels.get(level).stars = stars;
+           if(reference.levels.get(level).stars < stars){
+               reference.levels.get(level).stars = stars;
+           }
            reference.levels.get(level+1).available= true;
          
         }catch(IOException | ClassNotFoundException e){
